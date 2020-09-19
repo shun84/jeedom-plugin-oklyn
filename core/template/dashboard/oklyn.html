@@ -1,0 +1,79 @@
+<div class="eqLogic eqLogic-widget allowResize allowReorderCmd" style="border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#;width: #width#;height: #height#;#style#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" >
+    <div class="widget-name text-center">
+        <span style="font-size: 1.2em;#hideEqLogicName#">
+            <a href="#eqLink#">#name_display#
+                <span class="object_name">#object_name#</span>
+            </a>
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div>Air : #temperature# °c</div>
+            <div>Date Air : #datetemperature#</div>
+        </div>
+        <div class="col-md-3">
+            <div>Water : #eau# °C</div>
+            <div>Date Water : #dateeau#</div>
+        </div>
+        <div class="col-md-3">
+            <div>PH : #ph#</div>
+            <div>Status PH : #phstatus#</div>
+        </div>
+        <div class="col-md-3">
+            <div>ORP : #orp#</div>
+            <div>Status ORP : #orpstatus#</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div>Pompe : #pompe#</div>
+            <div>Status Pompe : #pompestatus#</div>
+            <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-cmd_id="#pompeoff_id#">
+                  <a class="btn btn-sm btn-default action">
+                      #pompeoff_name#
+                  </a>
+            </span>
+            <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-cmd_id="#pompeon_id#">
+                  <a class="btn btn-sm btn-default action">
+                      #pompeon_name#
+                  </a>
+            </span>
+            <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-cmd_id="#pompeauto_id#">
+                  <a class="btn btn-sm btn-default action">
+                      #pompeauto_name#
+                  </a>
+            </span>
+        </div>
+        <div class="col-md-3">
+            <div>Auxilaire : #aux#</div>
+            <div>Status Auxilaire : #auxstatus#</div>
+            <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-cmd_id="#auxoff_id#">
+                  <a class="btn btn-sm btn-default action">
+                      #auxoff_name#
+                  </a>
+            </span>
+            <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-cmd_id="#auxon_id#">
+                  <a class="btn btn-sm btn-default action">
+                      #auxon_name#
+                  </a>
+            </span>
+        </div>
+    </div>
+    <script>
+        $('.cmd[data-cmd_id=#pompeoff_id#]').off().on('click', function () {
+            jeedom.cmd.execute({id: '#pompeoff_id#'});
+        });
+        $('.cmd[data-cmd_id=#pompeon_id#]').off().on('click', function () {
+            jeedom.cmd.execute({id: '#pompeon_id#'});
+        });
+        $('.cmd[data-cmd_id=#pompeauto_id#]').off().on('click', function () {
+            jeedom.cmd.execute({id: '#pompeauto_id#'});
+        });
+        $('.cmd[data-cmd_id=#auxoff_id#]').off().on('click', function () {
+            jeedom.cmd.execute({id: '#auxoff_id#'});
+        });
+        $('.cmd[data-cmd_id=#auxon_id#]').off().on('click', function () {
+            jeedom.cmd.execute({id: '#auxon_id#'});
+        });
+    </script>
+</div>
