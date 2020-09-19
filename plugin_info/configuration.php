@@ -22,10 +22,10 @@ if (!isConnect()) {
     die();
 }
 ?>
-<form class="form-inline">
+<form class="form-inline center">
     <div class="form-group">
         <label for="apicle">{{Api cle}}</label>
-        <input class="configKey form-control" id="apicle" data-l1key="apicle"/>
+        <input style="width: 300px" class="configKey form-control" id="apicle" data-l1key="apicle"/>
     </div>
 </form>
 
