@@ -214,16 +214,20 @@ class oklyn extends eqLogic {
         $api = new oklyn();
         $airdate = new DateTime($api->getSonde('air','recorded'));
         $waterdate = new DateTime($api->getSonde('water','recorded'));
+        $phdate = new DateTime($api->getSonde('ph','recorded'));
+        $orpdate = new DateTime($api->getSonde('orp','recorded'));
 
         $changed = false;
         $changed = $this->checkAndUpdateCmd('air', $api->getSonde('air','value')) || $changed;
-        $changed = $this->checkAndUpdateCmd('dateair', $airdate->format('d-m-Y H:i:s')) || $changed;
+        $changed = $this->checkAndUpdateCmd('dateair', $airdate->format('d/m/Y \à H:i')) || $changed;
         $changed = $this->checkAndUpdateCmd('water', $api->getSonde('water','value')) || $changed;
-        $changed = $this->checkAndUpdateCmd('datewater', $waterdate->format('d-m-Y H:i:s')) || $changed;
+        $changed = $this->checkAndUpdateCmd('datewater', $waterdate->format('d/m/Y \à H:i')) || $changed;
         $changed = $this->checkAndUpdateCmd('ph', $api->getSonde('ph','value')) || $changed;
         $changed = $this->checkAndUpdateCmd('phstatus', $api->getSonde('ph','status')) || $changed;
+        $changed = $this->checkAndUpdateCmd('phdate', $phdate->format('d/m/Y \à H:i')) || $changed;
         $changed = $this->checkAndUpdateCmd('orp', $api->getSonde('orp','value')) || $changed;
         $changed = $this->checkAndUpdateCmd('orpstatus', $api->getSonde('orp','status')) || $changed;
+        $changed = $this->checkAndUpdateCmd('orpdate', $orpdate->format('d/m/Y \à H:i')) || $changed;
         $changed = $this->checkAndUpdateCmd('pompe', $api->getPompe('pump')) || $changed;
         $changed = $this->checkAndUpdateCmd('pompestatus', $api->getPompe('status')) || $changed;
         $changed = $this->checkAndUpdateCmd('aux', $api->getAux('aux')) || $changed;
@@ -255,7 +259,7 @@ class oklyn extends eqLogic {
 
     public function preSave() {
         $this->setDisplay("width","800px");
-        $this->setDisplay("height","200px");
+        $this->setDisplay("height","250px");
     }
 
     public function postSave() {
@@ -330,6 +334,17 @@ class oklyn extends eqLogic {
         $phstatus->setSubType('string');
         $phstatus->save();
 
+        $phdate = $this->getCmd(null, 'phdate');
+        if (!is_object($phdate)) {
+            $phdate = new oklynCmd();
+        }
+        $phdate->setName(__('Date ph', __FILE__));
+        $phdate->setLogicalId('phdate');
+        $phdate->setEqLogic_id($this->getId());
+        $phdate->setType('info');
+        $phdate->setSubType('string');
+        $phdate->save();
+
         $orp= $this->getCmd(null, 'orp');
         if (!is_object($orp)) {
             $orp = new oklynCmd();
@@ -352,6 +367,17 @@ class oklyn extends eqLogic {
         $orpstatus->setType('info');
         $orpstatus->setSubType('string');
         $orpstatus->save();
+
+        $orpdate = $this->getCmd(null, 'orpdate');
+        if (!is_object($orpdate)) {
+            $orpdate = new oklynCmd();
+        }
+        $orpdate->setName(__('Date orp', __FILE__));
+        $orpdate->setLogicalId('orpdate');
+        $orpdate->setEqLogic_id($this->getId());
+        $orpdate->setType('info');
+        $orpdate->setSubType('string');
+        $orpdate->save();
 
         $pompe = $this->getCmd(null, 'pompe');
         if (!is_object($pompe)) {
@@ -487,22 +513,35 @@ class oklyn extends eqLogic {
             }
         }
 
+        // Température de l'air
         $air = $this->getCmd(null, 'air');
         $replace['#temperature#'] = $air->execCmd();
         $dateair = $this->getCmd(null, 'dateair');
         $replace['#datetemperature#'] = $dateair->execCmd();
+
+        // Température de l'eau
         $water = $this->getCmd(null, 'water');
         $replace['#eau#'] = $water->execCmd();
         $datewater = $this->getCmd(null, 'datewater');
         $replace['#dateeau#'] = $datewater->execCmd();
+
+        // Sonde PH
         $ph = $this->getCmd(null, 'ph');
         $replace['#ph#'] = $ph->execCmd();
         $phstatus = $this->getCmd(null, 'phstatus');
         $replace['#phstatus#'] = $phstatus->execCmd();
+        $phdate = $this->getCmd(null, 'phdate');
+        $replace['#phdate#'] = $phdate->execCmd();
+
+        // Sonde ORP
         $orp = $this->getCmd(null, 'orp');
         $replace['#orp#'] = $orp->execCmd();
         $orpstatus = $this->getCmd(null, 'orpstatus');
         $replace['#orpstatus#'] = $orpstatus->execCmd();
+        $orpdate = $this->getCmd(null, 'orpdate');
+        $replace['#orpdate#'] = $orpdate->execCmd();
+
+        // Pompe de pisicne
         $pompe = $this->getCmd(null, 'pompe');
         $replace['#pompe#'] = $pompe->execCmd();
         $pompestatus = $this->getCmd(null, 'pompestatus');
@@ -516,6 +555,8 @@ class oklyn extends eqLogic {
         $pompeauto = $this->getCmd(null, 'pompeauto');
         $replace['#pompeauto_id#'] = $pompeauto->getId();
         $replace['#pompeauto_name#'] = $pompeauto->getName();
+
+        // Commande auxiliare
         $aux = $this->getCmd(null, 'aux');
         $replace['#aux#'] = $aux->execCmd();
         $auxstatus = $this->getCmd(null, 'auxstatus');

@@ -6,74 +6,141 @@
             </a>
         </span>
     </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div>Air : #temperature# °c</div>
-            <div>Date Air : #datetemperature#</div>
+    <div class="row" style="margin: 10px 5px 20px 5px">
+        <div class="col-md-3 center">
+            <div style="margin-bottom: 5px; font-size: 20px">AIR</div>
+            <div style="font-size: 35px">#temperature#°</div>
+            <div>#datetemperature#</div>
         </div>
-        <div class="col-md-3">
-            <div>Water : #eau# °C</div>
-            <div>Date Water : #dateeau#</div>
+        <div class="col-md-3 center">
+            <div style="margin-bottom: 5px; font-size: 20px">EAU</div>
+            <div style="font-size: 35px">#eau#°</div>
+            <div>#dateeau#</div>
         </div>
-        <div class="col-md-3">
-            <div>PH : #ph#</div>
-            <div>Status PH : #phstatus#</div>
+        <div class="col-md-3 center">
+            <input id="ph" name="ph" type="hidden" value="#ph#">
+            <input id="phstatus" name="phstatus" type="hidden" value="#phstatus#">
+            <div style="margin-bottom: 5px; font-size: 20px">PH</div>
+            <div class="ph" style="font-size: 35px">#ph#</div>
+            <div>#phdate#</div>
+            <div class="phstatus">Status PH : #phstatus#</div>
         </div>
-        <div class="col-md-3">
-            <div>ORP : #orp#</div>
-            <div>Status ORP : #orpstatus#</div>
+        <div class="col-md-3 center">
+            <input id="orp" name="orp" type="hidden" value="#orp#">
+            <input id="orpstatus" name="orpstatus" type="hidden" value="#orpstatus#">
+            <div style="margin-bottom: 5px; font-size: 20px">ORP</div>
+            <div class="orp" style="font-size: 35px">#orp#</div>
+            <div>#orpdate#</div>
+            <div class="orpstatus">Status ORP : #orpstatus#</div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-3">
+    <div class="row" style="margin: 10px 5px 20px 5px">
+        <div class="col-md-6">
             <div>Pompe : #pompe#</div>
             <div>Status Pompe : #pompestatus#</div>
             <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-cmd_id="#pompeoff_id#">
                   <a class="btn btn-sm btn-default action">
-                      #pompeoff_name#
+                      <i class="fas fa-stop"></i>
                   </a>
             </span>
             <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-cmd_id="#pompeon_id#">
                   <a class="btn btn-sm btn-default action">
-                      #pompeon_name#
+                      <i class="fas fa-play"></i>
                   </a>
             </span>
             <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-cmd_id="#pompeauto_id#">
                   <a class="btn btn-sm btn-default action">
-                      #pompeauto_name#
+                      <i class="fas fa-sync"></i>
                   </a>
             </span>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
             <div>Auxilaire : #aux#</div>
             <div>Status Auxilaire : #auxstatus#</div>
             <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-cmd_id="#auxoff_id#">
                   <a class="btn btn-sm btn-default action">
-                      #auxoff_name#
+                      <i class="fas fa-stop"></i>
                   </a>
             </span>
             <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-cmd_id="#auxon_id#">
                   <a class="btn btn-sm btn-default action">
-                      #auxon_name#
+                      <i class="fas fa-play"></i>
                   </a>
             </span>
         </div>
     </div>
     <script>
-        $('.cmd[data-cmd_id=#pompeoff_id#]').off().on('click', function () {
+        $('.cmd[data-cmd_id=#pompeoff_id#]').on('click', function () {
             jeedom.cmd.execute({id: '#pompeoff_id#'});
         });
-        $('.cmd[data-cmd_id=#pompeon_id#]').off().on('click', function () {
+        $('.cmd[data-cmd_id=#pompeon_id#]').on('click', function () {
             jeedom.cmd.execute({id: '#pompeon_id#'});
         });
-        $('.cmd[data-cmd_id=#pompeauto_id#]').off().on('click', function () {
+        $('.cmd[data-cmd_id=#pompeauto_id#]').on('click', function () {
             jeedom.cmd.execute({id: '#pompeauto_id#'});
         });
-        $('.cmd[data-cmd_id=#auxoff_id#]').off().on('click', function () {
+        $('.cmd[data-cmd_id=#auxoff_id#]').on('click', function () {
             jeedom.cmd.execute({id: '#auxoff_id#'});
         });
-        $('.cmd[data-cmd_id=#auxon_id#]').off().on('click', function () {
+        $('.cmd[data-cmd_id=#auxon_id#]').on('click', function () {
             jeedom.cmd.execute({id: '#auxon_id#'});
         });
+        $(document).ready(
+            function (){
+                let domphstatus = $(".phstatus");
+                let domph = $(".ph");
+                let domorpstatus = $(".orpstatus");
+                let domorp = $(".orp");
+
+                let ph = parseFloat(document.getElementById("ph").getAttribute("value"));
+                let orp = parseInt(document.getElementById("orp").getAttribute("value"));
+                let phstatus = document.getElementById("phstatus").getAttribute("value");
+                let orpstatus = document.getElementById("orpstatus").getAttribute("value");
+
+                if (ph >= 7.00 && ph <= 7.80){
+                    domph.css("color", "green");
+                }else if ((ph >= 6.80 && ph < 7.00) || (ph > 7.80 && ph <= 8.00)){
+                    domph.css("color", "yellow");
+                }else if (ph < 6.80 || ph > 8.0){
+                    domph.css("color", "red");
+                }
+
+                if (orp >= 650 && orp <= 750){
+                    domorp.css("color", "green");
+                }else if ((orp >= 500 && orp < 650) || (orp > 750 && orp <= 800)){
+                    domorp.css("color", "yellow");
+                }else if (orp < 500 || orp > 800){
+                    domorp.css("color", "red");
+                }
+
+                switch (phstatus){
+                    case 'normal' :
+                        domphstatus.css("color", "green");
+                        break;
+                    case 'warning' :
+                        domphstatus.css("color", "yellow");
+                        break;
+                    case 'danger' :
+                        domphstatus.css("color", "red");
+                        break;
+                    default :
+                        console.log('Correspond à aucun soucis status : '+phstatus);
+                }
+
+                switch (orpstatus){
+                    case 'normal' :
+                        domorpstatus.css("color", "green");
+                        break;
+                    case 'warning' :
+                        domorpstatus.css("color", "yellow");
+                        break;
+                    case 'danger' :
+                        domorpstatus.css("color", "red");
+                        break;
+                    default :
+                        console.log('Correspond à aucun soucis status : '+orpstatus);
+                }
+            }
+        );
     </script>
 </div>
