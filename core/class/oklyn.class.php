@@ -18,176 +18,13 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
+require_once __DIR__  . '/../../3rparty/ApiOklyn/Apioklyn.php';
 
 class oklyn extends eqLogic {
     /*     * *************************Attributs****************************** */
-    private $_apiToken;
     public static $_widgetPossibility = array('custom' => true, 'custom::layout' => false);
 
     /*     * ***********************Methode static*************************** */
-    public function __construct()
-    {
-        $this->_apiToken = config::byKey('apicle','oklyn');
-    }
-
-    /*
-     * Méthode: GET
-     * URL: https://api.oklyn.fr/public/v1/device/{deviceId}/pump
-     * {deviceId} est à remplacer par le numéro unique d’association ou par le mot clef my.
-     *
-     */
-    public function getPompe(string $value){
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/pump",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
-                "X-API-TOKEN: ". $this->_apiToken,
-                "Content-Type: application/json"
-            ),
-        ));
-
-        $response = json_decode(curl_exec($curl), true);
-        curl_close($curl);
-
-        return $response[$value];
-    }
-
-    /*
-     * Méthode: PUT
-     * URL: https://api.oklyn.fr/public/v1/device/{deviceId}/pump
-     * {deviceId} est à remplacer par le numéro unique d’association ou par le mot clef my.
-     * pump peut prendre comme valeur « on », « off », et « auto »
-     *
-     */
-
-    public function putPompe(string $value){
-        $api = new oklyn();
-        $data = array("pump" => $value);
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/pump",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "PUT",
-            CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => array(
-                "X-API-TOKEN: ". $api->_apiToken,
-                "Content-Type: application/json"
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        return $response;
-    }
-
-    /*
-     * Méthode: GET
-     * URL: https://api.oklyn.fr/public/v1/device/{deviceId}/data/{typeDeMesure}
-     * {deviceId} est à remplacer par le numéro unique d’association ou par le mot clef my.
-     * {typeDeMesure} est à remplacer par le nom d’une mesure parmi air, water (température de l’eau), ph, orp (redox).
-     *
-     */
-    public function getSonde(string $sonde, string $value) {
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/data/".$sonde,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
-                "X-API-TOKEN: ". $this->_apiToken,
-                "Content-Type: application/json"
-            ),
-        ));
-
-        $response = json_decode(curl_exec($curl), true);
-        curl_close($curl);
-
-        return $response[$value];
-    }
-
-    /*
-     * Méthode: GET
-     * URL: https://api.oklyn.fr/public/v1/device/{deviceId}/aux
-     * {deviceId} est à remplacer par le numéro unique d’association ou par le mot clef my.
-     *
-     */
-
-    public function getAux(string $value){
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/aux",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
-                "X-API-TOKEN: ". $this->_apiToken,
-                "Content-Type: application/json"
-            ),
-        ));
-
-        $response = json_decode(curl_exec($curl), true);
-        curl_close($curl);
-
-        return $response[$value];
-    }
-
-    /*
-     * Méthode: PUT
-     * URL: https://api.oklyn.fr/public/v1/device/{deviceId}/aux
-     * {deviceId} est à remplacer par le numéro unique d’association ou par le mot clef my.
-     * pump peut prendre comme valeur « on », « off »
-     *
-     */
-    public function putAux(string $value){
-        $api = new oklyn();
-        $data = array("aux" => $value);
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/aux",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "PUT",
-            CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => array(
-                "X-API-TOKEN: ". $api->_apiToken,
-                "Content-Type: application/json"
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        return $response;
-    }
 
     /*
      * Retour API pour lire les mesures des sondes
@@ -208,10 +45,9 @@ class oklyn extends eqLogic {
      * normal: pas d’alerte en cours
      * warning: alerte en cours sur cette mesure (trop faible ou trop élevée)
      * danger: alerte importante en cours sur cette mesure (vraiment trop faible ou vraiment trop élevé)
-     *
      */
     public function updateOklyn(){
-        $api = new oklyn();
+        $api = new Apioklyn(config::byKey('apicle','oklyn'));
         $airdate = new DateTime($api->getSonde('air','recorded'));
         $waterdate = new DateTime($api->getSonde('water','recorded'));
         $phdate = new DateTime($api->getSonde('ph','recorded'));
@@ -249,17 +85,26 @@ class oklyn extends eqLogic {
 
     /*     * *********************Méthodes d'instance************************* */
 
-    public function preInsert() {
-
+    public function preInsert(){
+        $apikey = config::byKey('apicle','oklyn');
+        if ($apikey == '') {
+            throw new Exception(__('Veulliez renseigner la clef d\'api dans Configuration', __FILE__));
+        }
     }
 
-    public function postInsert() {
+    public function preUpdate() {
+        if ($this->getConfiguration('packoklyn') == '') {
+            throw new Exception(__('Veuillez sélectionner le pack acheter chez Oklyn', __FILE__));
+        }
 
+        if ($this->getConfiguration('auxiliaire') == '') {
+            throw new Exception(__('Veuillez sélectionner si vous utiliser un auxilaire ou pas', __FILE__));
+        }
     }
 
     public function preSave() {
-        $this->setDisplay("width","800px");
-        $this->setDisplay("height","250px");
+        $this->setDisplay("width","632px");
+        $this->setDisplay("height","272px");
     }
 
     public function postSave() {
@@ -311,73 +156,78 @@ class oklyn extends eqLogic {
         $datewater->setSubType('string');
         $datewater->save();
 
-        $ph = $this->getCmd(null, 'ph');
-        if (!is_object($ph)) {
-            $ph = new oklynCmd();
-            $ph->setIsHistorized(1);
-        }
-        $ph->setName(__('PH', __FILE__));
-        $ph->setLogicalId('ph');
-        $ph->setEqLogic_id($this->getId());
-        $ph->setType('info');
-        $ph->setSubType('numeric');
-        $ph->save();
+        $confpackoklyn = $this->getConfiguration('packoklyn');
+        if ($confpackoklyn == 'phseul' || $confpackoklyn == 'phredox'){
+            $ph = $this->getCmd(null, 'ph');
+            if (!is_object($ph)) {
+                $ph = new oklynCmd();
+                $ph->setIsHistorized(1);
+            }
+            $ph->setName(__('PH', __FILE__));
+            $ph->setLogicalId('ph');
+            $ph->setEqLogic_id($this->getId());
+            $ph->setType('info');
+            $ph->setSubType('numeric');
+            $ph->save();
 
-        $phstatus = $this->getCmd(null, 'phstatus');
-        if (!is_object($phstatus)) {
-            $phstatus = new oklynCmd();
-        }
-        $phstatus->setName(__('Status PH', __FILE__));
-        $phstatus->setLogicalId('phstatus');
-        $phstatus->setEqLogic_id($this->getId());
-        $phstatus->setType('info');
-        $phstatus->setSubType('string');
-        $phstatus->save();
+            $phstatus = $this->getCmd(null, 'phstatus');
+            if (!is_object($phstatus)) {
+                $phstatus = new oklynCmd();
+            }
+            $phstatus->setName(__('Status PH', __FILE__));
+            $phstatus->setLogicalId('phstatus');
+            $phstatus->setEqLogic_id($this->getId());
+            $phstatus->setType('info');
+            $phstatus->setSubType('string');
+            $phstatus->save();
 
-        $phdate = $this->getCmd(null, 'phdate');
-        if (!is_object($phdate)) {
-            $phdate = new oklynCmd();
-        }
-        $phdate->setName(__('Date ph', __FILE__));
-        $phdate->setLogicalId('phdate');
-        $phdate->setEqLogic_id($this->getId());
-        $phdate->setType('info');
-        $phdate->setSubType('string');
-        $phdate->save();
+            $phdate = $this->getCmd(null, 'phdate');
+            if (!is_object($phdate)) {
+                $phdate = new oklynCmd();
+            }
+            $phdate->setName(__('Date ph', __FILE__));
+            $phdate->setLogicalId('phdate');
+            $phdate->setEqLogic_id($this->getId());
+            $phdate->setType('info');
+            $phdate->setSubType('string');
+            $phdate->save();
 
-        $orp= $this->getCmd(null, 'orp');
-        if (!is_object($orp)) {
-            $orp = new oklynCmd();
-            $orp->setIsHistorized(1);
-        }
-        $orp->setName(__('ORP', __FILE__));
-        $orp->setLogicalId('orp');
-        $orp->setEqLogic_id($this->getId());
-        $orp->setType('info');
-        $orp->setSubType('numeric');
-        $orp->save();
+            if ($confpackoklyn == 'phredox'){
+                $orp= $this->getCmd(null, 'orp');
+                if (!is_object($orp)) {
+                    $orp = new oklynCmd();
+                    $orp->setIsHistorized(1);
+                }
+                $orp->setName(__('ORP', __FILE__));
+                $orp->setLogicalId('orp');
+                $orp->setEqLogic_id($this->getId());
+                $orp->setType('info');
+                $orp->setSubType('numeric');
+                $orp->save();
 
-        $orpstatus = $this->getCmd(null, 'orpstatus');
-        if (!is_object($orpstatus)) {
-            $orpstatus = new oklynCmd();
-        }
-        $orpstatus->setName(__('Status ORP', __FILE__));
-        $orpstatus->setLogicalId('orpstatus');
-        $orpstatus->setEqLogic_id($this->getId());
-        $orpstatus->setType('info');
-        $orpstatus->setSubType('string');
-        $orpstatus->save();
+                $orpstatus = $this->getCmd(null, 'orpstatus');
+                if (!is_object($orpstatus)) {
+                    $orpstatus = new oklynCmd();
+                }
+                $orpstatus->setName(__('Status ORP', __FILE__));
+                $orpstatus->setLogicalId('orpstatus');
+                $orpstatus->setEqLogic_id($this->getId());
+                $orpstatus->setType('info');
+                $orpstatus->setSubType('string');
+                $orpstatus->save();
 
-        $orpdate = $this->getCmd(null, 'orpdate');
-        if (!is_object($orpdate)) {
-            $orpdate = new oklynCmd();
+                $orpdate = $this->getCmd(null, 'orpdate');
+                if (!is_object($orpdate)) {
+                    $orpdate = new oklynCmd();
+                }
+                $orpdate->setName(__('Date orp', __FILE__));
+                $orpdate->setLogicalId('orpdate');
+                $orpdate->setEqLogic_id($this->getId());
+                $orpdate->setType('info');
+                $orpdate->setSubType('string');
+                $orpdate->save();
+            }
         }
-        $orpdate->setName(__('Date orp', __FILE__));
-        $orpdate->setLogicalId('orpdate');
-        $orpdate->setEqLogic_id($this->getId());
-        $orpdate->setType('info');
-        $orpdate->setSubType('string');
-        $orpdate->save();
 
         $pompe = $this->getCmd(null, 'pompe');
         if (!is_object($pompe)) {
@@ -483,35 +333,13 @@ class oklyn extends eqLogic {
         }
     }
 
-    public function preUpdate() {
-
-    }
-
-    public function postUpdate() {
-
-    }
-
-    public function preRemove() {
-
-    }
-
-    public function postRemove() {
-
-    }
-
     // Non obligatoire mais permet de modifier l'affichage du widget si vous en avez besoin
     public function toHtml($_version = 'dashboard') {
-        $this->emptyCacheWidget();
         $replace = $this->preToHtml($_version);
         if (!is_array($replace)) {
             return $replace;
         }
         $_version = jeedom::versionAlias($_version);
-        foreach ($this->getCmd() as $cmd) {
-            if ($cmd->getType() == 'info') {
-                $replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
-            }
-        }
 
         // Température de l'air
         $air = $this->getCmd(null, 'air');
@@ -525,21 +353,31 @@ class oklyn extends eqLogic {
         $datewater = $this->getCmd(null, 'datewater');
         $replace['#dateeau#'] = $datewater->execCmd();
 
-        // Sonde PH
-        $ph = $this->getCmd(null, 'ph');
-        $replace['#ph#'] = $ph->execCmd();
-        $phstatus = $this->getCmd(null, 'phstatus');
-        $replace['#phstatus#'] = $phstatus->execCmd();
-        $phdate = $this->getCmd(null, 'phdate');
-        $replace['#phdate#'] = $phdate->execCmd();
-
-        // Sonde ORP
-        $orp = $this->getCmd(null, 'orp');
-        $replace['#orp#'] = $orp->execCmd();
-        $orpstatus = $this->getCmd(null, 'orpstatus');
-        $replace['#orpstatus#'] = $orpstatus->execCmd();
-        $orpdate = $this->getCmd(null, 'orpdate');
-        $replace['#orpdate#'] = $orpdate->execCmd();
+        // Sondes PH et ORP
+        $confpackoklyn = $this->getConfiguration('packoklyn');
+        if ($confpackoklyn == 'aucun'){
+            $replace['#phseul#'] = 'phaucun';
+            $replace['#phredox#'] = 'phredoxaucun';
+        }elseif ($confpackoklyn == 'phseul' || $confpackoklyn == 'phredox'){
+            if ($confpackoklyn != 'phredox'){
+                $replace['#phredox#'] = 'phredoxaucun';
+            }elseif ($confpackoklyn == 'phredox'){
+                $replace['#phredox#'] = 'phredox';
+                $orp = $this->getCmd(null, 'orp');
+                $replace['#orp#'] = $orp->execCmd();
+                $orpstatus = $this->getCmd(null, 'orpstatus');
+                $replace['#orpstatus#'] = $orpstatus->execCmd();
+                $orpdate = $this->getCmd(null, 'orpdate');
+                $replace['#orpdate#'] = $orpdate->execCmd();
+            }
+            $replace['#phseul#'] = 'phseul';
+            $ph = $this->getCmd(null, 'ph');
+            $replace['#ph#'] = $ph->execCmd();
+            $phstatus = $this->getCmd(null, 'phstatus');
+            $replace['#phstatus#'] = $phstatus->execCmd();
+            $phdate = $this->getCmd(null, 'phdate');
+            $replace['#phdate#'] = $phdate->execCmd();
+        }
 
         // Pompe de pisicne
         $pompe = $this->getCmd(null, 'pompe');
@@ -548,88 +386,95 @@ class oklyn extends eqLogic {
         $replace['#pompestatus#'] = $pompestatus->execCmd();
         $pompeoff = $this->getCmd(null, 'pompeoff');
         $replace['#pompeoff_id#'] = $pompeoff->getId();
-        $replace['#pompeoff_name#'] = $pompeoff->getName();
         $pompeon = $this->getCmd(null, 'pompeon');
         $replace['#pompeon_id#'] = $pompeon->getId();
-        $replace['#pompeon_name#'] = $pompeon->getName();
         $pompeauto = $this->getCmd(null, 'pompeauto');
         $replace['#pompeauto_id#'] = $pompeauto->getId();
-        $replace['#pompeauto_name#'] = $pompeauto->getName();
 
-        // Commande auxiliare
+        //Gérer la fonction auxiliaire
         $aux = $this->getCmd(null, 'aux');
         $replace['#aux#'] = $aux->execCmd();
         $auxstatus = $this->getCmd(null, 'auxstatus');
         $replace['#auxstatus#'] = $auxstatus->execCmd();
         $auxoff = $this->getCmd(null, 'auxoff');
         $replace['#auxoff_id#'] = $auxoff->getId();
-        $replace['#auxoff_name#'] = $auxoff->getName();
         $auxon = $this->getCmd(null, 'auxon');
         $replace['#auxon_id#'] = $auxon->getId();
-        $replace['#auxon_name#'] = $auxon->getName();
+
+        $confaux = $this->getConfiguration('auxiliaire');
+        if ($confaux == 'aucun'){
+            $replace['#confaux#'] = 'aucun';
+        } elseif ($confaux == 'lumiere'){
+            $replace['#confaux#'] = 'lumiere';
+            $replace['#icon_aux#'] = '<i class="fas fa-lightbulb fa-5x"></i>';
+        } elseif ($confaux == 'chauffage'){
+            $replace['#confaux#'] = 'chauffage';
+            $replace['#icon_aux#'] = '<i class="fas fa-thermometer-full fa-5x"></i>';
+        }
 
         $html = $this->postToHtml($_version, template_replace($replace, getTemplate('core', $_version, 'oklyn', 'oklyn')));
         cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
         return $html;
     }
-
-    /*
-     * Non obligatoire mais ca permet de déclencher une action après modification de variable de configuration
-    public static function postConfig_<Variable>() {
-    }
-     */
-
-    /*
-     * Non obligatoire mais ca permet de déclencher une action avant modification de variable de configuration
-    public static function preConfig_<Variable>() {
-    }
-     */
-
-    /*     * **********************Getteur Setteur*************************** */
 }
 
 class oklynCmd extends cmd {
-    /*     * *************************Attributs****************************** */
-
-
-    /*     * ***********************Methode static*************************** */
-
-
-    /*     * *********************Methode d'instance************************* */
-
-    /*
-     * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
-      public function dontRemoveCmd() {
-      return true;
-      }
-     */
-
     public function execute($_options = array()) {
+        $api = new Apioklyn(config::byKey('apicle','oklyn'));
         $eqlogic = $this->getEqLogic();
+
         if ($this->getLogicalId() == 'pompeoff') {
-            $putpompeoff = $eqlogic->putPompe('off');
-            $eqlogic->checkAndUpdateCmd('pompeoff', $putpompeoff);
+            $putpompeoff = $api->putPompe('off');
+            $errorapi = json_decode($putpompeoff);
+            if ($errorapi->{'error'}){
+                throw new Exception(__('L\'arret de la pompe n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
+            }else{
+                log::add('oklyn','debug','Lancement de l\'action pompe Off');
+                $eqlogic->checkAndUpdateCmd('pompeoff', $putpompeoff);
+            }
         }
         if ($this->getLogicalId() == 'pompeon') {
-            $putpompeon = $eqlogic->putPompe('on');
-            $eqlogic->checkAndUpdateCmd('pompeon', $putpompeon);
+            $putpompeon = $api->putPompe('on');
+            $errorapi = json_decode($putpompeon);
+            if ($errorapi->{'error'}){
+                throw new Exception(__('Le lancement de la pompe n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
+            }else{
+                log::add('oklyn','debug','Lancement de l\'action pompe On');
+                $eqlogic->checkAndUpdateCmd('pompeon', $putpompeon);
+            }
         }
         if ($this->getLogicalId() == 'pompeauto') {
-            $putpompeauto = $eqlogic->putPompe('auto');
-            $eqlogic->checkAndUpdateCmd('pompeauto', $putpompeauto);
+            $putpompeauto = $api->putPompe('auto');
+            $errorapi = json_decode($putpompeauto);
+            if ($errorapi->{'error'}){
+                throw new Exception(__('L\'automatisation de la pompe n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
+            }else{
+                log::add('oklyn','debug','Lancement de l\'action pompe Auto');
+                $eqlogic->checkAndUpdateCmd('pompeauto', $putpompeauto);
+            }
         }
         if ($this->getLogicalId() == 'auxoff') {
-            $putauxoff = $eqlogic->putAux('off');
-            $eqlogic->checkAndUpdateCmd('auxoff', $putauxoff);
+            $putauxoff = $api->putAux('off');
+            $errorapi = json_decode($putauxoff);
+            if ($errorapi->{'error'}){
+                throw new Exception(__('L\'arret de l\'auxilaire n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
+            }else{
+                log::add('oklyn','debug','Lancement de l\'action auxilaire Off');
+                $eqlogic->checkAndUpdateCmd('auxoff', $putauxoff);
+            }
         }
         if ($this->getLogicalId() == 'auxon') {
-            $putauxon = $eqlogic->putAux('on');
-            $eqlogic->checkAndUpdateCmd('auxon', $putauxon);
+            $putauxon = $api->putAux('on');
+            $errorapi = json_decode($putauxon);
+            if ($errorapi->{'error'}){
+                throw new Exception(__('Le lancement de l\'auxilaire n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
+            }else{
+                log::add('oklyn','debug','Lancement de l\'action auxilaire On');
+                $eqlogic->checkAndUpdateCmd('auxon', $putauxon);
+            }
         }
         $eqlogic->updateOklyn();
     }
-
-    /*     * **********************Getteur Setteur*************************** */
 }
 
 

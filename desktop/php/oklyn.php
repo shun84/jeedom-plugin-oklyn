@@ -23,7 +23,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
             </div>
         </div>
         <legend><i class="fas fa-table"></i> {{Mes équipements}}</legend>
-	    <input class="form-control" id="in_searchEqlogic" placeholder="{{Rechercher}}"/>
+        <label for="in_searchEqlogic"></label><input class="form-control" id="in_searchEqlogic" placeholder="{{Rechercher}}"/>
         <div class="eqLogicThumbnailContainer">
             <?php
             foreach ($eqLogics as $eqLogic) {
@@ -62,7 +62,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" >{{Objet parent}}</label>
+                            <label class="col-sm-3 control-label" for="sel_object">{{Objet parent}}</label>
                             <div class="col-sm-3">
                                 <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
                                     <option value="">{{Aucun}}</option>
@@ -91,6 +91,28 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <div class="col-sm-9">
                                 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
                                 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="packoklyn">{{Pack Oklyn}}</label>
+                            <div class="col-sm-3" style="width: 130px">
+                                <select id="packoklyn" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="packoklyn">
+                                    <option></option>
+                                    <option value="aucun">Aucun</option>
+                                    <option value="phseul">Ph seul</option>
+                                    <option value="phredox">Ph + Redox</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="auxiliaire">{{Auxilaire}}</label>
+                            <div class="col-sm-3" style="width: 130px">
+                                <select id="auxiliaire" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="auxiliaire">
+                                    <option></option>
+                                    <option value="aucun">Aucun</option>
+                                    <option value="lumiere">Lumière</option>
+                                    <option value="chauffage">Chauffage</option>
+                                </select>
                             </div>
                         </div>
                     </fieldset>
