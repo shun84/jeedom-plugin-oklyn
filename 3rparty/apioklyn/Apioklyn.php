@@ -37,10 +37,6 @@ class Apioklyn
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/pump",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
                 "X-API-TOKEN: ". $this->getApiToken(),
@@ -67,11 +63,6 @@ class Apioklyn
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/pump",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "PUT",
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => array(
@@ -98,10 +89,6 @@ class Apioklyn
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/data/".$sonde,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
                 "X-API-TOKEN: ". $this->getApiToken(),
@@ -127,11 +114,6 @@ class Apioklyn
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/aux",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
                 "X-API-TOKEN: ". $this->getApiToken(),
@@ -158,11 +140,6 @@ class Apioklyn
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/aux",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "PUT",
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => array(

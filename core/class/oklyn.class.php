@@ -18,7 +18,7 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
-require_once __DIR__  . '/../../3rparty/ApiOklyn/Apioklyn.php';
+require_once __DIR__ . '/../../3rparty/apioklyn/Apioklyn.php';
 
 class oklyn extends eqLogic {
     /*     * *************************Attributs****************************** */
@@ -333,7 +333,6 @@ class oklyn extends eqLogic {
         }
     }
 
-    // Non obligatoire mais permet de modifier l'affichage du widget si vous en avez besoin
     public function toHtml($_version = 'dashboard') {
         $replace = $this->preToHtml($_version);
         if (!is_array($replace)) {
