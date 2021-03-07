@@ -18,7 +18,7 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
-require_once __DIR__ . '/../../3rparty/apioklyn/Apioklyn.php';
+require_once __DIR__ . '/../../resources/apioklyn/Apioklyn.php';
 
 class oklyn extends eqLogic {
     /*     * *************************Attributs****************************** */

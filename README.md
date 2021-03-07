@@ -2,6 +2,12 @@
 
 Plugin qui permet de gerer voter priscine avec la solution Oklyn.
 
+# installation
+Installation depuis Github :
+
+> cd /var/www/html/plugins  # ou autre suivant l'installation de votre Jeedom
+> git clone https://github.com/shun84/jeedom-plugin-oklyn.git oklyn
+
 # Configuration du plugin
 
 Il faut récupérer la clé **API** directement sur l'application Mobile.
