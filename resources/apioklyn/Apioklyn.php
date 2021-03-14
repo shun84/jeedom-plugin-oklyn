@@ -5,6 +5,7 @@ class Apioklyn
 {
     private $_apiToken;
 
+
     public function __construct($apiToken)
     {
         $this->setApiToken($apiToken);
