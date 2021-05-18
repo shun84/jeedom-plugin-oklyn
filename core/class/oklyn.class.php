@@ -360,7 +360,7 @@ class oklyn extends eqLogic {
         }elseif ($confpackoklyn == 'phseul' || $confpackoklyn == 'phredox'){
             if ($confpackoklyn != 'phredox'){
                 $replace['#phredox#'] = 'phredoxaucun';
-            }elseif ($confpackoklyn == 'phredox'){
+            } else {
                 $replace['#phredox#'] = 'phredox';
                 $orp = $this->getCmd(null, 'orp');
                 $replace['#orp#'] = $orp->execCmd();

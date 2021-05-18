@@ -22,10 +22,20 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <span>{{Configuration}}</span>
             </div>
         </div>
-        <legend><i class="fas fa-table"></i> {{Mes équipements}}</legend>
-        <label for="in_searchEqlogic"></label><input class="form-control" id="in_searchEqlogic" placeholder="{{Rechercher}}"/>
-        <div class="eqLogicThumbnailContainer">
-            <?php
+        <legend><i class="fas fa-table"></i> {{Mes templates}}</legend>
+        <?php
+        if (count($eqLogics) == 0) {
+            echo '<br/><div class="text-center" style="font-size:1.2em;font-weight:bold;">{{Aucun équipement Template n\'est paramétré, cliquer sur "Ajouter" pour commencer}}</div>';
+        } else {
+            // Champ de recherche
+            echo '<div class="input-group" style="margin:5px;">';
+            echo '<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic"/>';
+            echo '<div class="input-group-btn">';
+            echo '<a id="bt_resetSearch" class="btn roundedRight" style="width:30px"><i class="fas fa-times"></i></a>';
+            echo '</div>';
+            echo '</div>';
+            // Liste des équipements du plugin
+            echo '<div class="eqLogicThumbnailContainer">';
             foreach ($eqLogics as $eqLogic) {
                 $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
                 echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
@@ -34,8 +44,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
                 echo '</div>';
             }
-            ?>
-        </div>
+            echo '</div>';
+        }
+        ?>
     </div>
 
     <div class="col-xs-12 eqLogic" style="display: none;">

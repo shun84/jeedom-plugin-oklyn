@@ -1,6 +1,11 @@
+![icon du site oklyn](https://cdn.oklyn.fr/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2018/08/LogoWeb-FR-80.jpg.webp)
+
+Il y a aucune affiliation avec l'entreprise Oklyn.
+J'utilise leur **API** sur le lien suivant : https://help.oklyn.fr/category/api/
+
 # jeedom-plugin-oklyn
 
-Plugin qui permet de gerer voter priscine avec la solution Oklyn.
+Plugin qui permet de gerer votre piscine avec la solution Oklyn avec Jeedom systeme de domotique.
 
 # installation
 Installation depuis Github :
@@ -20,7 +25,7 @@ Cette clé **API** la renseigner dans la configuration du plugin.
 
 Les valeurs à sélectionner obligatoirement :
 
-- **Pack Oklyn :** sélectionner le pack que vous avez acheter au prêt d’Oklyn.
+- **Pack Oklyn :** sélectionner le pack que vous avez acheté au prêt d’Oklyn.
 - **Auxilaire :** sélectionner l'auxilaire utiliser ou pas.
 
 Les données sont rafraîchies tout les 30 minutes.

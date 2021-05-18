@@ -1,6 +1,6 @@
 # Plugin Oklyn
 
-Plugin qui permet de gerer voter priscine avec la solution Oklyn.
+Plugin qui permet de gerer votre piscine avec la solution Oklyn.
 
 # Configuration du plugin
 
@@ -14,7 +14,7 @@ Cette clé **API** la renseigner dans la configuration du plugin.
 
 Les valeurs à sélectionner obligatoirement :
 
-- **Pack Oklyn :** sélectionner le pack que vous avez acheter au prêt d’Oklyn.
+- **Pack Oklyn :** sélectionner le pack que vous avez acheté au prêt d’Oklyn.
 - **Auxilaire :** sélectionner l'auxilaire utiliser ou pas.
 
 Les données sont rafraîchies tout les 30 minutes.
