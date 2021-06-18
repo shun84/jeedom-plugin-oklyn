@@ -1,20 +1,17 @@
 {
 	"id" : "oklyn",
 	"name" : "Oklyn",
-	"description" : "Plugin pour récupérer les informations de la piscine avec le boitier Oklyn",
+	"description" : "Plugin pour récupérer les informations de la piscine avec le boitier Oklyn (PH/ORP/Température de l'air et d'eau)",
 	"licence" : "AGPL",
 	"author" : "Shun84",
 	"require" : "4.0",
 	"category" : "devicecommunication",
+	"changelog" : "https://shun84.github.io/jeedom-plugin-oklyn/#language#/changelog",
+	"documentation" : "https://shun84.github.io/jeedom-plugin-oklyn/#language#/",
 	"hasDependency" : false,
 	"hasOwnDeamon" : false,
-	"maxDependancyInstallTime" : 0,
-	"changelog" : "https://jeedom.github.io/plugin-template/#language#/changelog",
-	"documentation" : "https://jeedom.github.io/plugin-template/#language#/",
-	"link" : {
-		"forum":"Lien vers le forum",
-		"video" : "Lien vers une video"
-	},
 	"language" : ["fr_FR"],
-	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile"]
+	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobileapp", "v4"],
+	"maxDependancyInstallTime" : 0
+
 }
