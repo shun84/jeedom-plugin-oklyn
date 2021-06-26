@@ -1,7 +1,9 @@
 {
 	"id" : "oklyn",
 	"name" : "Oklyn",
-	"description" : "Plugin pour récupérer les informations de la piscine avec le boitier Oklyn (PH/ORP/Température de l'air et d'eau)",
+	"description" : {
+		"fr_FR": "Plugin pour récupérer les informations de la piscine avec le boitier Oklyn (PH/ORP/Température de l'air et d'eau)"
+	},
 	"licence" : "AGPL",
 	"author" : "Shun84",
 	"require" : "4.0",
