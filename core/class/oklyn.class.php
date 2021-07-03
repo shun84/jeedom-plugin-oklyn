@@ -77,7 +77,7 @@ class oklyn extends eqLogic {
     //Fonction exécutée automatiquement toutes les 30 minutes par Jeedom
     public static function cron30() {
         foreach (oklyn::byType('oklyn') as $eqLogic) {
-            if ($eqLogic->getIsEnable() === 1) {
+            if ($eqLogic->getIsEnable() == 1) {
                 $eqLogic->updateOklyn();
             }
         }
@@ -87,17 +87,17 @@ class oklyn extends eqLogic {
 
     public function preInsert(){
         $apikey = config::byKey('apicle','oklyn');
-        if ($apikey === '') {
+        if ($apikey == '') {
             throw new Exception(__('Veulliez renseigner la clef d\'api dans Configuration', __FILE__));
         }
     }
 
     public function preUpdate() {
-        if ($this->getConfiguration('packoklyn') === '') {
+        if ($this->getConfiguration('packoklyn') == '') {
             throw new Exception(__('Veuillez sélectionner le pack acheter chez Oklyn', __FILE__));
         }
 
-        if ($this->getConfiguration('auxiliaire') === '') {
+        if ($this->getConfiguration('auxiliaire') == '') {
             throw new Exception(__('Veuillez sélectionner si vous utiliser un auxilaire ou pas', __FILE__));
         }
     }
@@ -157,7 +157,7 @@ class oklyn extends eqLogic {
         $datewater->save();
 
         $confpackoklyn = $this->getConfiguration('packoklyn');
-        if ($confpackoklyn === 'phseul' || $confpackoklyn === 'phredox'){
+        if ($confpackoklyn == 'phseul' || $confpackoklyn == 'phredox'){
             $ph = $this->getCmd(null, 'ph');
             if (!is_object($ph)) {
                 $ph = new oklynCmd();
@@ -192,7 +192,7 @@ class oklyn extends eqLogic {
             $phdate->setSubType('string');
             $phdate->save();
 
-            if ($confpackoklyn === 'phredox'){
+            if ($confpackoklyn == 'phredox'){
                 $orp= $this->getCmd(null, 'orp');
                 if (!is_object($orp)) {
                     $orp = new oklynCmd();
@@ -354,11 +354,11 @@ class oklyn extends eqLogic {
 
         // Sondes PH et ORP
         $confpackoklyn = $this->getConfiguration('packoklyn');
-        if ($confpackoklyn === 'aucun'){
+        if ($confpackoklyn == 'aucun'){
             $replace['#phseul#'] = 'phaucun';
             $replace['#phredox#'] = 'phredoxaucun';
-        }elseif ($confpackoklyn === 'phseul' || $confpackoklyn === 'phredox'){
-            if ($confpackoklyn !== 'phredox'){
+        }elseif ($confpackoklyn == 'phseul' || $confpackoklyn == 'phredox'){
+            if ($confpackoklyn != 'phredox'){
                 $replace['#phredox#'] = 'phredoxaucun';
             } else {
                 $replace['#phredox#'] = 'phredox';
@@ -422,7 +422,7 @@ class oklynCmd extends cmd {
         $api = new Apioklyn(config::byKey('apicle','oklyn'));
         $eqlogic = $this->getEqLogic();
 
-        if ($this->getLogicalId() === 'pompeoff') {
+        if ($this->getLogicalId() == 'pompeoff') {
             $putpompeoff = $api->putPompe('off');
             $errorapi = json_decode($putpompeoff);
             if ($errorapi->{'error'}){
@@ -432,7 +432,7 @@ class oklynCmd extends cmd {
                 $eqlogic->checkAndUpdateCmd('pompeoff', $putpompeoff);
             }
         }
-        if ($this->getLogicalId() === 'pompeon') {
+        if ($this->getLogicalId() == 'pompeon') {
             $putpompeon = $api->putPompe('on');
             $errorapi = json_decode($putpompeon);
             if ($errorapi->{'error'}){
@@ -442,7 +442,7 @@ class oklynCmd extends cmd {
                 $eqlogic->checkAndUpdateCmd('pompeon', $putpompeon);
             }
         }
-        if ($this->getLogicalId() === 'pompeauto') {
+        if ($this->getLogicalId() == 'pompeauto') {
             $putpompeauto = $api->putPompe('auto');
             $errorapi = json_decode($putpompeauto);
             if ($errorapi->{'error'}){
@@ -452,7 +452,7 @@ class oklynCmd extends cmd {
                 $eqlogic->checkAndUpdateCmd('pompeauto', $putpompeauto);
             }
         }
-        if ($this->getLogicalId() === 'auxoff') {
+        if ($this->getLogicalId() == 'auxoff') {
             $putauxoff = $api->putAux('off');
             $errorapi = json_decode($putauxoff);
             if ($errorapi->{'error'}){
@@ -462,7 +462,7 @@ class oklynCmd extends cmd {
                 $eqlogic->checkAndUpdateCmd('auxoff', $putauxoff);
             }
         }
-        if ($this->getLogicalId() === 'auxon') {
+        if ($this->getLogicalId() == 'auxon') {
             $putauxon = $api->putAux('on');
             $errorapi = json_decode($putauxon);
             if ($errorapi->{'error'}){
