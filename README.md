@@ -1,6 +1,6 @@
 ![icon du site oklyn](https://cdn.oklyn.fr/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2018/08/LogoWeb-FR-80.jpg.webp)
 
-Il y a aucune affiliation avec l'entreprise Oklyn.
+Il n'y a aucune affiliation avec l'entreprise Oklyn.
 J'utilise leur **API** sur le lien suivant : https://help.oklyn.fr/category/api/
 
 # jeedom-plugin-oklyn

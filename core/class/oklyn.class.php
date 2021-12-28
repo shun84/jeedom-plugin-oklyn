@@ -23,10 +23,20 @@ require_once __DIR__ . '/../../resources/apioklyn/Apioklyn.php';
 class oklyn extends eqLogic {
     /*     * *************************Attributs****************************** */
     public static $_widgetPossibility = array('custom' => true, 'custom::layout' => false);
+    protected const GENERICOKLYN = [
+        'TEMPERATUREAIR' => 'OKLYN_TEMPERATUREAIR',
+        'TEMPERATUREEAU' => 'OKLYN_TEMPERATUREEAU',
+        'ORP' => 'OKLYN_ORP',
+        'PH' => 'OKLYN_PH',
+        'AUXOFF' => 'OKLYN_AUXOFF',
+        'AUXON' => 'OKLYN_AUXON',
+        'POMPEOFF' => 'OKLYN_POMPEOFF',
+        'POMPEON' => 'OKLYN_POMPEON',
+        'POMPEAUTO' => 'OKLYN_POMPEAUTO'
+    ];
 
     /*     * ***********************Methode static*************************** */
-
-    /*
+    /**
      * Retour API pour lire les mesures des sondes
      * {
      *  "recorded": "2019-04-15T15:15:06+00:00",
@@ -45,6 +55,8 @@ class oklyn extends eqLogic {
      * normal: pas d’alerte en cours
      * warning: alerte en cours sur cette mesure (trop faible ou trop élevée)
      * danger: alerte importante en cours sur cette mesure (vraiment trop faible ou vraiment trop élevé)
+     *
+     * @throws Exception
      */
     public function updateOklyn(){
         $api = new Apioklyn(config::byKey('apicle','oklyn'));
@@ -53,28 +65,24 @@ class oklyn extends eqLogic {
         $phdate = new DateTime($api->getSonde('ph','recorded'));
         $orpdate = new DateTime($api->getSonde('orp','recorded'));
 
-        $changed = false;
-        $changed = $this->checkAndUpdateCmd('air', $api->getSonde('air','value')) || $changed;
-        $changed = $this->checkAndUpdateCmd('dateair', $airdate->format('d/m/Y \à H:i')) || $changed;
-        $changed = $this->checkAndUpdateCmd('water', $api->getSonde('water','value')) || $changed;
-        $changed = $this->checkAndUpdateCmd('datewater', $waterdate->format('d/m/Y \à H:i')) || $changed;
-        $changed = $this->checkAndUpdateCmd('ph', $api->getSonde('ph','value')) || $changed;
-        $changed = $this->checkAndUpdateCmd('phstatus', $api->getSonde('ph','status')) || $changed;
-        $changed = $this->checkAndUpdateCmd('phdate', $phdate->format('d/m/Y \à H:i')) || $changed;
-        $changed = $this->checkAndUpdateCmd('orp', $api->getSonde('orp','value')) || $changed;
-        $changed = $this->checkAndUpdateCmd('orpstatus', $api->getSonde('orp','status')) || $changed;
-        $changed = $this->checkAndUpdateCmd('orpdate', $orpdate->format('d/m/Y \à H:i')) || $changed;
-        $changed = $this->checkAndUpdateCmd('pompe', $api->getPompe('pump')) || $changed;
-        $changed = $this->checkAndUpdateCmd('pompestatus', $api->getPompe('status')) || $changed;
-        $changed = $this->checkAndUpdateCmd('aux', $api->getAux('aux')) || $changed;
-        $changed = $this->checkAndUpdateCmd('auxstatus', $api->getAux('status')) || $changed;
+        $this->checkAndUpdateCmd('air', $api->getSonde('air','value'));
+        $this->checkAndUpdateCmd('dateair', $airdate->format('d/m/Y \à H:i'));
+        $this->checkAndUpdateCmd('water', $api->getSonde('water','value'));
+        $this->checkAndUpdateCmd('datewater', $waterdate->format('d/m/Y \à H:i'));
+        $this->checkAndUpdateCmd('ph', $api->getSonde('ph','value'));
+        $this->checkAndUpdateCmd('phstatus', $api->getSonde('ph','status'));
+        $this->checkAndUpdateCmd('phdate', $phdate->format('d/m/Y \à H:i'));
+        $this->checkAndUpdateCmd('orp', $api->getSonde('orp','value'));
+        $this->checkAndUpdateCmd('orpstatus', $api->getSonde('orp','status'));
+        $this->checkAndUpdateCmd('orpdate', $orpdate->format('d/m/Y \à H:i'));
+        $this->checkAndUpdateCmd('pompe', $api->getPompe('pump'));
+        $this->checkAndUpdateCmd('pompestatus', $api->getPompe('status'));
+        $this->checkAndUpdateCmd('aux', $api->getAux('aux'));
+        $this->checkAndUpdateCmd('auxstatus', $api->getAux('status'));
 
-        if ($changed) {
-            $this->refreshWidget();
-        }
+        $this->refreshWidget();
     }
 
-    //Fonction exécutée automatiquement toutes les 30 minutes par Jeedom
     public static function cron30() {
         foreach (oklyn::byType('oklyn') as $eqLogic) {
             if ($eqLogic->getIsEnable() == 1) {
@@ -83,8 +91,80 @@ class oklyn extends eqLogic {
         }
     }
 
+    public static function pluginGenericTypes(): array
+    {
+        return [
+            self::GENERICOKLYN['TEMPERATUREAIR'] => [
+                'name' => __('Temperature de l\'air',__FILE__),
+                'familyid' => 'oklyn',
+                'family' => __('Plugin Oklyn',__FILE__),
+                'type' => 'Info',
+                'subtype' => ['numeric']
+            ],
+            self::GENERICOKLYN['TEMPERATUREEAU'] => [
+                'name' => __('Temperature de l\'eau',__FILE__),
+                'familyid' => 'oklyn',
+                'family' => __('Plugin Oklyn',__FILE__),
+                'type' => 'Info',
+                'subtype' => ['numeric']
+            ],
+            self::GENERICOKLYN['ORP'] => [
+                'name' => __('ORP',__FILE__),
+                'familyid' => 'oklyn',
+                'family' => __('Plugin Oklyn',__FILE__),
+                'type' => 'Info',
+                'subtype' => ['numeric']
+            ],
+            self::GENERICOKLYN['PH'] => [
+                'name' => __('PH',__FILE__),
+                'familyid' => 'oklyn',
+                'family' => __('Plugin Oklyn',__FILE__),
+                'type' => 'Info',
+                'subtype' => ['numeric']
+            ],
+            self::GENERICOKLYN['AUXOFF'] => [
+                'name' => __('Arrêter l\'auxilaire',__FILE__),
+                'familyid' => 'oklyn',
+                'family' => __('Plugin Oklyn',__FILE__),
+                'type' => 'Action',
+                'subtype' => ['other']
+            ],
+            self::GENERICOKLYN['AUXON'] => [
+                'name' => __('Lancer l\'auxilaire',__FILE__),
+                'familyid' => 'oklyn',
+                'family' => __('Plugin Oklyn',__FILE__),
+                'type' => 'Action',
+                'subtype' => ['other']
+            ],
+            self::GENERICOKLYN['POMPEOFF'] => [
+                'name' => __('Arrêter la pompe',__FILE__),
+                'familyid' => 'oklyn',
+                'family' => __('Plugin Oklyn',__FILE__),
+                'type' => 'Action',
+                'subtype' => ['other']
+            ],
+            self::GENERICOKLYN['POMPEON'] => [
+                'name' => __('Lancer la pompe',__FILE__),
+                'familyid' => 'oklyn',
+                'family' => __('Plugin Oklyn',__FILE__),
+                'type' => 'Action',
+                'subtype' => ['other']
+            ],
+            self::GENERICOKLYN['POMPEAUTO'] => [
+                'name' => __('Mode automatique de la pompe',__FILE__),
+                'familyid' => 'oklyn',
+                'family' => __('Plugin Oklyn',__FILE__),
+                'type' => 'Action',
+                'subtype' => ['other']
+            ]
+        ];
+    }
+
     /*     * *********************Méthodes d'instance************************* */
 
+    /**
+     * @throws Exception
+     */
     public function preInsert(){
         $apikey = config::byKey('apicle','oklyn');
         if ($apikey == '') {
@@ -92,6 +172,9 @@ class oklyn extends eqLogic {
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function preUpdate() {
         if ($this->getConfiguration('packoklyn') == '') {
             throw new Exception(__('Veuillez sélectionner le pack acheter chez Oklyn', __FILE__));
@@ -107,6 +190,9 @@ class oklyn extends eqLogic {
         $this->setDisplay("height","272px");
     }
 
+    /**
+     * @throws Exception
+     */
     public function postSave() {
         $air = $this->getCmd(null, 'air');
         if (!is_object($air)) {
@@ -116,6 +202,7 @@ class oklyn extends eqLogic {
         $air->setName(__('Air', __FILE__));
         $air->setLogicalId('air');
         $air->setEqLogic_id($this->getId());
+        $air->setGeneric_type(self::GENERICOKLYN['TEMPERATUREAIR']);
         $air->setUnite('°C');
         $air->setType('info');
         $air->setSubType('numeric');
@@ -140,6 +227,7 @@ class oklyn extends eqLogic {
         $water->setName(__('Eau', __FILE__));
         $water->setLogicalId('water');
         $water->setEqLogic_id($this->getId());
+        $water->setGeneric_type(self::GENERICOKLYN['TEMPERATUREEAU']);
         $water->setUnite('°C');
         $water->setType('info');
         $water->setSubType('numeric');
@@ -166,6 +254,7 @@ class oklyn extends eqLogic {
             $ph->setName(__('PH', __FILE__));
             $ph->setLogicalId('ph');
             $ph->setEqLogic_id($this->getId());
+            $ph->setGeneric_type(self::GENERICOKLYN['PH'] );
             $ph->setType('info');
             $ph->setSubType('numeric');
             $ph->save();
@@ -201,6 +290,8 @@ class oklyn extends eqLogic {
                 $orp->setName(__('ORP', __FILE__));
                 $orp->setLogicalId('orp');
                 $orp->setEqLogic_id($this->getId());
+                $orp->setGeneric_type(self::GENERICOKLYN['ORP'] );
+                $orp->setUnite('mV');
                 $orp->setType('info');
                 $orp->setSubType('numeric');
                 $orp->save();
@@ -280,6 +371,7 @@ class oklyn extends eqLogic {
         $auxoff->setName(__('Aux OFF', __FILE__));
         $auxoff->setLogicalId('auxoff');
         $auxoff->setEqLogic_id($this->getId());
+        $auxoff->setGeneric_type(self::GENERICOKLYN['AUXOFF']);
         $auxoff->setType('action');
         $auxoff->setSubType('other');
         $auxoff->save();
@@ -291,6 +383,7 @@ class oklyn extends eqLogic {
         $auxon->setName(__('Aux ON', __FILE__));
         $auxon->setLogicalId('auxon');
         $auxon->setEqLogic_id($this->getId());
+        $auxon->setGeneric_type(self::GENERICOKLYN['AUXON']);
         $auxon->setType('action');
         $auxon->setSubType('other');
         $auxon->save();
@@ -302,6 +395,7 @@ class oklyn extends eqLogic {
         $pompeoff->setName(__('Pompe OFF', __FILE__));
         $pompeoff->setLogicalId('pompeoff');
         $pompeoff->setEqLogic_id($this->getId());
+        $pompeoff->setGeneric_type(self::GENERICOKLYN['POMPEOFF']);
         $pompeoff->setType('action');
         $pompeoff->setSubType('other');
         $pompeoff->save();
@@ -313,6 +407,7 @@ class oklyn extends eqLogic {
         $pompeon->setName(__('Pompe ON', __FILE__));
         $pompeon->setLogicalId('pompeon');
         $pompeon->setEqLogic_id($this->getId());
+        $pompeoff->setGeneric_type(self::GENERICOKLYN['POMPEON']);
         $pompeon->setType('action');
         $pompeon->setSubType('other');
         $pompeon->save();
@@ -324,6 +419,7 @@ class oklyn extends eqLogic {
         $pompeauto->setName(__('Pompe AUTO', __FILE__));
         $pompeauto->setLogicalId('pompeauto');
         $pompeauto->setEqLogic_id($this->getId());
+        $pompeoff->setGeneric_type(self::GENERICOKLYN['POMPEAUTO']);
         $pompeauto->setType('action');
         $pompeauto->setSubType('other');
         $pompeauto->save();
@@ -333,6 +429,9 @@ class oklyn extends eqLogic {
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function toHtml($_version = 'dashboard') {
         $replace = $this->preToHtml($_version);
         if (!is_array($replace)) {
@@ -418,6 +517,9 @@ class oklyn extends eqLogic {
 }
 
 class oklynCmd extends cmd {
+    /**
+     * @throws Exception
+     */
     public function execute($_options = array()) {
         $api = new Apioklyn(config::byKey('apicle','oklyn'));
         $eqlogic = $this->getEqLogic();

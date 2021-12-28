@@ -13,29 +13,29 @@
             <div id="#phseul#">PH : #ph#</div>
             <div id="#phredox#">ORP : #orp#</div>
             <div>Pompe : #pompe#</div>
-            <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" title="Stop">
+            <span id="cmd_#pompeoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" title="Stop">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-stop"></i>
                   </a>
             </span>
-            <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" title="Play">
+            <span id="cmd_#pompeon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" title="Play">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-play"></i>
                   </a>
             </span>
-            <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" title="Auto">
+            <span id="cmd_#pompeauto_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" title="Auto">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-sync"></i>
                   </a>
             </span>
             <div id="#confaux#">
                 <div>Auxilaire : #aux#</div>
-                <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" title="Stop">
+                <span id="cmd_#auxoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" title="Stop">
                     <a class="btn btn-sm btn-default action">
                         <i class="fas fa-stop"></i>
                     </a>
                 </span>
-                <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" title="Play">
+                <span id="cmd_#auxon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" title="Play">
                     <a class="btn btn-sm btn-default action">
                         <i class="fas fa-play"></i>
                     </a>
@@ -44,24 +44,20 @@
         </div>
     </div>
     <script>
-        $('.cmd[data-cmd_id=#pompeoff_id#]').on('click', function () {
+        document.getElementById('cmd_#pompeoff_id#').addEventListener('click', function () {
             jeedom.cmd.execute({id: '#pompeoff_id#'});
         });
-        $('.cmd[data-cmd_id=#pompeon_id#]').on('click', function () {
+        document.getElementById('cmd_#pompeon_id#').addEventListener('click', function () {
             jeedom.cmd.execute({id: '#pompeon_id#'});
         });
-        $('.cmd[data-cmd_id=#pompeauto_id#]').on('click', function () {
+        document.getElementById('cmd_#pompeauto_id#').addEventListener('click', function () {
             jeedom.cmd.execute({id: '#pompeauto_id#'});
         });
-        $('.cmd[data-cmd_id=#auxoff_id#]').on('click', function () {
+        document.getElementById('cmd_#auxoff_id#').addEventListener('click', function () {
             jeedom.cmd.execute({id: '#auxoff_id#'});
         });
-        $('.cmd[data-cmd_id=#auxon_id#]').on('click', function () {
+        document.getElementById('cmd_#auxon_id#').addEventListener('click', function () {
             jeedom.cmd.execute({id: '#auxon_id#'});
         });
-
-        $('#aucun').hide();
-        $('#phaucun').hide();
-        $('#phredoxaucun').hide();
     </script>
 </div>

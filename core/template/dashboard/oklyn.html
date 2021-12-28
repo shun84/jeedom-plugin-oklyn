@@ -1,4 +1,12 @@
-<div class="eqLogic eqLogic-widget allowResize allowReorderCmd" style="border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#;width: #width#;height: #height#;#style#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" >
+<div class="eqLogic eqLogic-widget allowResize allowReorderCmd #custom_layout# #eqLogic_class# #class#"
+     data-eqType="#eqType#"
+     data-eqLogic_id="#id#"
+     data-eqLogic_uid="#uid#"
+     data-version="#version#"
+     data-translate-category="#translate_category#"
+     data-category="#category#"
+     data-tags="#tags#"
+     style="width: #width#;height: #height#;#style#">
     <div class="widget-name text-center">
         <span style="font-size: 1.2em;#hideEqLogicName#">
             <a href="#eqLink#">#name_display#
@@ -21,17 +29,17 @@
             <input id="ph" name="ph" type="hidden" value="#ph#">
             <input id="phstatus" name="phstatus" type="hidden" value="#phstatus#">
             <div style="margin-bottom: 5px; font-size: 20px">PH</div>
-            <div class="ph" style="font-size: 35px">#ph#</div>
+            <div id="domph" style="font-size: 35px">#ph#</div>
             <div>#phdate#</div>
-            <div class="phstatus">Status PH : #phstatus#</div>
+            <div id="domphstatus">Status PH : #phstatus#</div>
         </div>
         <div class="col-md-3 center" id="#phredox#">
             <input id="orp" name="orp" type="hidden" value="#orp#">
             <input id="orpstatus" name="orpstatus" type="hidden" value="#orpstatus#">
             <div style="margin-bottom: 5px; font-size: 20px">ORP</div>
-            <div class="orp" style="font-size: 35px">#orp#</div>
+            <div id="domorp" style="font-size: 35px">#orp#</div>
             <div>#orpdate#</div>
-            <div class="orpstatus">Status ORP : #orpstatus#</div>
+            <div id="domorpstatus">Status ORP : #orpstatus#</div>
         </div>
     </div>
     <div class="row" style="margin: 10px 5px 20px 5px">
@@ -39,17 +47,17 @@
             <img class="col-md-4" src="plugins/oklyn/core/template/img/pompe.png" height="64" width="70" alt="Pompe de pisicne"/>
             <div>Pompe : #pompe#</div>
             <div>Status Pompe : #pompestatus#</div>
-            <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" title="Stop">
+            <span id="cmd_#pompeoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" title="Stop">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-stop"></i>
                   </a>
             </span>
-            <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" title="Play">
+            <span id="cmd_#pompeon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" title="Play">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-play"></i>
                   </a>
             </span>
-            <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" title="Auto">
+            <span id="cmd_#pompeauto_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" title="Auto">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-sync"></i>
                   </a>
@@ -59,104 +67,85 @@
             <div id="icon_aux" class="col-md-3">#icon_aux#</div>
             <div id="auxiliaire" data-text="#aux#">Auxilaire : #aux#</div>
             <div>Status Auxilaire : #auxstatus#</div>
-            <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" title="Stop">
+            <span id="cmd_#auxoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" title="Stop">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-stop"></i>
                   </a>
             </span>
-            <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" title="Play">
+            <span id="cmd_#auxon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" title="Play">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-play"></i>
                   </a>
             </span>
         </div>
     </div>
+    #divGraphInfo#
     <script>
-        $('.cmd[data-cmd_id=#pompeoff_id#]').on('click', function () {
+        document.getElementById('cmd_#pompeoff_id#').addEventListener('click', function () {
             jeedom.cmd.execute({id: '#pompeoff_id#'});
         });
-        $('.cmd[data-cmd_id=#pompeon_id#]').on('click', function () {
+        document.getElementById('cmd_#pompeon_id#').addEventListener('click', function () {
             jeedom.cmd.execute({id: '#pompeon_id#'});
         });
-        $('.cmd[data-cmd_id=#pompeauto_id#]').on('click', function () {
+        document.getElementById('cmd_#pompeauto_id#').addEventListener('click', function () {
             jeedom.cmd.execute({id: '#pompeauto_id#'});
         });
-        $('.cmd[data-cmd_id=#auxoff_id#]').on('click', function () {
+        document.getElementById('cmd_#auxoff_id#').addEventListener('click', function () {
             jeedom.cmd.execute({id: '#auxoff_id#'});
         });
-        $('.cmd[data-cmd_id=#auxon_id#]').on('click', function () {
+        document.getElementById('cmd_#auxon_id#').addEventListener('click', function () {
             jeedom.cmd.execute({id: '#auxon_id#'});
         });
 
-        $(document).ready(
-            function (){
-                let domphstatus = $(".phstatus");
-                let domph = $(".ph");
-                let domorpstatus = $(".orpstatus");
-                let domorp = $(".orp");
+        if (parseFloat(document.getElementById("ph").getAttribute("value")) >= 7.00 && parseFloat(document.getElementById("ph").getAttribute("value")) <= 7.80){
+            document.getElementById("domph").style.color = "green";
+        }else if ((parseFloat(document.getElementById("ph").getAttribute("value")) >= 6.80 && parseFloat(document.getElementById("ph").getAttribute("value")) < 7.00)
+            || (parseFloat(document.getElementById("ph").getAttribute("value")) > 7.80 && parseFloat(document.getElementById("ph").getAttribute("value")) <= 8.00)){
+            document.getElementById("domph").style.color = "yellow";
+        }else if (parseFloat(document.getElementById("ph").getAttribute("value")) < 6.80 || parseFloat(document.getElementById("ph").getAttribute("value")) > 8.0){
+            document.getElementById("domph").style.color = "red";
+        }
 
-                let ph = parseFloat(document.getElementById("ph").getAttribute("value"));
-                let orp = parseInt(document.getElementById("orp").getAttribute("value"));
-                let phstatus = document.getElementById("phstatus").getAttribute("value");
-                let orpstatus = document.getElementById("orpstatus").getAttribute("value");
-                let aux = document.getElementsByClassName("#confaux#")[0].id;
-                let auxetat = document.getElementById("auxiliaire").getAttribute("data-text");
+        if (parseInt(document.getElementById("orp").getAttribute("value")) >= 650 && parseInt(document.getElementById("orp").getAttribute("value")) <= 750){
+            document.getElementById("domorp").style.color = "green";
+        }else if ((parseInt(document.getElementById("orp").getAttribute("value")) >= 500 && parseInt(document.getElementById("orp").getAttribute("value")) < 650) || (parseInt(document.getElementById("orp").getAttribute("value")) > 750 && parseInt(document.getElementById("orp").getAttribute("value")) <= 800)){
+            document.getElementById("domorp").style.color = "yellow";
+        }else if (parseInt(document.getElementById("orp").getAttribute("value")) < 500 || parseInt(document.getElementById("orp").getAttribute("value")) > 800){
+            document.getElementById("domorp").style.color = "red";
+        }
 
+        switch (document.getElementById("phstatus").getAttribute("value")){
+            case 'normal' :
+                document.getElementById("domphstatus").style.color = "green";
+                break;
+            case 'warning' :
+                document.getElementById("domphstatus").style.color = "yellow";
+                break;
+            case 'danger' :
+                document.getElementById("domphstatus").style.color = "red";
+                break;
+            default :
+                console.log('Correspond à aucun soucis status : '+document.getElementById("phstatus").getAttribute("value"));
+        }
 
-                $('#aucun').hide();
-                $('#phaucun').hide();
-                $('#phredoxaucun').hide();
+        switch (document.getElementById("orpstatus").getAttribute("value")){
+            case 'normal' :
+                document.getElementById("domorpstatus").style.color = "green";
+                break;
+            case 'warning' :
+                document.getElementById("domorpstatus").style.color = "yellow";
+                break;
+            case 'danger' :
+                document.getElementById("domorpstatus").style.color = "red";
+                break;
+            default :
+                console.log('Correspond à aucun soucis status : '+document.getElementById("orpstatus").getAttribute("value"));
+        }
 
-                if (ph >= 7.00 && ph <= 7.80){
-                    domph.css("color", "green");
-                }else if ((ph >= 6.80 && ph < 7.00) || (ph > 7.80 && ph <= 8.00)){
-                    domph.css("color", "yellow");
-                }else if (ph < 6.80 || ph > 8.0){
-                    domph.css("color", "red");
-                }
-
-                if (orp >= 650 && orp <= 750){
-                    domorp.css("color", "green");
-                }else if ((orp >= 500 && orp < 650) || (orp > 750 && orp <= 800)){
-                    domorp.css("color", "yellow");
-                }else if (orp < 500 || orp > 800){
-                    domorp.css("color", "red");
-                }
-
-                switch (phstatus){
-                    case 'normal' :
-                        domphstatus.css("color", "green");
-                        break;
-                    case 'warning' :
-                        domphstatus.css("color", "yellow");
-                        break;
-                    case 'danger' :
-                        domphstatus.css("color", "red");
-                        break;
-                    default :
-                        console.log('Correspond à aucun soucis status : '+phstatus);
-                }
-
-                switch (orpstatus){
-                    case 'normal' :
-                        domorpstatus.css("color", "green");
-                        break;
-                    case 'warning' :
-                        domorpstatus.css("color", "yellow");
-                        break;
-                    case 'danger' :
-                        domorpstatus.css("color", "red");
-                        break;
-                    default :
-                        console.log('Correspond à aucun soucis status : '+orpstatus);
-                }
-
-                if (auxetat === 'on' && aux === 'lumiere'){
-                    document.getElementById("icon_aux").style.color = "yellow";
-                }else if(auxetat === 'on' && aux === 'chauffage'){
-                    document.getElementById("icon_aux").style.color = "red";
-                }
-            }
-        );
+        if (document.getElementById("auxiliaire").getAttribute("data-text") === 'on' && document.getElementsByClassName("#confaux#")[0].id === 'lumiere'){
+            document.getElementById("icon_aux").style.color = "yellow";
+        }else if(document.getElementById("auxiliaire").getAttribute("data-text") === 'on' && document.getElementsByClassName("#confaux#")[0].id === 'chauffage'){
+            document.getElementById("icon_aux").style.color = "red";
+        }
     </script>
 </div>
