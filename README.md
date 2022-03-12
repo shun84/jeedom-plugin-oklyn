@@ -7,7 +7,7 @@ J'utilise leur **API** sur le lien suivant : https://help.oklyn.fr/category/api/
 
 Plugin qui permet de gerer votre piscine avec la solution Oklyn avec Jeedom systeme de domotique.
 
-# installation
+# Installation
 Installation depuis Github :
 
 > cd /var/www/html/plugins  # ou autre suivant l'installation de votre Jeedom

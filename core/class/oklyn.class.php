@@ -21,7 +21,7 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 require_once __DIR__ . '/../../resources/apioklyn/Apioklyn.php';
 
 class oklyn extends eqLogic {
-    /*     * *************************Attributs****************************** */
+    /* *************************Attributs****************************** */
     public static $_widgetPossibility = array('custom' => true, 'custom::layout' => false);
     protected const GENERICOKLYN = [
         'TEMPERATUREAIR' => 'OKLYN_TEMPERATUREAIR',
@@ -35,54 +35,7 @@ class oklyn extends eqLogic {
         'POMPEAUTO' => 'OKLYN_POMPEAUTO'
     ];
 
-    /*     * ***********************Methode static*************************** */
-    /**
-     * Retour API pour lire les mesures des sondes
-     * {
-     *  "recorded": "2019-04-15T15:15:06+00:00",
-     *  "value": 14.7,
-     *  "status": null,
-     *  "value_raw": null
-     * }
-     * recorded correspond à la date d’enregistrement des mesures.
-     *
-     * value correspond à la valeur exploitable de la mesure. Pour les mesures de RedOx et de pH, value correspond à une moyenne pondérée sur les mesures des 18 dernières heures.
-     *
-     * value_raw correspond à la valeur brute de la mesure, telle que transmise par la sonde.
-     *
-     * status indique s’il y a une alerte en cours sur cette mesure. Il peut prendre comme valeur:
-     * null: non applicable
-     * normal: pas d’alerte en cours
-     * warning: alerte en cours sur cette mesure (trop faible ou trop élevée)
-     * danger: alerte importante en cours sur cette mesure (vraiment trop faible ou vraiment trop élevé)
-     *
-     * @throws Exception
-     */
-    public function updateOklyn(){
-        $api = new Apioklyn(config::byKey('apicle','oklyn'));
-        $airdate = new DateTime($api->getSonde('air','recorded'));
-        $waterdate = new DateTime($api->getSonde('water','recorded'));
-        $phdate = new DateTime($api->getSonde('ph','recorded'));
-        $orpdate = new DateTime($api->getSonde('orp','recorded'));
-
-        $this->checkAndUpdateCmd('air', $api->getSonde('air','value'));
-        $this->checkAndUpdateCmd('dateair', $airdate->format('d/m/Y \à H:i'));
-        $this->checkAndUpdateCmd('water', $api->getSonde('water','value'));
-        $this->checkAndUpdateCmd('datewater', $waterdate->format('d/m/Y \à H:i'));
-        $this->checkAndUpdateCmd('ph', $api->getSonde('ph','value'));
-        $this->checkAndUpdateCmd('phstatus', $api->getSonde('ph','status'));
-        $this->checkAndUpdateCmd('phdate', $phdate->format('d/m/Y \à H:i'));
-        $this->checkAndUpdateCmd('orp', $api->getSonde('orp','value'));
-        $this->checkAndUpdateCmd('orpstatus', $api->getSonde('orp','status'));
-        $this->checkAndUpdateCmd('orpdate', $orpdate->format('d/m/Y \à H:i'));
-        $this->checkAndUpdateCmd('pompe', $api->getPompe('pump'));
-        $this->checkAndUpdateCmd('pompestatus', $api->getPompe('status'));
-        $this->checkAndUpdateCmd('aux', $api->getAux('aux'));
-        $this->checkAndUpdateCmd('auxstatus', $api->getAux('status'));
-
-        $this->refreshWidget();
-    }
-
+    /* ***********************Methode static*************************** */
     public static function cron30() {
         foreach (oklyn::byType('oklyn') as $eqLogic) {
             if ($eqLogic->getIsEnable() == 1) {
@@ -160,7 +113,35 @@ class oklyn extends eqLogic {
         ];
     }
 
-    /*     * *********************Méthodes d'instance************************* */
+    /* *********************Méthodes d'instance************************* */
+
+    /**
+     * @throws Exception
+     */
+    public function updateOklyn(){
+        $api = new Apioklyn(config::byKey('apicle','oklyn'));
+        $airdate = new DateTime($api->getSonde('air','recorded'));
+        $waterdate = new DateTime($api->getSonde('water','recorded'));
+        $phdate = new DateTime($api->getSonde('ph','recorded'));
+        $orpdate = new DateTime($api->getSonde('orp','recorded'));
+
+        $this->checkAndUpdateCmd('air', $api->getSonde('air','value'));
+        $this->checkAndUpdateCmd('dateair', $airdate->format('d/m/Y \à H:i'));
+        $this->checkAndUpdateCmd('water', $api->getSonde('water','value'));
+        $this->checkAndUpdateCmd('datewater', $waterdate->format('d/m/Y \à H:i'));
+        $this->checkAndUpdateCmd('ph', $api->getSonde('ph','value'));
+        $this->checkAndUpdateCmd('phstatus', $api->getSonde('ph','status'));
+        $this->checkAndUpdateCmd('phdate', $phdate->format('d/m/Y \à H:i'));
+        $this->checkAndUpdateCmd('orp', $api->getSonde('orp','value'));
+        $this->checkAndUpdateCmd('orpstatus', $api->getSonde('orp','status'));
+        $this->checkAndUpdateCmd('orpdate', $orpdate->format('d/m/Y \à H:i'));
+        $this->checkAndUpdateCmd('pompe', $api->getPompe('pump'));
+        $this->checkAndUpdateCmd('pompestatus', $api->getPompe('status'));
+        $this->checkAndUpdateCmd('aux', $api->getAux('aux'));
+        $this->checkAndUpdateCmd('auxstatus', $api->getAux('status'));
+
+        $this->refreshWidget();
+    }
 
     /**
      * @throws Exception
@@ -407,7 +388,7 @@ class oklyn extends eqLogic {
         $pompeon->setName(__('Pompe ON', __FILE__));
         $pompeon->setLogicalId('pompeon');
         $pompeon->setEqLogic_id($this->getId());
-        $pompeoff->setGeneric_type(self::GENERICOKLYN['POMPEON']);
+        $pompeon->setGeneric_type(self::GENERICOKLYN['POMPEON']);
         $pompeon->setType('action');
         $pompeon->setSubType('other');
         $pompeon->save();
@@ -419,7 +400,7 @@ class oklyn extends eqLogic {
         $pompeauto->setName(__('Pompe AUTO', __FILE__));
         $pompeauto->setLogicalId('pompeauto');
         $pompeauto->setEqLogic_id($this->getId());
-        $pompeoff->setGeneric_type(self::GENERICOKLYN['POMPEAUTO']);
+        $pompeauto->setGeneric_type(self::GENERICOKLYN['POMPEAUTO']);
         $pompeauto->setType('action');
         $pompeauto->setSubType('other');
         $pompeauto->save();

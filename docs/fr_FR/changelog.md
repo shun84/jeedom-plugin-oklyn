@@ -1,7 +1,13 @@
-# Mise à jour du 28 décembre 2021
+# Changelog plugin Oklyn
+
+>**IMPORTANT**
+>
+>Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
+
+# 28/12/2021
 - Mise en place du graphe pour la 4.2 sur la tuile
 - Optimisation du code JS en Vanilla
 - Mise en place des generics pour la 4.2
 
-# Version 1.0 du 18 juin 2021
+# 18/06/2021
 - Mise en place du plugin
