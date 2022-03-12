@@ -18,7 +18,7 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
-require_once __DIR__ . '/../../resources/apioklyn/Apioklyn.php';
+require_once __DIR__ . '/../../core/api/oklynApi.php';
 
 class oklyn extends eqLogic {
     /* *************************Attributs****************************** */
@@ -119,7 +119,7 @@ class oklyn extends eqLogic {
      * @throws Exception
      */
     public function updateOklyn(){
-        $api = new Apioklyn(config::byKey('apicle','oklyn'));
+        $api = new oklynApi(config::byKey('apicle','oklyn'));
         $airdate = new DateTime($api->getSonde('air','recorded'));
         $waterdate = new DateTime($api->getSonde('water','recorded'));
         $phdate = new DateTime($api->getSonde('ph','recorded'));
@@ -502,8 +502,7 @@ class oklynCmd extends cmd {
      * @throws Exception
      */
     public function execute($_options = array()) {
-        $api = new Apioklyn(config::byKey('apicle','oklyn'));
-        $eqlogic = $this->getEqLogic();
+        $api = new oklynApi(config::byKey('apicle','oklyn'));
 
         if ($this->getLogicalId() == 'pompeoff') {
             $putpompeoff = $api->putPompe('off');
@@ -512,7 +511,7 @@ class oklynCmd extends cmd {
                 throw new Exception(__('L\'arret de la pompe n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
             }else{
                 log::add('oklyn','debug','Lancement de l\'action pompe Off');
-                $eqlogic->checkAndUpdateCmd('pompeoff', $putpompeoff);
+                $this->getEqLogic()->checkAndUpdateCmd('pompeoff', $putpompeoff);
             }
         }
         if ($this->getLogicalId() == 'pompeon') {
@@ -522,7 +521,7 @@ class oklynCmd extends cmd {
                 throw new Exception(__('Le lancement de la pompe n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
             }else{
                 log::add('oklyn','debug','Lancement de l\'action pompe On');
-                $eqlogic->checkAndUpdateCmd('pompeon', $putpompeon);
+                $this->getEqLogic()->checkAndUpdateCmd('pompeon', $putpompeon);
             }
         }
         if ($this->getLogicalId() == 'pompeauto') {
@@ -532,7 +531,7 @@ class oklynCmd extends cmd {
                 throw new Exception(__('L\'automatisation de la pompe n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
             }else{
                 log::add('oklyn','debug','Lancement de l\'action pompe Auto');
-                $eqlogic->checkAndUpdateCmd('pompeauto', $putpompeauto);
+                $this->getEqLogic()->checkAndUpdateCmd('pompeauto', $putpompeauto);
             }
         }
         if ($this->getLogicalId() == 'auxoff') {
@@ -542,7 +541,7 @@ class oklynCmd extends cmd {
                 throw new Exception(__('L\'arret de l\'auxilaire n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
             }else{
                 log::add('oklyn','debug','Lancement de l\'action auxilaire Off');
-                $eqlogic->checkAndUpdateCmd('auxoff', $putauxoff);
+                $this->getEqLogic()->checkAndUpdateCmd('auxoff', $putauxoff);
             }
         }
         if ($this->getLogicalId() == 'auxon') {
@@ -552,10 +551,10 @@ class oklynCmd extends cmd {
                 throw new Exception(__('Le lancement de l\'auxilaire n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
             }else{
                 log::add('oklyn','debug','Lancement de l\'action auxilaire On');
-                $eqlogic->checkAndUpdateCmd('auxon', $putauxon);
+                $this->getEqLogic()->checkAndUpdateCmd('auxon', $putauxon);
             }
         }
-        $eqlogic->updateOklyn();
+        $this->getEqLogic()->updateOklyn();
     }
 }
 

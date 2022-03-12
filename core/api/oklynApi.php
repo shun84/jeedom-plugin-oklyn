@@ -1,7 +1,7 @@
 <?php
 
 
-class Apioklyn
+class oklynApi
 {
     private $_apiToken;
 
