@@ -34,15 +34,15 @@ class oklynApi
     public function getPompe(string $value){
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
+        curl_setopt_array($curl, [
             CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/pump",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER => [
                 "X-API-TOKEN: ". $this->getApiToken(),
                 "Content-Type: application/json"
-            ),
-        ));
+            ]
+        ]);
 
         $response = json_decode(curl_exec($curl), true);
         curl_close($curl);
@@ -57,19 +57,19 @@ class oklynApi
      * pump peut prendre comme valeur « on », « off », et « auto »
      */
     public function putPompe(string $value){
-        $data = array("pump" => $value);
+        $data = ["pump" => $value];
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
+        curl_setopt_array($curl, [
             CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/pump",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "PUT",
             CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER => [
                 "X-API-TOKEN: ". $this->getApiToken(),
                 "Content-Type: application/json"
-            ),
-        ));
+            ]
+        ]);
 
         $response = curl_exec($curl);
 
@@ -86,15 +86,15 @@ class oklynApi
     public function getSonde(string $sonde, string $value) {
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
+        curl_setopt_array($curl, [
             CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/data/".$sonde,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER => [
                 "X-API-TOKEN: ". $this->getApiToken(),
                 "Content-Type: application/json"
-            ),
-        ));
+            ]
+        ]);
 
         $response = json_decode(curl_exec($curl), true);
 
@@ -108,18 +108,18 @@ class oklynApi
      * URL: https://api.oklyn.fr/public/v1/device/{deviceId}/aux
      * {deviceId} est à remplacer par le numéro unique d’association ou par le mot clef my.
      */
-    public function getAux(string $value){
+    public function getAux(string $aux, string $value){
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/aux",
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/".$aux,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER => [
                 "X-API-TOKEN: ". $this->getApiToken(),
                 "Content-Type: application/json"
-            ),
-        ));
+            ]
+        ]);
 
         $response = json_decode(curl_exec($curl), true);
         curl_close($curl);
@@ -133,20 +133,20 @@ class oklynApi
      * {deviceId} est à remplacer par le numéro unique d’association ou par le mot clef my.
      * pump peut prendre comme valeur « on », « off »
      */
-    public function putAux(string $value){
-        $data = array("aux" => $value);
+    public function putAux(string $aux, string $value){
+        $data = ["aux" => $value];
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/aux",
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://api.oklyn.fr/public/v1/device/my/".$aux,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "PUT",
             CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER => [
                 "X-API-TOKEN: ". $this->getApiToken(),
                 "Content-Type: application/json"
-            ),
-        ));
+            ]
+        ]);
 
         $response = curl_exec($curl);
 

@@ -15,17 +15,17 @@
         </span>
     </div>
     <div class="row" style="margin: 10px 5px 20px 5px">
-        <div class="col-md-3 center">
+        <div class="sonde">
             <div style="margin-bottom: 5px; font-size: 20px">AIR</div>
             <div style="font-size: 35px">#temperature#°</div>
             <div>#datetemperature#</div>
         </div>
-        <div class="col-md-3 center">
+        <div class="sonde">
             <div style="margin-bottom: 5px; font-size: 20px">EAU</div>
             <div style="font-size: 35px">#eau#°</div>
             <div>#dateeau#</div>
         </div>
-        <div class="col-md-3 center" id="#phseul#">
+        <div class="sonde" id="#phseul#">
             <input id="ph" name="ph" type="hidden" value="#ph#">
             <input id="phstatus" name="phstatus" type="hidden" value="#phstatus#">
             <div style="margin-bottom: 5px; font-size: 20px">PH</div>
@@ -33,7 +33,7 @@
             <div>#phdate#</div>
             <div id="domphstatus">Status PH : #phstatus#</div>
         </div>
-        <div class="col-md-3 center" id="#phredox#">
+        <div class="sonde" id="#phredox#">
             <input id="orp" name="orp" type="hidden" value="#orp#">
             <input id="orpstatus" name="orpstatus" type="hidden" value="#orpstatus#">
             <div style="margin-bottom: 5px; font-size: 20px">ORP</div>
@@ -41,38 +41,61 @@
             <div>#orpdate#</div>
             <div id="domorpstatus">Status ORP : #orpstatus#</div>
         </div>
+        <div class="sonde" id="#phredoxsalt#">
+            <input id="salt" name="salt" type="hidden" value="#salt#">
+            <input id="saltstatus" name="saltstatus" type="hidden" value="#saltstatus#">
+            <div style="margin-bottom: 5px; font-size: 20px">SEL</div>
+            <div id="domsalt" style="font-size: 35px">#salt#</div>
+            <div>#saltdate#</div>
+            <div id="domsaltstatus">Status SEL : #saltstatus#</div>
+        </div>
     </div>
     <div class="row" style="margin: 10px 5px 20px 5px">
-        <div class="col-md-6">
-            <img class="col-md-4" src="plugins/oklyn/core/template/img/pompe.png" height="64" width="70" alt="Pompe de pisicne"/>
+        <div style="width: 220px;float: left">
+            <img class="col-md-5" src="plugins/oklyn/core/template/img/pompe.png" height="64" width="70" alt="Pompe de pisicne"/>
             <div>Pompe : #pompe#</div>
             <div>Status Pompe : #pompestatus#</div>
-            <span id="cmd_#pompeoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" title="Stop">
+            <span id="cmd_#pompeoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-stop"></i>
                   </a>
             </span>
-            <span id="cmd_#pompeon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" title="Play">
+            <span id="cmd_#pompeon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-play"></i>
                   </a>
             </span>
-            <span id="cmd_#pompeauto_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" title="Auto">
+            <span id="cmd_#pompeauto_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Auto">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-sync"></i>
                   </a>
             </span>
         </div>
-        <div class="col-md-6 #confaux#" id="#confaux#">
-            <div id="icon_aux" class="col-md-3">#icon_aux#</div>
+        <div style="width: 220px;float: left" class="#confaux#" id="#confaux#">
+            <div id="icon_aux" class="col-md-4">#icon_aux#</div>
             <div id="auxiliaire" data-text="#aux#">Auxilaire : #aux#</div>
             <div>Status Auxilaire : #auxstatus#</div>
-            <span id="cmd_#auxoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" title="Stop">
+            <span id="cmd_#auxoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-stop"></i>
                   </a>
             </span>
-            <span id="cmd_#auxon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" title="Play">
+            <span id="cmd_#auxon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
+                  <a class="btn btn-sm btn-default action">
+                      <i class="fas fa-play"></i>
+                  </a>
+            </span>
+        </div>
+        <div style="width: 220px;float: left" class="#confauxsecond#" id="#confauxsecond#">
+            <div id="icon_aux_second" class="col-md-4">#icon_aux_second#</div>
+            <div id="auxiliairesecond" data-text="#auxsecond#">Auxilaire 2 : #auxsecond#</div>
+            <div>Status Auxilaire 2 : #auxsecondstatus#</div>
+            <span id="cmd_#auxsecondoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
+                  <a class="btn btn-sm btn-default action">
+                      <i class="fas fa-stop"></i>
+                  </a>
+            </span>
+            <span id="cmd_#auxsecondon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-play"></i>
                   </a>
@@ -81,22 +104,6 @@
     </div>
     #divGraphInfo#
     <script>
-        document.getElementById('cmd_#pompeoff_id#').addEventListener('click', function () {
-            jeedom.cmd.execute({id: '#pompeoff_id#'});
-        });
-        document.getElementById('cmd_#pompeon_id#').addEventListener('click', function () {
-            jeedom.cmd.execute({id: '#pompeon_id#'});
-        });
-        document.getElementById('cmd_#pompeauto_id#').addEventListener('click', function () {
-            jeedom.cmd.execute({id: '#pompeauto_id#'});
-        });
-        document.getElementById('cmd_#auxoff_id#').addEventListener('click', function () {
-            jeedom.cmd.execute({id: '#auxoff_id#'});
-        });
-        document.getElementById('cmd_#auxon_id#').addEventListener('click', function () {
-            jeedom.cmd.execute({id: '#auxon_id#'});
-        });
-
         if (parseFloat(document.getElementById("ph").getAttribute("value")) >= 7.00 && parseFloat(document.getElementById("ph").getAttribute("value")) <= 7.80){
             document.getElementById("domph").style.color = "green";
         }else if ((parseFloat(document.getElementById("ph").getAttribute("value")) >= 6.80 && parseFloat(document.getElementById("ph").getAttribute("value")) < 7.00)
@@ -108,10 +115,20 @@
 
         if (parseInt(document.getElementById("orp").getAttribute("value")) >= 650 && parseInt(document.getElementById("orp").getAttribute("value")) <= 750){
             document.getElementById("domorp").style.color = "green";
-        }else if ((parseInt(document.getElementById("orp").getAttribute("value")) >= 500 && parseInt(document.getElementById("orp").getAttribute("value")) < 650) || (parseInt(document.getElementById("orp").getAttribute("value")) > 750 && parseInt(document.getElementById("orp").getAttribute("value")) <= 800)){
+        }else if ((parseInt(document.getElementById("orp").getAttribute("value")) >= 500 && parseInt(document.getElementById("orp").getAttribute("value")) < 650)
+            || (parseInt(document.getElementById("orp").getAttribute("value")) > 750 && parseInt(document.getElementById("orp").getAttribute("value")) <= 800)){
             document.getElementById("domorp").style.color = "yellow";
         }else if (parseInt(document.getElementById("orp").getAttribute("value")) < 500 || parseInt(document.getElementById("orp").getAttribute("value")) > 800){
             document.getElementById("domorp").style.color = "red";
+        }
+
+        if (parseFloat(document.getElementById("salt").getAttribute("value")) >= 4.00 && parseFloat(document.getElementById("salt").getAttribute("value")) <= 6.00){
+            document.getElementById("domsalt").style.color = "green";
+        }else if ((parseFloat(document.getElementById("salt").getAttribute("value")) >= 3.00 && parseFloat(document.getElementById("salt").getAttribute("value")) < 4.00)
+            || (parseFloat(document.getElementById("salt").getAttribute("value")) > 6.00 && parseFloat(document.getElementById("salt").getAttribute("value")) <= 7.00)){
+            document.getElementById("domsalt").style.color = "yellow";
+        }else if (parseFloat(document.getElementById("salt").getAttribute("value")) < 3.00 || parseFloat(document.getElementById("salt").getAttribute("value")) > 7.0){
+            document.getElementById("domsalt").style.color = "red";
         }
 
         switch (document.getElementById("phstatus").getAttribute("value")){
@@ -142,10 +159,48 @@
                 console.log('Correspond à aucun soucis status : '+document.getElementById("orpstatus").getAttribute("value"));
         }
 
-        if (document.getElementById("auxiliaire").getAttribute("data-text") === 'on' && document.getElementsByClassName("#confaux#")[0].id === 'lumiere'){
+        switch (document.getElementById("saltstatus").getAttribute("value")){
+            case 'normal' :
+                document.getElementById("domsaltstatus").style.color = "green";
+                break;
+            case 'warning' :
+                document.getElementById("domsaltstatus").style.color = "yellow";
+                break;
+            case 'danger' :
+                document.getElementById("domsaltstatus").style.color = "red";
+                break;
+            default :
+                console.log('Correspond à aucun soucis status : '+document.getElementById("saltstatus").getAttribute("value"));
+        }
+
+        if ((document.getElementById("auxiliaire").getAttribute("data-text") === 'on' && document.getElementsByClassName("#confaux#")[0].id === 'lumiere')
+            || (document.getElementById("auxiliaire").getAttribute("data-text") === 'on' && document.getElementsByClassName("#confaux#")[0].id === 'autre')){
             document.getElementById("icon_aux").style.color = "yellow";
         }else if(document.getElementById("auxiliaire").getAttribute("data-text") === 'on' && document.getElementsByClassName("#confaux#")[0].id === 'chauffage'){
             document.getElementById("icon_aux").style.color = "red";
         }
+
+        if ((document.getElementById("auxiliairesecond").getAttribute("data-text") === 'on' && document.getElementsByClassName("#confauxsecond#")[0].id === 'lumiere')
+            || (document.getElementById("auxiliairesecond").getAttribute("data-text") === 'on' && document.getElementsByClassName("#confauxsecond#")[0].id === 'autre')){
+            document.getElementById("icon_aux_second").style.color = "yellow";
+        }else if(document.getElementById("auxiliairesecond").getAttribute("data-text") === 'on' && document.getElementsByClassName("#confauxsecond#")[0].id === 'chauffage'){
+            document.getElementById("icon_aux_second").style.color = "red";
+        }
+
     </script>
+    <style>
+        .sonde
+        {
+            width: 130px;
+            float: left;
+            text-align: center;
+        }
+
+        #phredoxsaltaucun,
+        #phredoxaucun,
+        #phaucun,
+        #aucun{
+            display: none;
+        }
+    </style>
 </div>

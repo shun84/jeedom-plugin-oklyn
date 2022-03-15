@@ -12,30 +12,44 @@
             <div>Water : #eau# °C</div>
             <div id="#phseul#">PH : #ph#</div>
             <div id="#phredox#">ORP : #orp#</div>
+            <div id="#phredoxsalt#">SEL : #salt#</div>
             <div>Pompe : #pompe#</div>
-            <span id="cmd_#pompeoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" title="Stop">
+            <span id="cmd_#pompeoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-stop"></i>
                   </a>
             </span>
-            <span id="cmd_#pompeon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" title="Play">
+            <span id="cmd_#pompeon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-play"></i>
                   </a>
             </span>
-            <span id="cmd_#pompeauto_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" title="Auto">
+            <span id="cmd_#pompeauto_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Auto">
                   <a class="btn btn-sm btn-default action">
                       <i class="fas fa-sync"></i>
                   </a>
             </span>
             <div id="#confaux#">
                 <div>Auxilaire : #aux#</div>
-                <span id="cmd_#auxoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" title="Stop">
+                <span id="cmd_#auxoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
                     <a class="btn btn-sm btn-default action">
                         <i class="fas fa-stop"></i>
                     </a>
                 </span>
-                <span id="cmd_#auxon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" title="Play">
+                <span id="cmd_#auxon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
+                    <a class="btn btn-sm btn-default action">
+                        <i class="fas fa-play"></i>
+                    </a>
+                </span>
+            </div>
+            <div id="#confauxsecond#">
+                <div>Auxilaire 2 : #aux#</div>
+                <span id="cmd_#auxsecondoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
+                    <a class="btn btn-sm btn-default action">
+                        <i class="fas fa-stop"></i>
+                    </a>
+                </span>
+                <span id="cmd_#auxsecondon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
                     <a class="btn btn-sm btn-default action">
                         <i class="fas fa-play"></i>
                     </a>
@@ -43,21 +57,4 @@
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById('cmd_#pompeoff_id#').addEventListener('click', function () {
-            jeedom.cmd.execute({id: '#pompeoff_id#'});
-        });
-        document.getElementById('cmd_#pompeon_id#').addEventListener('click', function () {
-            jeedom.cmd.execute({id: '#pompeon_id#'});
-        });
-        document.getElementById('cmd_#pompeauto_id#').addEventListener('click', function () {
-            jeedom.cmd.execute({id: '#pompeauto_id#'});
-        });
-        document.getElementById('cmd_#auxoff_id#').addEventListener('click', function () {
-            jeedom.cmd.execute({id: '#auxoff_id#'});
-        });
-        document.getElementById('cmd_#auxon_id#').addEventListener('click', function () {
-            jeedom.cmd.execute({id: '#auxon_id#'});
-        });
-    </script>
 </div>

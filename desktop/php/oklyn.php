@@ -112,6 +112,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     <option value="aucun">Aucun (Oklyn Filtration)</option>
                                     <option value="phseul">Ph seul (Oklyn Filtration + PH seul)</option>
                                     <option value="phredox">Ph + Redox (Oklyn Filtration + Analyse)</option>
+                                    <option value="phredoxsalt">Ph + Redox + sel (Oklyn Filtration + Analyse + Sel)</option>
                                 </select>
                             </div>
                         </div>
@@ -123,6 +124,19 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     <option value="aucun">Aucun</option>
                                     <option value="lumiere">Lumière</option>
                                     <option value="chauffage">Chauffage</option>
+                                    <option value="autre">Autre</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="auxiliairesecond">{{Auxilaire 2}}</label>
+                            <div class="col-sm-3" style="width: auto">
+                                <select id="auxiliairesecond" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="auxiliairesecond">
+                                    <option></option>
+                                    <option value="aucun">Aucun</option>
+                                    <option value="lumiere">Lumière</option>
+                                    <option value="chauffage">Chauffage</option>
+                                    <option value="autre">Autre</option>
                                 </select>
                             </div>
                         </div>

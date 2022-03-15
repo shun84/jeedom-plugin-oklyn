@@ -28,11 +28,19 @@ class oklyn extends eqLogic {
         'TEMPERATUREEAU' => 'OKLYN_TEMPERATUREEAU',
         'ORP' => 'OKLYN_ORP',
         'PH' => 'OKLYN_PH',
+        'SEL' => 'OKLYN_SEL',
         'AUXOFF' => 'OKLYN_AUXOFF',
         'AUXON' => 'OKLYN_AUXON',
         'POMPEOFF' => 'OKLYN_POMPEOFF',
         'POMPEON' => 'OKLYN_POMPEON',
         'POMPEAUTO' => 'OKLYN_POMPEAUTO'
+    ];
+
+    protected const PACKOKLYN = [
+        'AUCUN' => 'aucun',
+        'PHSEUL' => 'phseul',
+        'PHREDOX' => 'phredox',
+        'PHREDOXSALT' => 'phredoxsalt'
     ];
 
     /* ***********************Methode static*************************** */
@@ -70,6 +78,13 @@ class oklyn extends eqLogic {
             ],
             self::GENERICOKLYN['PH'] => [
                 'name' => __('PH',__FILE__),
+                'familyid' => 'oklyn',
+                'family' => __('Plugin Oklyn',__FILE__),
+                'type' => 'Info',
+                'subtype' => ['numeric']
+            ],
+            self::GENERICOKLYN['SEL'] => [
+                'name' => __('SEL',__FILE__),
                 'familyid' => 'oklyn',
                 'family' => __('Plugin Oklyn',__FILE__),
                 'type' => 'Info',
@@ -124,6 +139,7 @@ class oklyn extends eqLogic {
         $waterdate = new DateTime($api->getSonde('water','recorded'));
         $phdate = new DateTime($api->getSonde('ph','recorded'));
         $orpdate = new DateTime($api->getSonde('orp','recorded'));
+        $saltdate = new DateTime($api->getSonde('salt','recorded'));
 
         $this->checkAndUpdateCmd('air', $api->getSonde('air','value'));
         $this->checkAndUpdateCmd('dateair', $airdate->format('d/m/Y \à H:i'));
@@ -135,10 +151,15 @@ class oklyn extends eqLogic {
         $this->checkAndUpdateCmd('orp', $api->getSonde('orp','value'));
         $this->checkAndUpdateCmd('orpstatus', $api->getSonde('orp','status'));
         $this->checkAndUpdateCmd('orpdate', $orpdate->format('d/m/Y \à H:i'));
+        $this->checkAndUpdateCmd('salt', $api->getSonde('salt','value'));
+        $this->checkAndUpdateCmd('saltstatus', $api->getSonde('salt','status'));
+        $this->checkAndUpdateCmd('saltdate', $saltdate->format('d/m/Y \à H:i'));
         $this->checkAndUpdateCmd('pompe', $api->getPompe('pump'));
         $this->checkAndUpdateCmd('pompestatus', $api->getPompe('status'));
-        $this->checkAndUpdateCmd('aux', $api->getAux('aux'));
-        $this->checkAndUpdateCmd('auxstatus', $api->getAux('status'));
+        $this->checkAndUpdateCmd('aux', $api->getAux('aux','aux'));
+        $this->checkAndUpdateCmd('auxstatus', $api->getAux('aux','status'));
+        $this->checkAndUpdateCmd('auxsecond', $api->getAux('aux2','aux'));
+        $this->checkAndUpdateCmd('auxsecondstatus', $api->getAux('aux2','status'));
 
         $this->refreshWidget();
     }
@@ -164,10 +185,14 @@ class oklyn extends eqLogic {
         if ($this->getConfiguration('auxiliaire') == '') {
             throw new Exception(__('Veuillez sélectionner si vous utiliser un auxilaire ou pas', __FILE__));
         }
+
+        if ($this->getConfiguration('auxiliairesecond') == '') {
+            throw new Exception(__('Veuillez sélectionner si vous utiliser un auxilaire 2 ou pas', __FILE__));
+        }
     }
 
     public function preSave() {
-        $this->setDisplay("width","632px");
+        $this->setDisplay("width","650px");
         $this->setDisplay("height","272px");
     }
 
@@ -226,7 +251,7 @@ class oklyn extends eqLogic {
         $datewater->save();
 
         $confpackoklyn = $this->getConfiguration('packoklyn');
-        if ($confpackoklyn == 'phseul' || $confpackoklyn == 'phredox'){
+        if ($confpackoklyn == self::PACKOKLYN['PHSEUL'] || $confpackoklyn == self::PACKOKLYN['PHREDOX'] || $confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
             $ph = $this->getCmd(null, 'ph');
             if (!is_object($ph)) {
                 $ph = new oklynCmd();
@@ -262,7 +287,7 @@ class oklyn extends eqLogic {
             $phdate->setSubType('string');
             $phdate->save();
 
-            if ($confpackoklyn == 'phredox'){
+            if ($confpackoklyn == self::PACKOKLYN['PHREDOX'] || $confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
                 $orp= $this->getCmd(null, 'orp');
                 if (!is_object($orp)) {
                     $orp = new oklynCmd();
@@ -298,6 +323,44 @@ class oklyn extends eqLogic {
                 $orpdate->setType('info');
                 $orpdate->setSubType('string');
                 $orpdate->save();
+            }
+
+            if ($confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
+                $salt= $this->getCmd(null, 'salt');
+                if (!is_object($salt)) {
+                    $salt = new oklynCmd();
+                    $salt->setIsHistorized(1);
+                }
+                $salt->setName(__('SEL', __FILE__));
+                $salt->setLogicalId('salt');
+                $salt->setEqLogic_id($this->getId());
+                $salt->setGeneric_type(self::GENERICOKLYN['SEL'] );
+                $salt->setUnite('g/L');
+                $salt->setType('info');
+                $salt->setSubType('numeric');
+                $salt->save();
+
+                $saltstatus = $this->getCmd(null, 'saltstatus');
+                if (!is_object($saltstatus)) {
+                    $saltstatus = new oklynCmd();
+                }
+                $saltstatus->setName(__('Status SEL', __FILE__));
+                $saltstatus->setLogicalId('saltstatus');
+                $saltstatus->setEqLogic_id($this->getId());
+                $saltstatus->setType('info');
+                $saltstatus->setSubType('string');
+                $saltstatus->save();
+
+                $saltdate = $this->getCmd(null, 'saltdate');
+                if (!is_object($saltdate)) {
+                    $saltdate = new oklynCmd();
+                }
+                $saltdate->setName(__('Date sel', __FILE__));
+                $saltdate->setLogicalId('saltdate');
+                $saltdate->setEqLogic_id($this->getId());
+                $saltdate->setType('info');
+                $saltdate->setSubType('string');
+                $saltdate->save();
             }
         }
 
@@ -369,6 +432,52 @@ class oklyn extends eqLogic {
         $auxon->setSubType('other');
         $auxon->save();
 
+        $auxsecond = $this->getCmd(null, 'auxsecond');
+        if (!is_object($auxsecond)) {
+            $auxsecond = new oklynCmd();
+        }
+        $auxsecond->setName(__('Auxiliaire 2', __FILE__));
+        $auxsecond->setLogicalId('auxsecond');
+        $auxsecond->setEqLogic_id($this->getId());
+        $auxsecond->setType('info');
+        $auxsecond->setSubType('string');
+        $auxsecond->save();
+
+        $auxsecondstatus = $this->getCmd(null, 'auxsecondstatus');
+        if (!is_object($auxsecondstatus)) {
+            $auxsecondstatus = new oklynCmd();
+        }
+        $auxsecondstatus->setName(__('Auxiliaire status 2', __FILE__));
+        $auxsecondstatus->setLogicalId('auxsecondstatus');
+        $auxsecondstatus->setEqLogic_id($this->getId());
+        $auxsecondstatus->setType('info');
+        $auxsecondstatus->setSubType('string');
+        $auxsecondstatus->save();
+
+        $auxsecondoff = $this->getCmd(null, 'auxsecondoff');
+        if (!is_object($auxsecondoff)) {
+            $auxsecondoff = new oklynCmd();
+        }
+        $auxsecondoff->setName(__('Aux OFF 2', __FILE__));
+        $auxsecondoff->setLogicalId('auxsecondoff');
+        $auxsecondoff->setEqLogic_id($this->getId());
+        $auxsecondoff->setGeneric_type(self::GENERICOKLYN['AUXOFF']);
+        $auxsecondoff->setType('action');
+        $auxsecondoff->setSubType('other');
+        $auxsecondoff->save();
+
+        $auxsecondon = $this->getCmd(null, 'auxsecondon');
+        if (!is_object($auxsecondon)) {
+            $auxsecondon = new oklynCmd();
+        }
+        $auxsecondon->setName(__('Aux ON 2', __FILE__));
+        $auxsecondon->setLogicalId('auxsecondon');
+        $auxsecondon->setEqLogic_id($this->getId());
+        $auxsecondon->setGeneric_type(self::GENERICOKLYN['AUXON']);
+        $auxsecondon->setType('action');
+        $auxsecondon->setSubType('other');
+        $auxsecondon->save();
+
         $pompeoff = $this->getCmd(null, 'pompeoff');
         if (!is_object($pompeoff)) {
             $pompeoff = new oklynCmd();
@@ -418,47 +527,55 @@ class oklyn extends eqLogic {
         if (!is_array($replace)) {
             return $replace;
         }
-        $_version = jeedom::versionAlias($_version);
+        $version = jeedom::versionAlias($_version);
 
-        // Température de l'air
         $air = $this->getCmd(null, 'air');
         $replace['#temperature#'] = $air->execCmd();
         $dateair = $this->getCmd(null, 'dateair');
         $replace['#datetemperature#'] = $dateair->execCmd();
 
-        // Température de l'eau
         $water = $this->getCmd(null, 'water');
         $replace['#eau#'] = $water->execCmd();
         $datewater = $this->getCmd(null, 'datewater');
         $replace['#dateeau#'] = $datewater->execCmd();
 
-        // Sondes PH et ORP
         $confpackoklyn = $this->getConfiguration('packoklyn');
-        if ($confpackoklyn == 'aucun'){
-            $replace['#phseul#'] = 'phaucun';
-            $replace['#phredox#'] = 'phredoxaucun';
-        }elseif ($confpackoklyn == 'phseul' || $confpackoklyn == 'phredox'){
-            if ($confpackoklyn != 'phredox'){
-                $replace['#phredox#'] = 'phredoxaucun';
-            } else {
-                $replace['#phredox#'] = 'phredox';
-                $orp = $this->getCmd(null, 'orp');
-                $replace['#orp#'] = $orp->execCmd();
-                $orpstatus = $this->getCmd(null, 'orpstatus');
-                $replace['#orpstatus#'] = $orpstatus->execCmd();
-                $orpdate = $this->getCmd(null, 'orpdate');
-                $replace['#orpdate#'] = $orpdate->execCmd();
-            }
-            $replace['#phseul#'] = 'phseul';
+        if ($confpackoklyn == self::PACKOKLYN['PHSEUL'] || $confpackoklyn == self::PACKOKLYN['PHREDOX'] || $confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
+            $replace['#phseul#'] = self::PACKOKLYN['PHSEUL'];
             $ph = $this->getCmd(null, 'ph');
             $replace['#ph#'] = $ph->execCmd();
             $phstatus = $this->getCmd(null, 'phstatus');
             $replace['#phstatus#'] = $phstatus->execCmd();
             $phdate = $this->getCmd(null, 'phdate');
             $replace['#phdate#'] = $phdate->execCmd();
+        }else{
+            $replace['#phseul#'] = 'phaucun';
         }
 
-        // Pompe de pisicne
+        if ($confpackoklyn == self::PACKOKLYN['PHREDOX'] || $confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
+            $replace['#phredox#'] = self::PACKOKLYN['PHREDOX'];
+            $orp = $this->getCmd(null, 'orp');
+            $replace['#orp#'] = $orp->execCmd();
+            $orpstatus = $this->getCmd(null, 'orpstatus');
+            $replace['#orpstatus#'] = $orpstatus->execCmd();
+            $orpdate = $this->getCmd(null, 'orpdate');
+            $replace['#orpdate#'] = $orpdate->execCmd();
+        }else{
+            $replace['#phredox#'] = 'phredoxaucun';
+        }
+
+        if ($confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
+            $replace['#phredoxsalt#'] = self::PACKOKLYN['PHREDOXSALT'];
+            $salt = $this->getCmd(null, 'salt');
+            $replace['#salt#'] = $salt->execCmd();
+            $saltstatus = $this->getCmd(null, 'saltstatus');
+            $replace['#saltstatus#'] = $saltstatus->execCmd();
+            $saltdate = $this->getCmd(null, 'saltdate');
+            $replace['#saltdate#'] = $saltdate->execCmd();
+        }else{
+            $replace['#phredoxsalt#'] = 'phredoxsaltaucun';
+        }
+
         $pompe = $this->getCmd(null, 'pompe');
         $replace['#pompe#'] = $pompe->execCmd();
         $pompestatus = $this->getCmd(null, 'pompestatus');
@@ -470,7 +587,6 @@ class oklyn extends eqLogic {
         $pompeauto = $this->getCmd(null, 'pompeauto');
         $replace['#pompeauto_id#'] = $pompeauto->getId();
 
-        //Gérer la fonction auxiliaire
         $aux = $this->getCmd(null, 'aux');
         $replace['#aux#'] = $aux->execCmd();
         $auxstatus = $this->getCmd(null, 'auxstatus');
@@ -480,24 +596,52 @@ class oklyn extends eqLogic {
         $auxon = $this->getCmd(null, 'auxon');
         $replace['#auxon_id#'] = $auxon->getId();
 
+        $auxsecond = $this->getCmd(null, 'auxsecond');
+        $replace['#auxsecond#'] = $auxsecond->execCmd();
+        $auxsecondstatus = $this->getCmd(null, 'auxsecondstatus');
+        $replace['#auxsecondstatus#'] = $auxsecondstatus->execCmd();
+        $auxsecondoff = $this->getCmd(null, 'auxsecondoff');
+        $replace['#auxsecondoff_id#'] = $auxsecondoff->getId();
+        $auxsecondon = $this->getCmd(null, 'auxsecondon');
+        $replace['#auxsecondon_id#'] = $auxsecondon->getId();
+
         $confaux = $this->getConfiguration('auxiliaire');
-        if ($confaux == 'aucun'){
-            $replace['#confaux#'] = 'aucun';
+        if ($confaux == self::PACKOKLYN['AUCUN']){
+            $replace['#confaux#'] = self::PACKOKLYN['AUCUN'];
         } elseif ($confaux == 'lumiere'){
             $replace['#confaux#'] = 'lumiere';
             $replace['#icon_aux#'] = '<i class="fas fa-lightbulb fa-5x"></i>';
         } elseif ($confaux == 'chauffage'){
             $replace['#confaux#'] = 'chauffage';
             $replace['#icon_aux#'] = '<i class="fas fa-thermometer-full fa-5x"></i>';
+        } elseif ($confaux == 'autre'){
+            $replace['#confaux#'] = 'autre';
+            $replace['#icon_aux#'] = '<i class="fas fa-power-off fa-4x"></i>';
         }
 
-        $html = $this->postToHtml($_version, template_replace($replace, getTemplate('core', $_version, 'oklyn', 'oklyn')));
+        $confauxsecond = $this->getConfiguration('auxiliairesecond');
+        if ($confauxsecond == self::PACKOKLYN['AUCUN']){
+            $replace['#confauxsecond#'] = self::PACKOKLYN['AUCUN'];
+        } elseif ($confauxsecond == 'lumiere'){
+            $replace['#confauxsecond#'] = 'lumiere';
+            $replace['#icon_aux_second#'] = '<i class="fas fa-lightbulb fa-5x"></i>';
+        } elseif ($confauxsecond == 'chauffage'){
+            $replace['#confauxsecond#'] = 'chauffage';
+            $replace['#icon_aux_second#'] = '<i class="fas fa-thermometer-full fa-5x"></i>';
+        } elseif ($confauxsecond == 'autre'){
+            $replace['#confauxsecond#'] = 'autre';
+            $replace['#icon_aux_second#'] = '<i class="fas fa-power-off fa-4x"></i>';
+        }
+
+        $html = $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'oklyn', 'oklyn')));
         cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
         return $html;
     }
 }
 
 class oklynCmd extends cmd {
+    public static $_widgetPossibility = ['custom' => false];
+
     /**
      * @throws Exception
      */
@@ -535,7 +679,7 @@ class oklynCmd extends cmd {
             }
         }
         if ($this->getLogicalId() == 'auxoff') {
-            $putauxoff = $api->putAux('off');
+            $putauxoff = $api->putAux('aux','off');
             $errorapi = json_decode($putauxoff);
             if ($errorapi->{'error'}){
                 throw new Exception(__('L\'arret de l\'auxilaire n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
@@ -545,13 +689,33 @@ class oklynCmd extends cmd {
             }
         }
         if ($this->getLogicalId() == 'auxon') {
-            $putauxon = $api->putAux('on');
+            $putauxon = $api->putAux('aux','on');
             $errorapi = json_decode($putauxon);
             if ($errorapi->{'error'}){
                 throw new Exception(__('Le lancement de l\'auxilaire n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
             }else{
                 log::add('oklyn','debug','Lancement de l\'action auxilaire On');
                 $this->getEqLogic()->checkAndUpdateCmd('auxon', $putauxon);
+            }
+        }
+        if ($this->getLogicalId() == 'auxsecondoff') {
+            $putauxsecondoff = $api->putAux('aux2','off');
+            $errorapi = json_decode($putauxsecondoff);
+            if ($errorapi->{'error'}){
+                throw new Exception(__('L\'arret de l\'auxilaire 2 n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
+            }else{
+                log::add('oklyn','debug','Lancement de l\'action auxilaire Off 2');
+                $this->getEqLogic()->checkAndUpdateCmd('auxsecondoff', $putauxsecondoff);
+            }
+        }
+        if ($this->getLogicalId() == 'auxsecondon') {
+            $putauxsecondon = $api->putAux('aux2','on');
+            $errorapi = json_decode($putauxsecondon);
+            if ($errorapi->{'error'}){
+                throw new Exception(__('Le lancement de l\'auxilaire 2 n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
+            }else{
+                log::add('oklyn','debug','Lancement de l\'action auxilaire On 2');
+                $this->getEqLogic()->checkAndUpdateCmd('auxsecondon', $putauxsecondon);
             }
         }
         $this->getEqLogic()->updateOklyn();
