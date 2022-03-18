@@ -23,7 +23,7 @@ require_once __DIR__ . '/../../core/api/oklynApi.php';
 class oklyn extends eqLogic {
     /* *************************Attributs****************************** */
     public static $_widgetPossibility = array('custom' => true, 'custom::layout' => false);
-    protected const GENERICOKLYN = [
+    public const GENERICOKLYN = [
         'TEMPERATUREAIR' => 'OKLYN_TEMPERATUREAIR',
         'TEMPERATUREEAU' => 'OKLYN_TEMPERATUREEAU',
         'ORP' => 'OKLYN_ORP',

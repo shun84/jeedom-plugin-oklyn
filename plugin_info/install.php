@@ -19,13 +19,17 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function oklyn_install() {
-    
+
 }
 
 function oklyn_update() {
-    
+    foreach (oklyn::byType('oklyn') as $oklyn){
+        if($oklyn->getConfiguration('auxiliairesecond') == ''){
+            $oklyn->setConfiguration('auxiliairesecond', 'aucun');
+        }
+        $oklyn->save();
+    }
 }
-
 
 function oklyn_remove() {
     
