@@ -192,8 +192,8 @@ class oklyn extends eqLogic {
     }
 
     public function preSave() {
-        $this->setDisplay("width","650px");
-        $this->setDisplay("height","272px");
+        $this->setDisplay("width","792px");
+        $this->setDisplay("height","232px");
     }
 
     /**
@@ -540,41 +540,31 @@ class oklyn extends eqLogic {
         $replace['#dateeau#'] = $datewater->execCmd();
 
         $confpackoklyn = $this->getConfiguration('packoklyn');
-        if ($confpackoklyn == self::PACKOKLYN['PHSEUL'] || $confpackoklyn == self::PACKOKLYN['PHREDOX'] || $confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
-            $replace['#phseul#'] = self::PACKOKLYN['PHSEUL'];
-            $ph = $this->getCmd(null, 'ph');
-            $replace['#ph#'] = $ph->execCmd();
-            $phstatus = $this->getCmd(null, 'phstatus');
-            $replace['#phstatus#'] = $phstatus->execCmd();
-            $phdate = $this->getCmd(null, 'phdate');
-            $replace['#phdate#'] = $phdate->execCmd();
-        }else{
-            $replace['#phseul#'] = 'phaucun';
-        }
+        $replace['#confpackoklyn#'] = $confpackoklyn;
 
-        if ($confpackoklyn == self::PACKOKLYN['PHREDOX'] || $confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
-            $replace['#phredox#'] = self::PACKOKLYN['PHREDOX'];
-            $orp = $this->getCmd(null, 'orp');
-            $replace['#orp#'] = $orp->execCmd();
-            $orpstatus = $this->getCmd(null, 'orpstatus');
-            $replace['#orpstatus#'] = $orpstatus->execCmd();
-            $orpdate = $this->getCmd(null, 'orpdate');
-            $replace['#orpdate#'] = $orpdate->execCmd();
-        }else{
-            $replace['#phredox#'] = 'phredoxaucun';
-        }
+        $replace['#phseul#'] = self::PACKOKLYN['PHSEUL'];
+        $ph = $this->getCmd(null, 'ph');
+        $replace['#ph#'] = $ph->execCmd();
+        $phstatus = $this->getCmd(null, 'phstatus');
+        $replace['#phstatus#'] = $phstatus->execCmd();
+        $phdate = $this->getCmd(null, 'phdate');
+        $replace['#phdate#'] = $phdate->execCmd();
 
-        if ($confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
-            $replace['#phredoxsalt#'] = self::PACKOKLYN['PHREDOXSALT'];
-            $salt = $this->getCmd(null, 'salt');
-            $replace['#salt#'] = $salt->execCmd();
-            $saltstatus = $this->getCmd(null, 'saltstatus');
-            $replace['#saltstatus#'] = $saltstatus->execCmd();
-            $saltdate = $this->getCmd(null, 'saltdate');
-            $replace['#saltdate#'] = $saltdate->execCmd();
-        }else{
-            $replace['#phredoxsalt#'] = 'phredoxsaltaucun';
-        }
+        $replace['#phredox#'] = self::PACKOKLYN['PHREDOX'];
+        $orp = $this->getCmd(null, 'orp');
+        $replace['#orp#'] = $orp->execCmd();
+        $orpstatus = $this->getCmd(null, 'orpstatus');
+        $replace['#orpstatus#'] = $orpstatus->execCmd();
+        $orpdate = $this->getCmd(null, 'orpdate');
+        $replace['#orpdate#'] = $orpdate->execCmd();
+
+        $replace['#phredoxsalt#'] = self::PACKOKLYN['PHREDOXSALT'];
+        $salt = $this->getCmd(null, 'salt');
+        $replace['#salt#'] = $salt->execCmd();
+        $saltstatus = $this->getCmd(null, 'saltstatus');
+        $replace['#saltstatus#'] = $saltstatus->execCmd();
+        $saltdate = $this->getCmd(null, 'saltdate');
+        $replace['#saltdate#'] = $saltdate->execCmd();
 
         $pompe = $this->getCmd(null, 'pompe');
         $replace['#pompe#'] = $pompe->execCmd();
@@ -606,32 +596,10 @@ class oklyn extends eqLogic {
         $replace['#auxsecondon_id#'] = $auxsecondon->getId();
 
         $confaux = $this->getConfiguration('auxiliaire');
-        if ($confaux == self::PACKOKLYN['AUCUN']){
-            $replace['#confaux#'] = self::PACKOKLYN['AUCUN'];
-        } elseif ($confaux == 'lumiere'){
-            $replace['#confaux#'] = 'lumiere';
-            $replace['#icon_aux#'] = '<i class="fas fa-lightbulb fa-5x"></i>';
-        } elseif ($confaux == 'chauffage'){
-            $replace['#confaux#'] = 'chauffage';
-            $replace['#icon_aux#'] = '<i class="fas fa-thermometer-full fa-5x"></i>';
-        } elseif ($confaux == 'autre'){
-            $replace['#confaux#'] = 'autre';
-            $replace['#icon_aux#'] = '<i class="fas fa-power-off fa-4x"></i>';
-        }
+        $replace['#confaux#'] = $confaux;
 
         $confauxsecond = $this->getConfiguration('auxiliairesecond');
-        if ($confauxsecond == self::PACKOKLYN['AUCUN']){
-            $replace['#confauxsecond#'] = self::PACKOKLYN['AUCUN'];
-        } elseif ($confauxsecond == 'lumiere'){
-            $replace['#confauxsecond#'] = 'lumiere';
-            $replace['#icon_aux_second#'] = '<i class="fas fa-lightbulb fa-5x"></i>';
-        } elseif ($confauxsecond == 'chauffage'){
-            $replace['#confauxsecond#'] = 'chauffage';
-            $replace['#icon_aux_second#'] = '<i class="fas fa-thermometer-full fa-5x"></i>';
-        } elseif ($confauxsecond == 'autre'){
-            $replace['#confauxsecond#'] = 'autre';
-            $replace['#icon_aux_second#'] = '<i class="fas fa-power-off fa-4x"></i>';
-        }
+        $replace['#confauxsecond#'] = $confauxsecond;
 
         $html = $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'oklyn', 'oklyn')));
         cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
