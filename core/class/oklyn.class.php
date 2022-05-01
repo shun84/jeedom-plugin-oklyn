@@ -530,70 +530,67 @@ class oklyn extends eqLogic {
         $version = jeedom::versionAlias($_version);
 
         $air = $this->getCmd(null, 'air');
-        $replace['#temperature#'] = $air->execCmd();
+        $replace['#temperature#'] = is_object($air) ? $air->execCmd() : '';
         $dateair = $this->getCmd(null, 'dateair');
-        $replace['#datetemperature#'] = $dateair->execCmd();
+        $replace['#datetemperature#'] = is_object($dateair) ? $dateair->execCmd() : '';
 
         $water = $this->getCmd(null, 'water');
-        $replace['#eau#'] = $water->execCmd();
+        $replace['#eau#'] = is_object($water) ? $water->execCmd() : '';
         $datewater = $this->getCmd(null, 'datewater');
-        $replace['#dateeau#'] = $datewater->execCmd();
+        $replace['#dateeau#'] = is_object($datewater) ? $datewater->execCmd() : '';
 
         $confpackoklyn = $this->getConfiguration('packoklyn');
         $replace['#confpackoklyn#'] = $confpackoklyn;
 
-        $replace['#phseul#'] = self::PACKOKLYN['PHSEUL'];
         $ph = $this->getCmd(null, 'ph');
-        $replace['#ph#'] = $ph->execCmd();
+        $replace['#ph#'] = is_object($ph) ? $ph->execCmd() : '';
         $phstatus = $this->getCmd(null, 'phstatus');
-        $replace['#phstatus#'] = $phstatus->execCmd();
+        $replace['#phstatus#'] = is_object($phstatus) ? $phstatus->execCmd() : '';
         $phdate = $this->getCmd(null, 'phdate');
-        $replace['#phdate#'] = $phdate->execCmd();
+        $replace['#phdate#'] = is_object($phdate) ? $phdate->execCmd() : '';
 
-        $replace['#phredox#'] = self::PACKOKLYN['PHREDOX'];
         $orp = $this->getCmd(null, 'orp');
-        $replace['#orp#'] = $orp->execCmd();
+        $replace['#orp#'] = is_object($orp) ? $orp->execCmd() : '';
         $orpstatus = $this->getCmd(null, 'orpstatus');
-        $replace['#orpstatus#'] = $orpstatus->execCmd();
+        $replace['#orpstatus#'] = is_object($orpstatus) ? $orpstatus->execCmd() : '';
         $orpdate = $this->getCmd(null, 'orpdate');
-        $replace['#orpdate#'] = $orpdate->execCmd();
+        $replace['#orpdate#'] = is_object($orpdate) ? $orpdate->execCmd() : '';
 
-        $replace['#phredoxsalt#'] = self::PACKOKLYN['PHREDOXSALT'];
         $salt = $this->getCmd(null, 'salt');
-        $replace['#salt#'] = $salt->execCmd();
+        $replace['#salt#'] = is_object($salt) ? $salt->execCmd() : '';
         $saltstatus = $this->getCmd(null, 'saltstatus');
-        $replace['#saltstatus#'] = $saltstatus->execCmd();
+        $replace['#saltstatus#'] = is_object($saltstatus) ? $saltstatus->execCmd() : '';
         $saltdate = $this->getCmd(null, 'saltdate');
-        $replace['#saltdate#'] = $saltdate->execCmd();
+        $replace['#saltdate#'] = is_object($saltdate) ? $saltdate->execCmd() : '';
 
         $pompe = $this->getCmd(null, 'pompe');
-        $replace['#pompe#'] = $pompe->execCmd();
+        $replace['#pompe#'] = is_object($pompe) ? $pompe->execCmd() : '';
         $pompestatus = $this->getCmd(null, 'pompestatus');
-        $replace['#pompestatus#'] = $pompestatus->execCmd();
+        $replace['#pompestatus#'] = is_object($pompestatus) ? $pompestatus->execCmd() : '';
         $pompeoff = $this->getCmd(null, 'pompeoff');
-        $replace['#pompeoff_id#'] = $pompeoff->getId();
+        $replace['#pompeoff_id#'] = is_object($pompeoff) ? $pompeoff->getId() : '';
         $pompeon = $this->getCmd(null, 'pompeon');
-        $replace['#pompeon_id#'] = $pompeon->getId();
+        $replace['#pompeon_id#'] = is_object($pompeon) ? $pompeon->getId() : '';
         $pompeauto = $this->getCmd(null, 'pompeauto');
-        $replace['#pompeauto_id#'] = $pompeauto->getId();
+        $replace['#pompeauto_id#'] = is_object($pompeauto) ? $pompeauto->getId() : '';
 
         $aux = $this->getCmd(null, 'aux');
-        $replace['#aux#'] = $aux->execCmd();
+        $replace['#aux#'] = is_object($aux) ? $aux->execCmd() : '';
         $auxstatus = $this->getCmd(null, 'auxstatus');
-        $replace['#auxstatus#'] = $auxstatus->execCmd();
+        $replace['#auxstatus#'] = is_object($auxstatus) ? $auxstatus->execCmd() : '';
         $auxoff = $this->getCmd(null, 'auxoff');
-        $replace['#auxoff_id#'] = $auxoff->getId();
+        $replace['#auxoff_id#'] = is_object($auxoff) ? $auxoff->getId() : '';
         $auxon = $this->getCmd(null, 'auxon');
-        $replace['#auxon_id#'] = $auxon->getId();
+        $replace['#auxon_id#'] = is_object($auxon) ? $auxon->getId() : '';
 
         $auxsecond = $this->getCmd(null, 'auxsecond');
-        $replace['#auxsecond#'] = $auxsecond->execCmd();
+        $replace['#auxsecond#'] = is_object($auxsecond) ? $auxsecond->execCmd() : '';
         $auxsecondstatus = $this->getCmd(null, 'auxsecondstatus');
-        $replace['#auxsecondstatus#'] = $auxsecondstatus->execCmd();
+        $replace['#auxsecondstatus#'] = is_object($auxsecondstatus) ? $auxsecondstatus->execCmd() : '';
         $auxsecondoff = $this->getCmd(null, 'auxsecondoff');
-        $replace['#auxsecondoff_id#'] = $auxsecondoff->getId();
+        $replace['#auxsecondoff_id#'] = is_object($auxsecondoff) ? $auxsecondoff->getId() : '';
         $auxsecondon = $this->getCmd(null, 'auxsecondon');
-        $replace['#auxsecondon_id#'] = $auxsecondon->getId();
+        $replace['#auxsecondon_id#'] = is_object($auxsecondon) ? $auxsecondon->getId() : '';
 
         $confaux = $this->getConfiguration('auxiliaire');
         $replace['#confaux#'] = $confaux;
