@@ -47,52 +47,78 @@
     </div>
     <div class="col-sm-4" style="margin-top: 10px">
         <div id="icon_pool" class="col-md-5"><i class="fas fa-swimming-pool fa-4x"></i></div>
-        <div id="pompe" data-pompe="#pompe#">Pompe : #pompe#</div>
-        <div>Status Pompe : #pompestatus#</div>
-        <span id="cmd_#pompeoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
-            <a class="btn btn-sm btn-default action">
-                <i class="fas fa-stop"></i>
-            </a>
+        <div class="content-xs">
+            <span class="cmdName #hide_name#" id="pompe" data-pompe="#pompe#">Pompe :</span> <strong class="state">#pompe#</strong>
+        </div>
+        <div class="content-xs">
+            <span class="cmdName #hide_name#">Status Pompe :</span> <strong class="state">#pompestatus#</strong>
+        </div>
+        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Arreter la pompe">
+            <div class="content-xs">
+                <a class="btn btn-sm btn-default action tooltips">
+                    <i class="fas fa-stop"></i>
+                </a>
+            </div>
         </span>
-        <span id="cmd_#pompeon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
-            <a class="btn btn-sm btn-default action">
-                <i class="fas fa-play"></i>
-            </a>
+        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Lancer la pompe">
+            <div class="content-xs">
+                <a class="btn btn-sm btn-default action tooltips">
+                    <i class="fas fa-play"></i>
+                </a>
+            </div>
         </span>
-        <span id="cmd_#pompeauto_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Auto">
-            <a class="btn btn-sm btn-default action">
-                <i class="fas fa-sync"></i>
-            </a>
+        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Auto la pompe">
+            <div class="content-xs">
+                <a class="btn btn-sm btn-default action tooltips">
+                    <i class="fas fa-sync"></i>
+                </a>
+            </div>
         </span>
     </div>
     <div class="#confaux# col-sm-4" id="#confaux#_aux" style="margin-top: 10px">
         <div id="icon_aux" class="col-md-4"></div>
-        <div id="auxiliaire" data-aux="#aux#">Auxilaire : #aux#</div>
-        <div>Status Auxilaire : #auxstatus#</div>
-        <span id="cmd_#auxoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
-            <a class="btn btn-sm btn-default action">
-                <i class="fas fa-stop"></i>
-            </a>
+        <div class="content-xs">
+            <span class="cmdName #hide_name#" id="auxiliaire" data-aux="#aux#">Auxilaire :</span> <strong class="state">#aux#</strong>
+        </div>
+        <div class="content-xs">
+            <span class="cmdName #hide_name#">Status Auxilaire :</span> <strong class="state">#auxstatus#</strong>
+        </div>
+        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Arreter l'auxilaire 1">
+            <div class="content-xs">
+                <a class="btn btn-sm btn-default action tooltips">
+                    <i class="fas fa-stop"></i>
+                </a>
+            </div>
         </span>
-        <span id="cmd_#auxon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
-            <a class="btn btn-sm btn-default action">
-                <i class="fas fa-play"></i>
-            </a>
+        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Lancer l'auxilaire 1">
+            <div class="content-xs">
+                <a class="btn btn-sm btn-default action tooltips">
+                    <i class="fas fa-play"></i>
+                </a>
+            </div>
         </span>
     </div>
     <div class="#confauxsecond# col-sm-4" id="#confauxsecond#_aux_second" style="margin-top: 10px">
         <div id="icon_aux_second" class="col-md-4"></div>
-        <div id="auxiliairesecond" data-auxsecond="#auxsecond#">Auxilaire 2 : #auxsecond#</div>
-        <div>Status Auxilaire 2 : #auxsecondstatus#</div>
-        <span id="cmd_#auxsecondoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
-            <a class="btn btn-sm btn-default action">
-                <i class="fas fa-stop"></i>
-            </a>
+        <div class="content-xs">
+            <span class="cmdName #hide_name#" id="auxiliairesecond" data-auxsecond="#auxsecond#">Auxilaire 2 :</span> <strong class="state">#auxsecond#</strong>
+        </div>
+        <div class="content-xs">
+            <span class="cmdName #hide_name#">Status Auxilaire 2 :</span> <strong class="state">#auxsecondstatus#</strong>
+        </div>
+        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Arreter l'auxilaire 2">
+            <div class="content-xs">
+                <a class="btn btn-sm btn-default action tooltips">
+                    <i class="fas fa-stop"></i>
+                </a>
+            </div>
         </span>
-        <span id="cmd_#auxsecondon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
-            <a class="btn btn-sm btn-default action">
-                <i class="fas fa-play"></i>
-            </a>
+        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Lancer l'auxilaire 2">
+            <div class="content-xs">
+                <a class="btn btn-sm btn-default action tooltips">
+                    <i class="fas fa-play"></i>
+                </a>
+            </div>
         </span>
     </div>
     #divGraphInfo#

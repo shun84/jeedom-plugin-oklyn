@@ -4,6 +4,9 @@
 >
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
+# 07/05/2022
+- Optimisation du design coté desktop et vue mobile
+
 # 01/05/2022
 - Fix Bug : si la personne n'avez pas le sel ou autre et qu'il avait activé le pack, il y avait un soucis sur le dashbord merci à **bart40140**
 

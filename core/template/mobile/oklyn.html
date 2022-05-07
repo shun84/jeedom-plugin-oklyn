@@ -1,76 +1,79 @@
-<div class="eqLogic eqLogic-widget" data-eqType="#eqType#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" style="border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#;#style#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#">
+<div class="eqLogic eqLogic-widget #class#" data-eqLogic_id="#id#" data-eqType="#eqType#" data-version="#version#" data-eqLogic_uid="#uid#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" style="#style#">
     <div style="text-align: center">
         <span class="widget-name">
             <span style="#hideEqLogicName#">#name_display# <span class="object_name">#object_name#</span></span><br/>
         </span>
     </div>
     <input id="confpackoklyn" name="confpackoklyn" type="hidden" value="#confpackoklyn#">
-    <div style="text-align: center">Air : #temperature# °c</div>
-    <div style="text-align: center">Water : #eau# °C</div>
-    <div style="text-align: center" id="phseul">PH : #ph#</div>
-    <div style="text-align: center" id="phredox">ORP : #orp#</div>
-    <div style="text-align: center" id="phredoxsalt">SEL : #salt#</div>
-    <div style="text-align: center">Pompe : #pompe#</div>
-    <div class="state" style="text-align: center">
-        <span id="cmd_#pompeoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
-            <a class="btn btn-sm btn-default action">
+    <div class="mobilecenter">
+        <span class="cmdName">Air :</span> <strong class="state">#temperature# °C</strong>
+    </div>
+    <div class="mobilecenter">
+        <span class="cmdName">Water :</span> <strong class="state">#eau# °C</strong>
+    </div>
+    <div class="mobilecenter">
+        <span class="cmdName">PH :</span> <strong class="state">#ph#</strong>
+    </div>
+    <div class="mobilecenter">
+        <span class="cmdName">ORP :</span> <strong class="state">#orp#</strong>
+    </div>
+    <div class="mobilecenter">
+        <span class="cmdName">SEL :</span> <strong class="state">#salt#</strong>
+    </div>
+    <div class="mobilecenter">
+        <span class="cmdName">Pompe :</span> <strong class="state">#pompe#</strong>
+    </div>
+    <div class="mobilecenter">
+         <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-template="default" data-cmd_id="#pompeoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Arreter la pompe">
+            <a class="action ui-btn ui-mini ui-btn-inline ui-btn-raised">
                 <i class="fas fa-stop"></i>
             </a>
         </span>
-        <span id="cmd_#pompeon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
-            <a class="btn btn-sm btn-default action">
+        <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-template="default" data-cmd_id="#pompeon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Lancer la pompe">
+            <a class="action ui-btn ui-mini ui-btn-inline ui-btn-raised">
                 <i class="fas fa-play"></i>
             </a>
         </span>
-        <span id="cmd_#pompeauto_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Auto">
-            <a class="btn btn-sm btn-default action">
+        <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-template="default" data-cmd_id="#pompeauto_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Auto la pompe">
+            <a class="action ui-btn ui-mini ui-btn-inline ui-btn-raised">
                 <i class="fas fa-sync"></i>
             </a>
         </span>
     </div>
-    <div style="text-align: center">Auxilaire : #aux#</div>
-    <div class="state" style="text-align: center">
-        <span id="cmd_#auxoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
-            <a class="btn btn-sm btn-default action">
+    <div class="mobilecenter">
+        <span class="cmdName">Auxilaire :</span> <strong class="state">#aux#</strong>
+    </div>
+    <div class="mobilecenter">
+        <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-template="default" data-cmd_id="#auxoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Arreter l'auxilaire 1">
+            <a class="action ui-btn ui-mini ui-btn-inline ui-btn-raised">
                 <i class="fas fa-stop"></i>
             </a>
         </span>
-        <span id="cmd_#auxon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
-            <a class="btn btn-sm btn-default action">
+        <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-template="default" data-cmd_id="#auxon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Lancer l'auxilaire 1">
+            <a class="action ui-btn ui-mini ui-btn-inline ui-btn-raised">
                 <i class="fas fa-play"></i>
             </a>
         </span>
     </div>
-    <div style="text-align: center">Auxilaire 2 : #aux#</div>
-    <div class="state" style="text-align: center">
-         <span id="cmd_#auxsecondoff_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Stop">
-            <a class="btn btn-sm btn-default action">
+    <div class="mobilecenter">
+        <span class="cmdName">Auxilaire 2 :</span> <strong class="state">#auxsecond#</strong>
+    </div>
+    <div class="mobilecenter">
+         <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-template="default" data-cmd_id="#auxsecondoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Arreter l'auxilaire 2">
+            <a class="action ui-btn ui-mini ui-btn-inline ui-btn-raised">
                 <i class="fas fa-stop"></i>
             </a>
         </span>
-        <span id="cmd_#auxsecondon_id#" class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Play">
-            <a class="btn btn-sm btn-default action">
+        <span class="cmd cmd-widget" data-type="action" data-subtype="other" data-template="default" data-cmd_id="#auxsecondon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Lancer l'auxilaire 2">
+            <a class="action ui-btn ui-mini ui-btn-inline ui-btn-raised">
                 <i class="fas fa-play"></i>
             </a>
         </span>
     </div>
-    <script>
-        if (document.getElementById('confpackoklyn').getAttribute('value') === 'phredoxsalt'){
-            document.getElementById('phredoxsalt').style.display = 'block';
-            document.getElementById('phredox').style.display = 'block';
-            document.getElementById('phseul').style.display = 'block';
-        }else if (document.getElementById('confpackoklyn').getAttribute('value') === 'phredox'){
-            document.getElementById('phredoxsalt').style.display = 'none';
-            document.getElementById('phredox').style.display = 'block';
-            document.getElementById('phseul').style.display = 'block';
-        }else if (document.getElementById('confpackoklyn').getAttribute('value') === 'phseul'){
-            document.getElementById('phredoxsalt').style.display = 'none';
-            document.getElementById('phredox').style.display = 'none';
-            document.getElementById('phseul').style.display = 'block';
-        }else if (document.getElementById('confpackoklyn').getAttribute('value') === 'aucun'){
-            document.getElementById('phredoxsalt').style.display = 'none';
-            document.getElementById('phredox').style.display = 'none';
-            document.getElementById('phseul').style.display = 'none';
+    <style>
+        .mobilecenter
+        {
+            text-align: center;
         }
-    </script>
+    </style>
 </div>
