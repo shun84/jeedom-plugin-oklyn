@@ -15,246 +15,76 @@
         </span>
     </div>
     <input id="confpackoklyn" name="confpackoklyn" type="hidden" value="#confpackoklyn#">
-    <div style="height: 120px">
-        <div class="col-sm-3 text-center">
-            <div class="cmdName" style="margin-bottom: 5px; font-size: 20px">AIR</div>
+    <section>
+        <!-- content here -->
+        <div class="text-center">
             <div style="font-size: 35px">#temperature#°</div>
-            <div class="cmdName" style="font-size: smaller">#datetemperature#</div>
         </div>
-        <div class="col-sm-3 text-center">
-            <div class="cmdName" style="margin-bottom: 5px; font-size: 20px">EAU</div>
-            <div style="font-size: 35px">#eau#°</div>
-            <div class="cmdName" style="font-size: smaller">#dateeau#</div>
+        <div class="curve"></div>
+    </section>
+    <div class="text-center" style="font-size: 35px; background-color: #015871">
+        <div class="state" style="padding-top: 15px">#eau#°</div>
+    </div>
+    <div style="height: 110px; background-color: #015871">
+        <div id="icon_filtation" class="col-md-4 text-center" style="margin-top: 10px">
+            <div id="popuppool"
+                 data-cmd_auto_id="#pompeauto_id#"
+                 data-cmd_on_id="#pompeon_id#"
+                 data-cmd_off_id="#pompeoff_id#"
+                 data-pompe="#pompe#">
+            </div>
+            <span id="icon_pool" onclick="popUpPool()"><i class="fas fa-swimming-pool fa-4x"></i></span>
         </div>
-        <div class="col-sm-2 text-center" id="phseul">
-            <div class="cmdName" style="margin-bottom: 5px; font-size: 20px">PH</div>
-            <div id="domph" style="font-size: 35px">#ph#</div>
-            <div class="cmdName" style="font-size: smaller">#phdate#</div>
-            <div id="domphstatus">Status : #phstatus#</div>
+        <div class="#confaux# col-md-4 text-center" id="#confaux#_aux" style="margin-top: 10px">
+            <span class="cmd cmd-widget"
+                  data-type="action"
+                  data-toggle="tooltip"
+                  data-statut="#aux#"
+                  data-subtype="other"
+                  data-cmd_on_id="#auxon_id#"
+                  data-cmd_off_id="#auxoff_id#"
+                  id="icon_aux">
+            </span>
         </div>
-        <div class="col-sm-2 text-center" id="phredox">
-            <div class="cmdName" style="margin-bottom: 5px; font-size: 20px">ORP</div>
-            <div id="domorp" style="font-size: 35px">#orp#</div>
-            <div class="cmdName" style="font-size: smaller">#orpdate#</div>
-            <div id="domorpstatus">Status : #orpstatus#</div>
-        </div>
-        <div class="col-sm-2 text-center" id="phredoxsalt">
-            <div class="cmdName" style="margin-bottom: 5px; font-size: 20px">SEL</div>
-            <div id="domsalt" style="font-size: 35px">#salt#</div>
-            <div class="cmdName" style="font-size: smaller">#saltdate#</div>
-            <div id="domsaltstatus">Status : #saltstatus#</div>
+        <div class="#confauxsecond# col-md-4 text-center" id="#confauxsecond#_aux_second" style="margin-top: 10px">
+            <span class="cmd cmd-widget"
+                  data-type="action"
+                  data-toggle="tooltip"
+                  data-statutsecond="#auxsecond#"
+                  data-subtype="other"
+                  data-cmd_on_id="#auxsecondon_id#"
+                  data-cmd_off_id="#auxsecondoff_id#"
+                  id="icon_aux_second">
+            </span>
         </div>
     </div>
-    <div class="col-sm-4" style="margin-top: 10px">
-        <div id="icon_pool" class="col-md-5"><i class="fas fa-swimming-pool fa-4x"></i></div>
-        <div class="content-xs">
-            <span class="cmdName #hide_name#" id="pompe" data-pompe="#pompe#">Pompe :</span> <strong class="state">#pompe#</strong>
+    <div style="height: 100px; background-color: #015871">
+        <div class="col-md-4 text-center" id="phseul">
+            <div id="outer-circle-ph">
+                <span class="circle_text">
+                    <strong id="domph" class="state">#ph#<br>pH</strong>
+                </span>
+            </div>
         </div>
-        <div class="content-xs">
-            <span class="cmdName #hide_name#">Status Pompe :</span> <strong class="state">#pompestatus#</strong>
+        <div class="col-md-4 text-center" id="phredox">
+            <div id="outer-circle-orp">
+                <span class="circle_text">
+                    <strong id="domorp" class="state">#orp#<br>RedOx</strong>
+                </span>
+            </div>
         </div>
-        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Arreter la pompe">
-            <div class="content-xs">
-                <a class="btn btn-sm btn-default action tooltips">
-                    <i class="fas fa-stop"></i>
-                </a>
+        <div class="col-md-4 text-center" id="phredoxsalt">
+            <div id="outer-circle-salt">
+                <span class="circle_text">
+                    <strong id="domsalt" class="state">#salt#<br>Sel</strong>
+                </span>
             </div>
-        </span>
-        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Lancer la pompe">
-            <div class="content-xs">
-                <a class="btn btn-sm btn-default action tooltips">
-                    <i class="fas fa-play"></i>
-                </a>
-            </div>
-        </span>
-        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#pompeauto_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Auto la pompe">
-            <div class="content-xs">
-                <a class="btn btn-sm btn-default action tooltips">
-                    <i class="fas fa-sync"></i>
-                </a>
-            </div>
-        </span>
+        </div>
     </div>
-    <div class="#confaux# col-sm-4" id="#confaux#_aux" style="margin-top: 10px">
-        <div id="icon_aux" class="col-md-4"></div>
-        <div class="content-xs">
-            <span class="cmdName #hide_name#" id="auxiliaire" data-aux="#aux#">Auxilaire :</span> <strong class="state">#aux#</strong>
-        </div>
-        <div class="content-xs">
-            <span class="cmdName #hide_name#">Status Auxilaire :</span> <strong class="state">#auxstatus#</strong>
-        </div>
-        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Arreter l'auxilaire 1">
-            <div class="content-xs">
-                <a class="btn btn-sm btn-default action tooltips">
-                    <i class="fas fa-stop"></i>
-                </a>
-            </div>
-        </span>
-        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Lancer l'auxilaire 1">
-            <div class="content-xs">
-                <a class="btn btn-sm btn-default action tooltips">
-                    <i class="fas fa-play"></i>
-                </a>
-            </div>
-        </span>
-    </div>
-    <div class="#confauxsecond# col-sm-4" id="#confauxsecond#_aux_second" style="margin-top: 10px">
-        <div id="icon_aux_second" class="col-md-4"></div>
-        <div class="content-xs">
-            <span class="cmdName #hide_name#" id="auxiliairesecond" data-auxsecond="#auxsecond#">Auxilaire 2 :</span> <strong class="state">#auxsecond#</strong>
-        </div>
-        <div class="content-xs">
-            <span class="cmdName #hide_name#">Status Auxilaire 2 :</span> <strong class="state">#auxsecondstatus#</strong>
-        </div>
-        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondoff_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Arreter l'auxilaire 2">
-            <div class="content-xs">
-                <a class="btn btn-sm btn-default action tooltips">
-                    <i class="fas fa-stop"></i>
-                </a>
-            </div>
-        </span>
-        <span class="cmd cmd-widget" data-type="action" data-toggle="tooltip" data-subtype="other" data-cmd_id="#auxsecondon_id#" onclick="jeedom.cmd.execute({id: $(this).data('cmd_id')});" title="Lancer l'auxilaire 2">
-            <div class="content-xs">
-                <a class="btn btn-sm btn-default action tooltips">
-                    <i class="fas fa-play"></i>
-                </a>
-            </div>
-        </span>
+    <div class="text-center" style="background-color: #015871; padding-bottom: 5px">
+        #datetemperature#
     </div>
     #divGraphInfo#
-    <script>
-        if (document.getElementById('confpackoklyn').getAttribute('value') === 'phredoxsalt'){
-            document.getElementById('phredoxsalt').style.display = 'block';
-            document.getElementById('phredox').style.display = 'block';
-            document.getElementById('phseul').style.display = 'block';
-        }else if (document.getElementById('confpackoklyn').getAttribute('value') === 'phredox'){
-            document.getElementById('phredoxsalt').style.display = 'none';
-            document.getElementById('phredox').style.display = 'block';
-            document.getElementById('phseul').style.display = 'block';
-        }else if (document.getElementById('confpackoklyn').getAttribute('value') === 'phseul'){
-            document.getElementById('phredoxsalt').style.display = 'none';
-            document.getElementById('phredox').style.display = 'none';
-            document.getElementById('phseul').style.display = 'block';
-        }else if (document.getElementById('confpackoklyn').getAttribute('value') === 'aucun'){
-            document.getElementById('phredoxsalt').style.display = 'none';
-            document.getElementById('phredox').style.display = 'none';
-            document.getElementById('phseul').style.display = 'none';
-        }
-
-        if (document.getElementById("chauffage_aux")){
-            document.getElementById("icon_aux").innerHTML = '<i class=\"fas fa-thermometer-full fa-4x\"></i>'
-        }
-
-        if (document.getElementById("chauffage_aux_second")){
-            document.getElementById("icon_aux_second").innerHTML = '<i class=\"fas fa-thermometer-full fa-4x\"></i>'
-        }
-
-        if (document.getElementById("lumiere_aux")){
-            document.getElementById("icon_aux").innerHTML = '<i class=\"fas fa-lightbulb fa-4x\"></i>'
-        }
-
-        if (document.getElementById("lumiere_aux_second")){
-            document.getElementById("icon_aux_second").innerHTML = '<i class=\"fas fa-lightbulb fa-4x\"></i>'
-        }
-
-        if (document.getElementById("autre_aux")){
-            document.getElementById("icon_aux").innerHTML = '<i class=\"fas fa-power-off fa-4x\"></i>'
-        }
-
-        if (document.getElementById("autre_aux_second")){
-            document.getElementById("icon_aux_second").innerHTML = '<i class=\"fas fa-power-off fa-4x\"></i>'
-        }
-
-        if (parseFloat(document.getElementById("domph").innerHTML) >= 7.00 && parseFloat(document.getElementById("domph").innerHTML) <= 7.80){
-            document.getElementById("domph").style.color = "green";
-        }else if ((parseFloat(document.getElementById("domph").innerHTML) >= 6.80 && parseFloat(document.getElementById("domph").innerHTML) < 7.00)
-            || (parseFloat(document.getElementById("domph").innerHTML) > 7.80 && parseFloat(document.getElementById("domph").innerHTML) <= 8.00)){
-            document.getElementById("domph").style.color = "yellow";
-        }else if (parseFloat(document.getElementById("domph").innerHTML) < 6.80 || parseFloat(document.getElementById("domph").innerHTML) > 8.0){
-            document.getElementById("domph").style.color = "red";
-        }
-
-        if (parseInt(document.getElementById("domorp").innerHTML) >= 650 && parseInt(document.getElementById("domorp").innerHTML) <= 750){
-            document.getElementById("domorp").style.color = "green";
-        }else if ((parseInt(document.getElementById("domorp").innerHTML) >= 500 && parseInt(document.getElementById("domorp").innerHTML) < 650)
-            || (parseInt(document.getElementById("domorp").innerHTML) > 750 && parseInt(document.getElementById("domorp").innerHTML) <= 800)){
-            document.getElementById("domorp").style.color = "yellow";
-        }else if (parseInt(document.getElementById("domorp").innerHTML) < 500 || parseInt(document.getElementById("domorp").innerHTML) > 800){
-            document.getElementById("domorp").style.color = "red";
-        }
-
-        if (parseFloat(document.getElementById("domsalt").innerHTML) >= 4.00 && parseFloat(document.getElementById("domsalt").innerHTML) <= 6.00){
-            document.getElementById("domsalt").style.color = "green";
-        }else if ((parseFloat(document.getElementById("domsalt").innerHTML) >= 3.00 && parseFloat(document.getElementById("domsalt").innerHTML) < 4.00)
-            || (parseFloat(document.getElementById("domsalt").innerHTML) > 6.00 && parseFloat(document.getElementById("domsalt").innerHTML) <= 7.00)){
-            document.getElementById("domsalt").style.color = "yellow";
-        }else if (parseFloat(document.getElementById("domsalt").innerHTML) < 3.00 || parseFloat(document.getElementById("domsalt").innerHTML) > 7.0){
-            document.getElementById("domsalt").style.color = "red";
-        }
-
-        switch (document.getElementById("domphstatus").innerHTML){
-            case 'Status : normal' :
-                document.getElementById("domphstatus").style.color = "green";
-                break;
-            case 'Status : warning' :
-                document.getElementById("domphstatus").style.color = "yellow";
-                break;
-            case 'Status : danger' :
-                document.getElementById("domphstatus").style.color = "red";
-                break;
-            default :
-                console.log('Correspond à aucun soucis status : '+document.getElementById("domphstatus").innerHTML);
-        }
-
-        switch (document.getElementById("domorpstatus").innerHTML){
-            case 'Status : normal' :
-                document.getElementById("domorpstatus").style.color = "green";
-                break;
-            case 'Status : warning' :
-                document.getElementById("domorpstatus").style.color = "yellow";
-                break;
-            case 'Status : danger' :
-                document.getElementById("domorpstatus").style.color = "red";
-                break;
-            default :
-                console.log('Correspond à aucun soucis status : '+document.getElementById("domorpstatus").innerHTML);
-        }
-
-        switch (document.getElementById("domsaltstatus").innerHTML){
-            case 'Status : normal' :
-                document.getElementById("domsaltstatus").style.color = "green";
-                break;
-            case 'Status : warning' :
-                document.getElementById("domsaltstatus").style.color = "yellow";
-                break;
-            case 'Status : danger' :
-                document.getElementById("domsaltstatus").style.color = "red";
-                break;
-            default :
-                console.log('Correspond à aucun soucis status : '+document.getElementById("domsaltstatus").innerHTML);
-        }
-
-        if ((document.getElementById("auxiliaire").getAttribute("data-aux") === 'on' && document.getElementById("lumiere_aux"))
-            || (document.getElementById("auxiliaire").getAttribute("data-aux") === 'on' && document.getElementById("autre_aux"))){
-            document.getElementById("icon_aux").style.color = "yellow";
-        } else if(document.getElementById("auxiliaire").getAttribute("data-aux") === 'on' && document.getElementById("chauffage_aux")){
-            document.getElementById("icon_aux").style.color = "red";
-        }
-
-        if ((document.getElementById("auxiliairesecond").getAttribute("data-auxsecond") === 'on' && document.getElementById("lumiere_aux_second"))
-            || (document.getElementById("auxiliairesecond").getAttribute("data-auxsecond") === 'on' && document.getElementById("autre_aux_second"))){
-            document.getElementById("icon_aux_second").style.color = "yellow";
-        } else if(document.getElementById("auxiliairesecond").getAttribute("data-auxsecond") === 'on' && document.getElementById("chauffage_aux_second")){
-            document.getElementById("icon_aux_second").style.color = "red";
-        }
-
-        if (document.getElementById("pompe").getAttribute("data-pompe") === "auto"){
-            document.getElementById("icon_pool").style.color = "yellow";
-        } else if(document.getElementById("pompe").getAttribute("data-pompe") === "on"){
-            document.getElementById("icon_pool").style.color = "green";
-        } else if(document.getElementById("pompe").getAttribute("data-pompe") === "off"){
-            document.getElementById("icon_pool").style.color = "red";
-        }
-
-    </script>
+    <script src="plugins/oklyn/core/template/js/oklyn.js"></script>
+    <link href="plugins/oklyn/core/template/css/oklyn.css" rel="stylesheet">
 </div>

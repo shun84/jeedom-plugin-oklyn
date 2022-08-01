@@ -192,8 +192,8 @@ class oklyn extends eqLogic {
     }
 
     public function preSave() {
-        $this->setDisplay("width","792px");
-        $this->setDisplay("height","232px");
+        $this->setDisplay("width","302px");
+        $this->setDisplay("height","380px");
     }
 
     /**
@@ -379,7 +379,7 @@ class oklyn extends eqLogic {
         if (!is_object($pompestatus)) {
             $pompestatus = new oklynCmd();
         }
-        $pompestatus->setName(__('Pompe Status', __FILE__));
+        $pompestatus->setName(__('Pompe Status lol', __FILE__));
         $pompestatus->setLogicalId('pompestatus');
         $pompestatus->setEqLogic_id($this->getId());
         $pompestatus->setType('info');
@@ -605,7 +605,7 @@ class oklyn extends eqLogic {
 }
 
 class oklynCmd extends cmd {
-    public static $_widgetPossibility = ['custom' => false];
+    public static $_widgetPossibility = ['custom' => true];
 
     /**
      * @throws Exception

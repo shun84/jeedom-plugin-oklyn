@@ -1,0 +1,56 @@
+section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 70px;
+    margin-top: -5px;
+    background: white;
+}
+
+.curve {
+    position: absolute;
+    height: 40px;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+}
+
+.curve::before {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 80% 50%;
+    width: 55%;
+    height: 100%;
+    transform: translate(85%, 60%);
+    background-color: #015871;
+}
+
+.curve::after {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 130% 50%;
+    width: 55%;
+    height: 100%;
+    background-color: white;
+    transform: translate(-4%, 40%);
+}
+
+#outer-circle-ph,
+#outer-circle-orp,
+#outer-circle-salt
+{
+    background: #015871;
+    border-radius: 50%;
+    height: 55px;
+    width: 55px;
+    position: relative;
+    margin: 10px;
+}
+
+.circle_text{
+    display:block;
+    padding-top:10px;
+}
