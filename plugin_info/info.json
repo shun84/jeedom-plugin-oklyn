@@ -10,8 +10,11 @@
 	"category" : "devicecommunication",
 	"changelog" : "https://shun84.github.io/jeedom-plugin-oklyn/#language#/changelog",
 	"documentation" : "https://shun84.github.io/jeedom-plugin-oklyn/#language#/",
+	"changelog_beta" : "https://shun84.github.io/jeedom-plugin-oklyn/#language#/beta/changelog",
+	"documentation_beta" : "https://shun84.github.io/jeedom-plugin-oklyn/#language#/beta/",
 	"hasDependency" : false,
 	"hasOwnDeamon" : false,
+	"display": "panel",
 	"language" : ["fr_FR"],
 	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobileapp", "v4"],
 	"maxDependancyInstallTime" : 0

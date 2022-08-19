@@ -23,18 +23,6 @@ require_once __DIR__ . '/../../core/api/oklynApi.php';
 class oklyn extends eqLogic {
     /* *************************Attributs****************************** */
     public static $_widgetPossibility = array('custom' => true, 'custom::layout' => false);
-    public const GENERICOKLYN = [
-        'TEMPERATUREAIR' => 'OKLYN_TEMPERATUREAIR',
-        'TEMPERATUREEAU' => 'OKLYN_TEMPERATUREEAU',
-        'ORP' => 'OKLYN_ORP',
-        'PH' => 'OKLYN_PH',
-        'SEL' => 'OKLYN_SEL',
-        'AUXOFF' => 'OKLYN_AUXOFF',
-        'AUXON' => 'OKLYN_AUXON',
-        'POMPEOFF' => 'OKLYN_POMPEOFF',
-        'POMPEON' => 'OKLYN_POMPEON',
-        'POMPEAUTO' => 'OKLYN_POMPEAUTO'
-    ];
 
     protected const PACKOKLYN = [
         'AUCUN' => 'aucun',
@@ -52,82 +40,6 @@ class oklyn extends eqLogic {
         }
     }
 
-    public static function pluginGenericTypes(): array
-    {
-        return [
-            self::GENERICOKLYN['TEMPERATUREAIR'] => [
-                'name' => __('Temperature de l\'air',__FILE__),
-                'familyid' => 'oklyn',
-                'family' => __('Plugin Oklyn',__FILE__),
-                'type' => 'Info',
-                'subtype' => ['numeric']
-            ],
-            self::GENERICOKLYN['TEMPERATUREEAU'] => [
-                'name' => __('Temperature de l\'eau',__FILE__),
-                'familyid' => 'oklyn',
-                'family' => __('Plugin Oklyn',__FILE__),
-                'type' => 'Info',
-                'subtype' => ['numeric']
-            ],
-            self::GENERICOKLYN['ORP'] => [
-                'name' => __('ORP',__FILE__),
-                'familyid' => 'oklyn',
-                'family' => __('Plugin Oklyn',__FILE__),
-                'type' => 'Info',
-                'subtype' => ['numeric']
-            ],
-            self::GENERICOKLYN['PH'] => [
-                'name' => __('PH',__FILE__),
-                'familyid' => 'oklyn',
-                'family' => __('Plugin Oklyn',__FILE__),
-                'type' => 'Info',
-                'subtype' => ['numeric']
-            ],
-            self::GENERICOKLYN['SEL'] => [
-                'name' => __('SEL',__FILE__),
-                'familyid' => 'oklyn',
-                'family' => __('Plugin Oklyn',__FILE__),
-                'type' => 'Info',
-                'subtype' => ['numeric']
-            ],
-            self::GENERICOKLYN['AUXOFF'] => [
-                'name' => __('Arrêter l\'auxilaire',__FILE__),
-                'familyid' => 'oklyn',
-                'family' => __('Plugin Oklyn',__FILE__),
-                'type' => 'Action',
-                'subtype' => ['other']
-            ],
-            self::GENERICOKLYN['AUXON'] => [
-                'name' => __('Lancer l\'auxilaire',__FILE__),
-                'familyid' => 'oklyn',
-                'family' => __('Plugin Oklyn',__FILE__),
-                'type' => 'Action',
-                'subtype' => ['other']
-            ],
-            self::GENERICOKLYN['POMPEOFF'] => [
-                'name' => __('Arrêter la pompe',__FILE__),
-                'familyid' => 'oklyn',
-                'family' => __('Plugin Oklyn',__FILE__),
-                'type' => 'Action',
-                'subtype' => ['other']
-            ],
-            self::GENERICOKLYN['POMPEON'] => [
-                'name' => __('Lancer la pompe',__FILE__),
-                'familyid' => 'oklyn',
-                'family' => __('Plugin Oklyn',__FILE__),
-                'type' => 'Action',
-                'subtype' => ['other']
-            ],
-            self::GENERICOKLYN['POMPEAUTO'] => [
-                'name' => __('Mode automatique de la pompe',__FILE__),
-                'familyid' => 'oklyn',
-                'family' => __('Plugin Oklyn',__FILE__),
-                'type' => 'Action',
-                'subtype' => ['other']
-            ]
-        ];
-    }
-
     /* *********************Méthodes d'instance************************* */
 
     /**
@@ -136,30 +48,17 @@ class oklyn extends eqLogic {
     public function updateOklyn(){
         $api = new oklynApi(config::byKey('apicle','oklyn'));
         $airdate = new DateTime($api->getSonde('air','recorded'));
-        $waterdate = new DateTime($api->getSonde('water','recorded'));
-        $phdate = new DateTime($api->getSonde('ph','recorded'));
-        $orpdate = new DateTime($api->getSonde('orp','recorded'));
-        $saltdate = new DateTime($api->getSonde('salt','recorded'));
 
         $this->checkAndUpdateCmd('air', $api->getSonde('air','value'));
         $this->checkAndUpdateCmd('dateair', $airdate->format('d/m/Y \à H:i'));
         $this->checkAndUpdateCmd('water', $api->getSonde('water','value'));
-        $this->checkAndUpdateCmd('datewater', $waterdate->format('d/m/Y \à H:i'));
         $this->checkAndUpdateCmd('ph', $api->getSonde('ph','value'));
-        $this->checkAndUpdateCmd('phstatus', $api->getSonde('ph','status'));
-        $this->checkAndUpdateCmd('phdate', $phdate->format('d/m/Y \à H:i'));
         $this->checkAndUpdateCmd('orp', $api->getSonde('orp','value'));
-        $this->checkAndUpdateCmd('orpstatus', $api->getSonde('orp','status'));
-        $this->checkAndUpdateCmd('orpdate', $orpdate->format('d/m/Y \à H:i'));
         $this->checkAndUpdateCmd('salt', $api->getSonde('salt','value'));
-        $this->checkAndUpdateCmd('saltstatus', $api->getSonde('salt','status'));
-        $this->checkAndUpdateCmd('saltdate', $saltdate->format('d/m/Y \à H:i'));
         $this->checkAndUpdateCmd('pompe', $api->getPompe('pump'));
         $this->checkAndUpdateCmd('pompestatus', $api->getPompe('status'));
         $this->checkAndUpdateCmd('aux', $api->getAux('aux','aux'));
-        $this->checkAndUpdateCmd('auxstatus', $api->getAux('aux','status'));
         $this->checkAndUpdateCmd('auxsecond', $api->getAux('aux2','aux'));
-        $this->checkAndUpdateCmd('auxsecondstatus', $api->getAux('aux2','status'));
 
         $this->refreshWidget();
     }
@@ -203,15 +102,15 @@ class oklyn extends eqLogic {
         $air = $this->getCmd(null, 'air');
         if (!is_object($air)) {
             $air = new oklynCmd();
-            $air->setIsHistorized(1);
         }
         $air->setName(__('Air', __FILE__));
         $air->setLogicalId('air');
         $air->setEqLogic_id($this->getId());
-        $air->setGeneric_type(self::GENERICOKLYN['TEMPERATUREAIR']);
+        $air->setGeneric_type('TEMPERATURE');
         $air->setUnite('°C');
         $air->setType('info');
         $air->setSubType('numeric');
+        $air->setIsHistorized(1);
         $air->save();
 
         $dateair= $this->getCmd(null, 'dateair');
@@ -228,163 +127,66 @@ class oklyn extends eqLogic {
         $water= $this->getCmd(null, 'water');
         if (!is_object($water)) {
             $water = new oklynCmd();
-            $water->setIsHistorized(1);
         }
         $water->setName(__('Eau', __FILE__));
         $water->setLogicalId('water');
         $water->setEqLogic_id($this->getId());
-        $water->setGeneric_type(self::GENERICOKLYN['TEMPERATUREEAU']);
+        $water->setGeneric_type('TEMPERATURE');
         $water->setUnite('°C');
         $water->setType('info');
         $water->setSubType('numeric');
+        $water->setIsHistorized(1);
         $water->save();
-
-        $datewater = $this->getCmd(null, 'datewater');
-        if (!is_object($datewater)) {
-            $datewater = new oklynCmd();
-        }
-        $datewater->setName(__('Date Eau', __FILE__));
-        $datewater->setLogicalId('datewater');
-        $datewater->setEqLogic_id($this->getId());
-        $datewater->setType('info');
-        $datewater->setSubType('string');
-        $datewater->save();
 
         $confpackoklyn = $this->getConfiguration('packoklyn');
         if ($confpackoklyn == self::PACKOKLYN['PHSEUL'] || $confpackoklyn == self::PACKOKLYN['PHREDOX'] || $confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
             $ph = $this->getCmd(null, 'ph');
             if (!is_object($ph)) {
                 $ph = new oklynCmd();
-                $ph->setIsHistorized(1);
+
             }
-            $ph->setName(__('PH', __FILE__));
+            $ph->setName(__('Ph', __FILE__));
             $ph->setLogicalId('ph');
             $ph->setEqLogic_id($this->getId());
-            $ph->setGeneric_type(self::GENERICOKLYN['PH'] );
+            $ph->setGeneric_type('GENERIC_INFO');
             $ph->setType('info');
             $ph->setSubType('numeric');
+            $ph->setUnite('Ph');
+            $ph->setIsHistorized(1);
             $ph->save();
-
-            $phstatus = $this->getCmd(null, 'phstatus');
-            if (!is_object($phstatus)) {
-                $phstatus = new oklynCmd();
-            }
-            $phstatus->setName(__('Status PH', __FILE__));
-            $phstatus->setLogicalId('phstatus');
-            $phstatus->setEqLogic_id($this->getId());
-            $phstatus->setType('info');
-            $phstatus->setSubType('string');
-            $phstatus->save();
-
-            $phdate = $this->getCmd(null, 'phdate');
-            if (!is_object($phdate)) {
-                $phdate = new oklynCmd();
-            }
-            $phdate->setName(__('Date ph', __FILE__));
-            $phdate->setLogicalId('phdate');
-            $phdate->setEqLogic_id($this->getId());
-            $phdate->setType('info');
-            $phdate->setSubType('string');
-            $phdate->save();
 
             if ($confpackoklyn == self::PACKOKLYN['PHREDOX'] || $confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
                 $orp= $this->getCmd(null, 'orp');
                 if (!is_object($orp)) {
                     $orp = new oklynCmd();
-                    $orp->setIsHistorized(1);
                 }
-                $orp->setName(__('ORP', __FILE__));
+                $orp->setName(__('Orp', __FILE__));
                 $orp->setLogicalId('orp');
                 $orp->setEqLogic_id($this->getId());
-                $orp->setGeneric_type(self::GENERICOKLYN['ORP'] );
+                $orp->setGeneric_type('GENERIC_INFO');
                 $orp->setUnite('mV');
                 $orp->setType('info');
                 $orp->setSubType('numeric');
+                $orp->setIsHistorized(1);
                 $orp->save();
-
-                $orpstatus = $this->getCmd(null, 'orpstatus');
-                if (!is_object($orpstatus)) {
-                    $orpstatus = new oklynCmd();
-                }
-                $orpstatus->setName(__('Status ORP', __FILE__));
-                $orpstatus->setLogicalId('orpstatus');
-                $orpstatus->setEqLogic_id($this->getId());
-                $orpstatus->setType('info');
-                $orpstatus->setSubType('string');
-                $orpstatus->save();
-
-                $orpdate = $this->getCmd(null, 'orpdate');
-                if (!is_object($orpdate)) {
-                    $orpdate = new oklynCmd();
-                }
-                $orpdate->setName(__('Date orp', __FILE__));
-                $orpdate->setLogicalId('orpdate');
-                $orpdate->setEqLogic_id($this->getId());
-                $orpdate->setType('info');
-                $orpdate->setSubType('string');
-                $orpdate->save();
             }
 
             if ($confpackoklyn == self::PACKOKLYN['PHREDOXSALT']){
                 $salt= $this->getCmd(null, 'salt');
                 if (!is_object($salt)) {
                     $salt = new oklynCmd();
-                    $salt->setIsHistorized(1);
                 }
-                $salt->setName(__('SEL', __FILE__));
+                $salt->setName(__('Sel', __FILE__));
                 $salt->setLogicalId('salt');
                 $salt->setEqLogic_id($this->getId());
-                $salt->setGeneric_type(self::GENERICOKLYN['SEL'] );
+                $salt->setGeneric_type('GENERIC_INFO');
                 $salt->setUnite('g/L');
                 $salt->setType('info');
                 $salt->setSubType('numeric');
+                $salt->setIsHistorized(1);
                 $salt->save();
-
-                $saltstatus = $this->getCmd(null, 'saltstatus');
-                if (!is_object($saltstatus)) {
-                    $saltstatus = new oklynCmd();
-                }
-                $saltstatus->setName(__('Status SEL', __FILE__));
-                $saltstatus->setLogicalId('saltstatus');
-                $saltstatus->setEqLogic_id($this->getId());
-                $saltstatus->setType('info');
-                $saltstatus->setSubType('string');
-                $saltstatus->save();
-
-                $saltdate = $this->getCmd(null, 'saltdate');
-                if (!is_object($saltdate)) {
-                    $saltdate = new oklynCmd();
-                }
-                $saltdate->setName(__('Date sel', __FILE__));
-                $saltdate->setLogicalId('saltdate');
-                $saltdate->setEqLogic_id($this->getId());
-                $saltdate->setType('info');
-                $saltdate->setSubType('string');
-                $saltdate->save();
             }
         }
-
-        $pompe = $this->getCmd(null, 'pompe');
-        if (!is_object($pompe)) {
-            $pompe = new oklynCmd();
-        }
-        $pompe->setName(__('Pompe', __FILE__));
-        $pompe->setLogicalId('pompe');
-        $pompe->setEqLogic_id($this->getId());
-        $pompe->setType('info');
-        $pompe->setSubType('string');
-        $pompe->save();
-
-        $pompestatus = $this->getCmd(null, 'pompestatus');
-        if (!is_object($pompestatus)) {
-            $pompestatus = new oklynCmd();
-        }
-        $pompestatus->setName(__('Pompe Status lol', __FILE__));
-        $pompestatus->setLogicalId('pompestatus');
-        $pompestatus->setEqLogic_id($this->getId());
-        $pompestatus->setType('info');
-        $pompestatus->setSubType('string');
-        $pompestatus->save();
 
         $aux = $this->getCmd(null, 'aux');
         if (!is_object($aux)) {
@@ -395,41 +197,33 @@ class oklyn extends eqLogic {
         $aux->setEqLogic_id($this->getId());
         $aux->setType('info');
         $aux->setSubType('string');
+        $aux->setGeneric_type('GENERIC_INFO');
         $aux->save();
-
-        $auxstatus = $this->getCmd(null, 'auxstatus');
-        if (!is_object($auxstatus)) {
-            $auxstatus = new oklynCmd();
-        }
-        $auxstatus->setName(__('Auxiliaire status', __FILE__));
-        $auxstatus->setLogicalId('auxstatus');
-        $auxstatus->setEqLogic_id($this->getId());
-        $auxstatus->setType('info');
-        $auxstatus->setSubType('string');
-        $auxstatus->save();
 
         $auxoff = $this->getCmd(null, 'auxoff');
         if (!is_object($auxoff)) {
             $auxoff = new oklynCmd();
         }
-        $auxoff->setName(__('Aux OFF', __FILE__));
+        $auxoff->setName(__('Aux Off', __FILE__));
         $auxoff->setLogicalId('auxoff');
         $auxoff->setEqLogic_id($this->getId());
-        $auxoff->setGeneric_type(self::GENERICOKLYN['AUXOFF']);
+        $auxoff->setGeneric_type('GENERIC_ACTION');
         $auxoff->setType('action');
         $auxoff->setSubType('other');
+        $auxoff->setValue($aux->getId());
         $auxoff->save();
 
         $auxon = $this->getCmd(null, 'auxon');
         if (!is_object($auxon)) {
             $auxon = new oklynCmd();
         }
-        $auxon->setName(__('Aux ON', __FILE__));
+        $auxon->setName(__('Aux On', __FILE__));
         $auxon->setLogicalId('auxon');
         $auxon->setEqLogic_id($this->getId());
-        $auxon->setGeneric_type(self::GENERICOKLYN['AUXON']);
+        $auxon->setGeneric_type('GENERIC_ACTION');
         $auxon->setType('action');
         $auxon->setSubType('other');
+        $auxon->setValue($aux->getId());
         $auxon->save();
 
         $auxsecond = $this->getCmd(null, 'auxsecond');
@@ -441,77 +235,96 @@ class oklyn extends eqLogic {
         $auxsecond->setEqLogic_id($this->getId());
         $auxsecond->setType('info');
         $auxsecond->setSubType('string');
+        $auxsecond->setGeneric_type('GENERIC_INFO');
         $auxsecond->save();
-
-        $auxsecondstatus = $this->getCmd(null, 'auxsecondstatus');
-        if (!is_object($auxsecondstatus)) {
-            $auxsecondstatus = new oklynCmd();
-        }
-        $auxsecondstatus->setName(__('Auxiliaire status 2', __FILE__));
-        $auxsecondstatus->setLogicalId('auxsecondstatus');
-        $auxsecondstatus->setEqLogic_id($this->getId());
-        $auxsecondstatus->setType('info');
-        $auxsecondstatus->setSubType('string');
-        $auxsecondstatus->save();
 
         $auxsecondoff = $this->getCmd(null, 'auxsecondoff');
         if (!is_object($auxsecondoff)) {
             $auxsecondoff = new oklynCmd();
         }
-        $auxsecondoff->setName(__('Aux OFF 2', __FILE__));
+        $auxsecondoff->setName(__('Aux 2 Off', __FILE__));
         $auxsecondoff->setLogicalId('auxsecondoff');
         $auxsecondoff->setEqLogic_id($this->getId());
-        $auxsecondoff->setGeneric_type(self::GENERICOKLYN['AUXOFF']);
+        $auxsecondoff->setGeneric_type('GENERIC_ACTION');
         $auxsecondoff->setType('action');
         $auxsecondoff->setSubType('other');
+        $auxsecondoff->setValue($auxsecond->getId());
         $auxsecondoff->save();
 
         $auxsecondon = $this->getCmd(null, 'auxsecondon');
         if (!is_object($auxsecondon)) {
             $auxsecondon = new oklynCmd();
         }
-        $auxsecondon->setName(__('Aux ON 2', __FILE__));
+        $auxsecondon->setName(__('Aux 2 On', __FILE__));
         $auxsecondon->setLogicalId('auxsecondon');
         $auxsecondon->setEqLogic_id($this->getId());
-        $auxsecondon->setGeneric_type(self::GENERICOKLYN['AUXON']);
+        $auxsecondon->setGeneric_type('GENERIC_ACTION');
         $auxsecondon->setType('action');
         $auxsecondon->setSubType('other');
+        $auxsecondon->setValue($auxsecond->getId());
         $auxsecondon->save();
+
+        $pompe = $this->getCmd(null, 'pompe');
+        if (!is_object($pompe)) {
+            $pompe = new oklynCmd();
+        }
+        $pompe->setName(__('Pompe', __FILE__));
+        $pompe->setLogicalId('pompe');
+        $pompe->setEqLogic_id($this->getId());
+        $pompe->setType('info');
+        $pompe->setSubType('string');
+        $pompe->setGeneric_type('GENERIC_INFO');
+        $pompe->save();
+
+        $pompestatus = $this->getCmd(null, 'pompestatus');
+        if (!is_object($pompestatus)) {
+            $pompestatus = new oklynCmd();
+        }
+        $pompestatus->setName(__('Pompe status', __FILE__));
+        $pompestatus->setLogicalId('pompestatus');
+        $pompestatus->setEqLogic_id($this->getId());
+        $pompestatus->setType('info');
+        $pompestatus->setSubType('string');
+        $pompestatus->setIsHistorized(1);
+        $pompestatus->save();
 
         $pompeoff = $this->getCmd(null, 'pompeoff');
         if (!is_object($pompeoff)) {
             $pompeoff = new oklynCmd();
         }
-        $pompeoff->setName(__('Pompe OFF', __FILE__));
+        $pompeoff->setName(__('Off', __FILE__));
         $pompeoff->setLogicalId('pompeoff');
         $pompeoff->setEqLogic_id($this->getId());
-        $pompeoff->setGeneric_type(self::GENERICOKLYN['POMPEOFF']);
+        $pompeoff->setGeneric_type('GENERIC_ACTION');
         $pompeoff->setType('action');
         $pompeoff->setSubType('other');
+        $pompeoff->setValue($pompe->getId());
         $pompeoff->save();
 
         $pompeon = $this->getCmd(null, 'pompeon');
         if (!is_object($pompeon)) {
             $pompeon = new oklynCmd();
         }
-        $pompeon->setName(__('Pompe ON', __FILE__));
+        $pompeon->setName(__('On', __FILE__));
         $pompeon->setLogicalId('pompeon');
         $pompeon->setEqLogic_id($this->getId());
-        $pompeon->setGeneric_type(self::GENERICOKLYN['POMPEON']);
+        $pompeon->setGeneric_type('GENERIC_ACTION');
         $pompeon->setType('action');
         $pompeon->setSubType('other');
+        $pompeon->setValue($pompe->getId());
         $pompeon->save();
 
         $pompeauto = $this->getCmd(null, 'pompeauto');
         if (!is_object($pompeauto)) {
             $pompeauto = new oklynCmd();
         }
-        $pompeauto->setName(__('Pompe AUTO', __FILE__));
+        $pompeauto->setName(__('Auto', __FILE__));
         $pompeauto->setLogicalId('pompeauto');
         $pompeauto->setEqLogic_id($this->getId());
-        $pompeauto->setGeneric_type(self::GENERICOKLYN['POMPEAUTO']);
+        $pompeauto->setGeneric_type('GENERIC_ACTION');
         $pompeauto->setType('action');
         $pompeauto->setSubType('other');
+        $pompeauto->setValue($pompe->getId());
         $pompeauto->save();
 
         if ($this->getIsEnable() == 1) {
@@ -530,43 +343,37 @@ class oklyn extends eqLogic {
         $version = jeedom::versionAlias($_version);
 
         $air = $this->getCmd(null, 'air');
-        $replace['#temperature#'] = is_object($air) ? $air->execCmd() : '';
+        $replace['#idair#'] = is_object($air) ? $air->getId() : '';
+        $replace['#stateair#'] = is_object($air) ? $air->execCmd() : '';
+        $replace['#historyair#'] = is_object($air) && $air->getIsHistorized() === "1" ? 'history cursor' : '';
         $dateair = $this->getCmd(null, 'dateair');
         $replace['#datetemperature#'] = is_object($dateair) ? $dateair->execCmd() : '';
 
         $water = $this->getCmd(null, 'water');
-        $replace['#eau#'] = is_object($water) ? $water->execCmd() : '';
-        $datewater = $this->getCmd(null, 'datewater');
-        $replace['#dateeau#'] = is_object($datewater) ? $datewater->execCmd() : '';
+        $replace['#idwater#'] = is_object($water) ? $water->getId() : '';
+        $replace['#statewater#'] = is_object($water) ? $water->execCmd() : '';
+        $replace['#historywater#'] = is_object($water) && $water->getIsHistorized() === "1" ? 'history cursor' : '';
 
         $confpackoklyn = $this->getConfiguration('packoklyn');
         $replace['#confpackoklyn#'] = $confpackoklyn;
 
         $ph = $this->getCmd(null, 'ph');
-        $replace['#ph#'] = is_object($ph) ? $ph->execCmd() : '';
-        $phstatus = $this->getCmd(null, 'phstatus');
-        $replace['#phstatus#'] = is_object($phstatus) ? $phstatus->execCmd() : '';
-        $phdate = $this->getCmd(null, 'phdate');
-        $replace['#phdate#'] = is_object($phdate) ? $phdate->execCmd() : '';
+        $replace['#idph#'] = is_object($ph) ? $ph->getId() : '';
+        $replace['#stateph#'] = is_object($ph) ? $ph->execCmd() : '';
+        $replace['#historyph#'] = is_object($ph) && $ph->getIsHistorized() === "1" ? 'history cursor' : '';
 
         $orp = $this->getCmd(null, 'orp');
-        $replace['#orp#'] = is_object($orp) ? $orp->execCmd() : '';
-        $orpstatus = $this->getCmd(null, 'orpstatus');
-        $replace['#orpstatus#'] = is_object($orpstatus) ? $orpstatus->execCmd() : '';
-        $orpdate = $this->getCmd(null, 'orpdate');
-        $replace['#orpdate#'] = is_object($orpdate) ? $orpdate->execCmd() : '';
+        $replace['#idorp#'] = is_object($orp) ? $orp->getId() : '';
+        $replace['#stateorp#'] = is_object($orp) ? $orp->execCmd() : '';
+        $replace['#historyorp#'] = is_object($orp) && $orp->getIsHistorized() === "1" ? 'history cursor' : '';
 
         $salt = $this->getCmd(null, 'salt');
-        $replace['#salt#'] = is_object($salt) ? $salt->execCmd() : '';
-        $saltstatus = $this->getCmd(null, 'saltstatus');
-        $replace['#saltstatus#'] = is_object($saltstatus) ? $saltstatus->execCmd() : '';
-        $saltdate = $this->getCmd(null, 'saltdate');
-        $replace['#saltdate#'] = is_object($saltdate) ? $saltdate->execCmd() : '';
+        $replace['#idsalt#'] = is_object($salt) ? $salt->getId() : '';
+        $replace['#statesalt#'] = is_object($salt) ? $salt->execCmd() : '';
+        $replace['#historysalt#'] = is_object($salt) && $salt->getIsHistorized() === "1" ? 'history cursor' : '';
 
         $pompe = $this->getCmd(null, 'pompe');
         $replace['#pompe#'] = is_object($pompe) ? $pompe->execCmd() : '';
-        $pompestatus = $this->getCmd(null, 'pompestatus');
-        $replace['#pompestatus#'] = is_object($pompestatus) ? $pompestatus->execCmd() : '';
         $pompeoff = $this->getCmd(null, 'pompeoff');
         $replace['#pompeoff_id#'] = is_object($pompeoff) ? $pompeoff->getId() : '';
         $pompeon = $this->getCmd(null, 'pompeon');
@@ -576,8 +383,6 @@ class oklyn extends eqLogic {
 
         $aux = $this->getCmd(null, 'aux');
         $replace['#aux#'] = is_object($aux) ? $aux->execCmd() : '';
-        $auxstatus = $this->getCmd(null, 'auxstatus');
-        $replace['#auxstatus#'] = is_object($auxstatus) ? $auxstatus->execCmd() : '';
         $auxoff = $this->getCmd(null, 'auxoff');
         $replace['#auxoff_id#'] = is_object($auxoff) ? $auxoff->getId() : '';
         $auxon = $this->getCmd(null, 'auxon');
@@ -585,8 +390,6 @@ class oklyn extends eqLogic {
 
         $auxsecond = $this->getCmd(null, 'auxsecond');
         $replace['#auxsecond#'] = is_object($auxsecond) ? $auxsecond->execCmd() : '';
-        $auxsecondstatus = $this->getCmd(null, 'auxsecondstatus');
-        $replace['#auxsecondstatus#'] = is_object($auxsecondstatus) ? $auxsecondstatus->execCmd() : '';
         $auxsecondoff = $this->getCmd(null, 'auxsecondoff');
         $replace['#auxsecondoff_id#'] = is_object($auxsecondoff) ? $auxsecondoff->getId() : '';
         $auxsecondon = $this->getCmd(null, 'auxsecondon');
@@ -605,7 +408,7 @@ class oklyn extends eqLogic {
 }
 
 class oklynCmd extends cmd {
-    public static $_widgetPossibility = ['custom' => true];
+    public static $_widgetPossibility = ['custom' => false];
 
     /**
      * @throws Exception
