@@ -31,23 +31,25 @@ function displayOklyn(object_id) {
             $('#oklynname').empty().append(icon + ' ' + data.result.object.name);
 
             for (let i in data.result.eqLogics) {
-                graphesOklyn(data.result.eqLogics[i].eqLogic.id);
+                graphesOklyn(data.result.eqLogics[i].eqLogic.id, data.result.eqLogics[i].eqLogic.configuration.packoklyn);
             }
         }
     });
 }
 
-function graphesOklyn(_eqLogic_id) {
+function graphesOklyn(_eqLogic_id, _param_pack) {
     jeedom.eqLogic.getCmd({
         id: _eqLogic_id,
         error: function (error) {
             $.fn.showAlert({message: error.message, level: 'danger'});
         },
         success: function (cmds) {
+            debugger
             const histoairwater = document.getElementById('oklyn_air_water');
             const histoph = document.getElementById('oklyn_ph');
             const histoorp = document.getElementById('oklyn_orp');
             const histosalt = document.getElementById('oklyn_salt');
+            const packoklyn = _param_pack;
 
             for (let i in cmds) {
                 if (cmds[i].logicalId === 'air') {
@@ -78,55 +80,69 @@ function graphesOklyn(_eqLogic_id) {
                     });
                     histoairwater.innerHTML = '<div class="chartContainer" id="oklyn_air_water' + _eqLogic_id + '"></div>';
                 }
+                if (packoklyn === 'phseul' || packoklyn === 'phredox' || packoklyn === 'phredoxsalt'){
+                    if (cmds[i].logicalId === 'ph') {
+                        jeedom.history.drawChart({
+                            cmd_id: cmds[i].id,
+                            dateStart: $('#in_startDate').value(),
+                            dateEnd: $('#in_endDate').value(),
+                            el: 'oklyn_ph' + _eqLogic_id,
+                            option: {
+                                graphColor: '#8612f3',
+                                derive : 0,
+                                graphZindex : 0
+                            }
+                        });
+                        histoph.innerHTML = '<div class="chartContainer" id="oklyn_ph' + _eqLogic_id + '"></div>';
+                    }
 
-                if (cmds[i].logicalId === 'ph') {
-                    jeedom.history.drawChart({
-                        cmd_id: cmds[i].id,
-                        dateStart: $('#in_startDate').value(),
-                        dateEnd: $('#in_endDate').value(),
-                        el: 'oklyn_ph' + _eqLogic_id,
-                        option: {
-                            graphColor: '#8612f3',
-                            derive : 0,
-                            graphZindex : 0
+                    if (packoklyn === 'phredox' || packoklyn === 'phredoxsalt'){
+                        if (cmds[i].logicalId === 'orp') {
+                            jeedom.history.drawChart({
+                                cmd_id: cmds[i].id,
+                                dateStart: $('#in_startDate').value(),
+                                dateEnd: $('#in_endDate').value(),
+                                el: 'oklyn_orp' + _eqLogic_id,
+                                option: {
+                                    graphColor: '#43f312',
+                                    derive : 0,
+                                    graphZindex : 0
+                                }
+                            });
+                            histoorp.innerHTML = '<div class="chartContainer" id="oklyn_orp' + _eqLogic_id + '"></div>';
                         }
-                    });
-                    histoph.innerHTML = '<div class="chartContainer" id="oklyn_ph' + _eqLogic_id + '"></div>';
-                }
-                if (cmds[i].logicalId === 'orp') {
-                    jeedom.history.drawChart({
-                        cmd_id: cmds[i].id,
-                        dateStart: $('#in_startDate').value(),
-                        dateEnd: $('#in_endDate').value(),
-                        el: 'oklyn_orp' + _eqLogic_id,
-                        option: {
-                            graphColor: '#43f312',
-                            derive : 0,
-                            graphZindex : 0
+                        if (packoklyn === 'phredoxsalt'){
+                            if (cmds[i].logicalId === 'salt') {
+                                jeedom.history.drawChart({
+                                    cmd_id: cmds[i].id,
+                                    dateStart: $('#in_startDate').value(),
+                                    dateEnd: $('#in_endDate').value(),
+                                    el: 'oklyn_salt' + _eqLogic_id,
+                                    option: {
+                                        graphColor: '#090704',
+                                        derive : 0,
+                                        graphZindex : 0
+                                    }
+                                });
+                                histosalt.innerHTML = '<div class="chartContainer" id="oklyn_salt' + _eqLogic_id + '"></div>';
+                            }
                         }
-                    });
-                    histoorp.innerHTML = '<div class="chartContainer" id="oklyn_orp' + _eqLogic_id + '"></div>';
-                }
-                if (cmds[i].logicalId === 'salt') {
-                    jeedom.history.drawChart({
-                        cmd_id: cmds[i].id,
-                        dateStart: $('#in_startDate').value(),
-                        dateEnd: $('#in_endDate').value(),
-                        el: 'oklyn_salt' + _eqLogic_id,
-                        option: {
-                            graphColor: '#090704',
-                            derive : 0,
-                            graphZindex : 0
-                        }
-                    });
-                    histosalt.innerHTML = '<div class="chartContainer" id="oklyn_salt' + _eqLogic_id + '"></div>';
+                    }
+
                 }
             }
             setTimeout(function(){
+                debugger
                 jeedom.history.chart['oklyn_air_water' + _eqLogic_id].chart.xAxis[0].setExtremes(jeedom.history.chart['oklyn_air_water' + _eqLogic_id].chart.navigator.xAxis.min,jeedom.history.chart['oklyn_air_water' + _eqLogic_id].chart.navigator.xAxis.max);
-                jeedom.history.chart['oklyn_ph' + _eqLogic_id].chart.xAxis[0].setExtremes(jeedom.history.chart['oklyn_ph' + _eqLogic_id].chart.navigator.xAxis.min,jeedom.history.chart['oklyn_ph' + _eqLogic_id].chart.navigator.xAxis.max);
-                jeedom.history.chart['oklyn_orp' + _eqLogic_id].chart.xAxis[0].setExtremes(jeedom.history.chart['oklyn_orp' + _eqLogic_id].chart.navigator.xAxis.min,jeedom.history.chart['oklyn_orp' + _eqLogic_id].chart.navigator.xAxis.max);
-                jeedom.history.chart['oklyn_salt' + _eqLogic_id].chart.xAxis[0].setExtremes(jeedom.history.chart['oklyn_salt' + _eqLogic_id].chart.navigator.xAxis.min,jeedom.history.chart['oklyn_salt' + _eqLogic_id].chart.navigator.xAxis.max);
+                if (packoklyn === 'phseul' || packoklyn === 'phredox' || packoklyn === 'phredoxsalt'){
+                    jeedom.history.chart['oklyn_ph' + _eqLogic_id].chart.xAxis[0].setExtremes(jeedom.history.chart['oklyn_ph' + _eqLogic_id].chart.navigator.xAxis.min,jeedom.history.chart['oklyn_ph' + _eqLogic_id].chart.navigator.xAxis.max);
+                    if (packoklyn === 'phredox' || packoklyn === 'phredoxsalt'){
+                        jeedom.history.chart['oklyn_orp' + _eqLogic_id].chart.xAxis[0].setExtremes(jeedom.history.chart['oklyn_orp' + _eqLogic_id].chart.navigator.xAxis.min,jeedom.history.chart['oklyn_orp' + _eqLogic_id].chart.navigator.xAxis.max);
+                        if (packoklyn === 'phredoxsalt'){
+                            jeedom.history.chart['oklyn_salt' + _eqLogic_id].chart.xAxis[0].setExtremes(jeedom.history.chart['oklyn_salt' + _eqLogic_id].chart.navigator.xAxis.min,jeedom.history.chart['oklyn_salt' + _eqLogic_id].chart.navigator.xAxis.max);
+                        }
+                    }
+                }
             }, 1000);
         }
     });
