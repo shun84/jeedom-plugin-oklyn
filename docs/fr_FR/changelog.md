@@ -4,6 +4,16 @@
 >
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
+
+# 28/08/2022
+- Mise en place d'un widget dashbord sans sel et auxilaire 2
+
+# 15/08/2022
+- Mise en place du design sur le dashbord comme l'app mobile de Oklyn
+- Supression des doublons de statut
+- Mise en place des historiques sur le dashbord sur un clique pour toutes les informations
+- Mise en place d'un panel qui regroupe toutes les historiques des informations
+
 # 07/05/2022
 - Optimisation du design coté desktop et vue mobile
 

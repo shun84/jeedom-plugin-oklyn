@@ -43,11 +43,12 @@ section {
 #outer-circle-salt
 {
     background: #015871;
+    text-align: center;
     border-radius: 50%;
     height: 55px;
     width: 55px;
     position: relative;
-    margin: 10px;
+    margin: auto;
 }
 
 .circle_text{

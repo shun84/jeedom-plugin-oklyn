@@ -21,7 +21,7 @@
     </section>
     <div class=" text-center state #historywater#" data-cmd_id="#idwater#" style="font-size: 35px; padding-top: 15px; background-color: #015871">#statewater#°</div>
     <div style="height: 110px; background-color: #015871">
-        <a id="icon_filtation" class="col-md-4 text-center" style="margin-top: 10px">
+        <a id="icon_filtation" class="col-xs-6 text-center" style="margin-top: 10px">
             <div id="popuppool"
                  data-type="action"
                  data-toggle="tooltip"
@@ -33,48 +33,30 @@
             </div>
             <div id="icon_pool" onclick="popUpPool()"><i class="fas fa-swimming-pool fa-4x"></i></div>
         </a>
-        <a class="#confaux# col-md-4 text-center" id="#confaux#_aux" style="margin-top: 10px">
+        <a class="#confaux# col-xs-6 text-center" id="#confaux#_aux" style="margin-top: 10px">
             <div class="cmd cmd-widget"
-                  data-type="action"
-                  data-toggle="tooltip"
-                  data-statut="#aux#"
-                  data-subtype="other"
-                  data-cmd_on_id="#auxon_id#"
-                  data-cmd_off_id="#auxoff_id#"
-                  id="icon_aux">
-            </div>
-        </a>
-        <a class="#confauxsecond# col-md-4 text-center" id="#confauxsecond#_aux_second" style="margin-top: 10px">
-            <div class="cmd cmd-widget"
-                  data-type="action"
-                  data-toggle="tooltip"
-                  data-statutsecond="#auxsecond#"
-                  data-subtype="other"
-                  data-cmd_on_id="#auxsecondon_id#"
-                  data-cmd_off_id="#auxsecondoff_id#"
-                  id="icon_aux_second">
+                 data-type="action"
+                 data-toggle="tooltip"
+                 data-statut="#aux#"
+                 data-subtype="other"
+                 data-cmd_on_id="#auxon_id#"
+                 data-cmd_off_id="#auxoff_id#"
+                 id="icon_aux">
             </div>
         </a>
     </div>
     <div style="height: 100px; background-color: #015871">
-        <div class="col-md-4 #historyph#" data-cmd_id="#idph#" id="phseul">
+        <div class="col-xs-6 #historyph#" data-cmd_id="#idph#" id="phseul">
             <div id="outer-circle-ph">
                 <div class="circle_text state">
                     <strong id="domph">#stateph#<br>pH</strong>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 #historyorp#" data-cmd_id="#idorp#" id="phredox">
+        <div class="col-xs-6 #historyorp#" data-cmd_id="#idorp#" id="phredox">
             <div id="outer-circle-orp">
                 <div class="circle_text state">
                     <strong id="domorp">#stateorp#<br>RedOx</strong>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 #historysalt#" data-cmd_id="#idsalt#" id="phredoxsalt">
-            <div id="outer-circle-salt">
-                <div class="circle_text state">
-                    <strong id="domsalt">#statesalt#<br>Sel</strong>
                 </div>
             </div>
         </div>
@@ -83,6 +65,6 @@
         #datetemperature#
     </div>
     #divGraphInfo#
-    <script src="plugins/oklyn/core/template/js/oklyn.js"></script>
+    <script src="plugins/oklyn/core/template/js/phredox.js"></script>
     <link href="plugins/oklyn/core/template/css/oklyn.css" rel="stylesheet">
 </div>

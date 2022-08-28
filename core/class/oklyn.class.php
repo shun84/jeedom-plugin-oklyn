@@ -401,7 +401,16 @@ class oklyn extends eqLogic {
         $confauxsecond = $this->getConfiguration('auxiliairesecond');
         $replace['#confauxsecond#'] = $confauxsecond;
 
-        $html = $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'oklyn', 'oklyn')));
+        if (
+            $this->getConfiguration('auxiliaire') !== 'aucun' &&
+            $this->getConfiguration('packoklyn') === 'phredox' &&
+            $this->getConfiguration('auxiliairesecond') === 'aucun'
+        ){
+            $html = $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'phredox', 'oklyn')));
+        } else {
+            $html = $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'oklyn', 'oklyn')));
+        }
+
         cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
         return $html;
     }
