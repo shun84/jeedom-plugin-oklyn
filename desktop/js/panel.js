@@ -44,7 +44,6 @@ function graphesOklyn(_eqLogic_id, _param_pack) {
             $.fn.showAlert({message: error.message, level: 'danger'});
         },
         success: function (cmds) {
-            debugger
             const histoairwater = document.getElementById('oklyn_air_water');
             const histoph = document.getElementById('oklyn_ph');
             const histoorp = document.getElementById('oklyn_orp');
@@ -132,7 +131,6 @@ function graphesOklyn(_eqLogic_id, _param_pack) {
                 }
             }
             setTimeout(function(){
-                debugger
                 jeedom.history.chart['oklyn_air_water' + _eqLogic_id].chart.xAxis[0].setExtremes(jeedom.history.chart['oklyn_air_water' + _eqLogic_id].chart.navigator.xAxis.min,jeedom.history.chart['oklyn_air_water' + _eqLogic_id].chart.navigator.xAxis.max);
                 if (packoklyn === 'phseul' || packoklyn === 'phredox' || packoklyn === 'phredoxsalt'){
                     jeedom.history.chart['oklyn_ph' + _eqLogic_id].chart.xAxis[0].setExtremes(jeedom.history.chart['oklyn_ph' + _eqLogic_id].chart.navigator.xAxis.min,jeedom.history.chart['oklyn_ph' + _eqLogic_id].chart.navigator.xAxis.max);
