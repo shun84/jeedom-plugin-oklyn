@@ -28,7 +28,7 @@ Les valeurs à sélectionner obligatoirement :
 - **Pack Oklyn :** sélectionner le pack que vous avez acheté au prêt d’Oklyn.
 - **Auxilaire :** sélectionner l'auxilaire utiliser ou pas.
 
-Les données sont rafraîchies tout les 30 minutes.
+Les données sont rafraîchies tout les 30 minutes. test
     
 
 
