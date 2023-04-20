@@ -22,10 +22,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <span>{{Configuration}}</span>
             </div>
         </div>
-        <legend><i class="fas fa-table"></i> {{Mes templates}}</legend>
+        <legend><i class="fas fa-table"></i> {{Mes Oklyn}}</legend>
         <?php
             if (count($eqLogics) == 0) {
-                echo '<br><div class="text-center" style="font-size:1.2em;font-weight:bold;">{{Aucun équipement Template trouvé, cliquer sur "Ajouter" pour commencer}}</div>';
+                echo '<br><div class="text-center" style="font-size:1.2em;font-weight:bold;">{{Aucun équipement Oklyn trouvé, cliquer sur "Ajouter" pour commencer}}</div>';
             } else {
                 // Champ de recherche
                 echo '<div class="input-group" style="margin:5px;">';
@@ -154,7 +154,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <legend><i class="fas fa-info"></i> {{Informations}}</legend>
                             <div class="form-group">
                                 <div class="text-center">
-                                    <img name="icon_visu" src="<?= $plugin->getPathImgIcon(); ?>" style="max-width:160px;"/>
+                                    <img src="<?= $plugin->getPathImgIcon(); ?>" style="max-width:160px;" alt=""/>
                                 </div>
                             </div>
                         </div>
@@ -162,16 +162,23 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 </form>
             </div>
             <div role="tabpanel" class="tab-pane" id="commandtab">
-                <table id="table_cmd" class="table table-bordered table-condensed">
-                    <thead>
+                <div class="table-responsive">
+                    <table id="table_cmd" class="table table-bordered table-condensed">
+                        <thead>
                         <tr>
-                            <th>{{Nom}}</th><th>{{Type}}</th><th>{{Action}}</th>
+                            <th class="hidden-xs" style="min-width:50px;width:70px;">ID</th>
+                            <th style="min-width:200px;width:350px;">{{Nom}}</th>
+                            <th>{{Type}}</th>
+                            <th style="min-width:260px;">{{Options}}</th>
+                            <th>{{Etat}}</th>
+                            <th style="min-width:80px;width:200px;">{{Actions}}</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- /.tabpanel #commandtab-->
         </div>
     </div>
 </div>

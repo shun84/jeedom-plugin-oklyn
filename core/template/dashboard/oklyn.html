@@ -6,7 +6,7 @@
      data-translate-category="#translate_category#"
      data-category="#category#"
      data-tags="#tags#"
-     style="width: #width#;height: #height#;#style#">
+     style="width: #width#;height: #height#;#style#; background-color: #015871 !important;">
     <div class="widget-name text-center">
         <span style="font-size: 1.2em;#hideEqLogicName#">
             <a href="#eqLink#">#name_display#
@@ -20,7 +20,7 @@
         <div class="curve"></div>
     </section>
     <div class=" text-center state #historywater#" data-cmd_id="#idwater#" style="font-size: 35px; padding-top: 15px; background-color: #015871">#statewater#°</div>
-    <div style="height: 110px; background-color: #015871">
+    <div style="height: 80px; background-color: #015871">
         <a id="icon_filtation" class="col-md-4 text-center" style="margin-top: 10px">
             <div id="popuppool"
                  data-type="action"
@@ -31,10 +31,10 @@
                  data-cmd_off_id="#pompeoff_id#"
                  data-pompe="#pompe#">
             </div>
-            <div id="icon_pool" onclick="popUpPool()"><i class="fas fa-swimming-pool fa-4x"></i></div>
+            <div id="icon_pool"><i class="fas fa-swimming-pool fa-4x"></i></div>
         </a>
         <a class="#confaux# col-md-4 text-center" id="#confaux#_aux" style="margin-top: 10px">
-            <div class="cmd cmd-widget"
+            <div class="cmd"
                   data-type="action"
                   data-toggle="tooltip"
                   data-statut="#aux#"
@@ -45,7 +45,7 @@
             </div>
         </a>
         <a class="#confauxsecond# col-md-4 text-center" id="#confauxsecond#_aux_second" style="margin-top: 10px">
-            <div class="cmd cmd-widget"
+            <div class="cmd"
                   data-type="action"
                   data-toggle="tooltip"
                   data-statutsecond="#auxsecond#"
@@ -56,6 +56,7 @@
             </div>
         </a>
     </div>
+    <div id="textfiltration" style="width: auto; height: 60px; display: none"></div>
     <div style="height: 100px; background-color: #015871">
         <div class="col-md-4 #historyph#" data-cmd_id="#idph#" id="phseul">
             <div id="outer-circle-ph">
@@ -83,6 +84,7 @@
         #datetemperature#
     </div>
     #divGraphInfo#
-    <script src="plugins/oklyn/core/template/js/oklyn.js"></script>
-    <link href="plugins/oklyn/core/template/css/oklyn.css" rel="stylesheet">
+    <script src="/plugins/oklyn/core/template/js/oklyn.js"></script>
+    <script src="/plugins/oklyn/core/template/js/commun.js"></script>
+    <link href="/plugins/oklyn/core/template/css/oklyn.css" rel="stylesheet">
 </div>

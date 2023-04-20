@@ -22,7 +22,7 @@ require_once __DIR__ . '/../../core/api/oklynApi.php';
 
 class oklyn extends eqLogic {
     /* *************************Attributs****************************** */
-    public static $_widgetPossibility = array('custom' => true, 'custom::layout' => false);
+    public static $_widgetPossibility = ['custom' => true, 'custom::layout' => false];
 
     protected const PACKOKLYN = [
         'AUCUN' => 'aucun',
@@ -88,11 +88,6 @@ class oklyn extends eqLogic {
         if ($this->getConfiguration('auxiliairesecond') == '') {
             throw new Exception(__('Veuillez sélectionner si vous utiliser un auxilaire 2 ou pas', __FILE__));
         }
-    }
-
-    public function preSave() {
-        $this->setDisplay("width","302px");
-        $this->setDisplay("height","380px");
     }
 
     /**
@@ -411,7 +406,7 @@ class oklyn extends eqLogic {
             $html = $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'oklyn', 'oklyn')));
         }
 
-        cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
+        cache::set('widgetHtml' . $_version . $this->getId(), $html);
         return $html;
     }
 }
@@ -422,7 +417,7 @@ class oklynCmd extends cmd {
     /**
      * @throws Exception
      */
-    public function execute($_options = array()) {
+    public function execute($_options = []) {
         $api = new oklynApi(config::byKey('apicle','oklyn'));
 
         if ($this->getLogicalId() == 'pompeoff') {
