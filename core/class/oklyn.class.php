@@ -32,6 +32,21 @@ class oklyn extends eqLogic {
     ];
 
     /* ***********************Methode static*************************** */
+    public static function cron() {
+        foreach (oklyn::byType('oklyn') as $eqLogic) {
+            if ($eqLogic->getIsEnable() == 1) {
+                $api = new oklynApi(config::byKey('apicle','oklyn'));
+
+                $eqLogic->checkAndUpdateCmd('pompe', $api->getPompe('pump'));
+                $eqLogic->checkAndUpdateCmd('pompestatus', $api->getPompe('status'));
+                $eqLogic->checkAndUpdateCmd('aux', $api->getAux('aux','aux'));
+                $eqLogic->checkAndUpdateCmd('auxsecond', $api->getAux('aux2','aux'));
+
+                $eqLogic->refreshWidget();
+            }
+        }
+    }
+
     public static function cron30() {
         foreach (oklyn::byType('oklyn') as $eqLogic) {
             if ($eqLogic->getIsEnable() == 1) {
