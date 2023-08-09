@@ -50,7 +50,11 @@ section {
     margin: auto;
 }
 
-.circle_text{
+.circle_text {
     display:block;
     padding-top:5px;
+}
+
+#selectpool {
+    width: 75px;
 }

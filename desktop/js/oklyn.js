@@ -81,10 +81,17 @@ function addCmdToTable(_cmd) {
         id:  $('.eqLogicAttr[data-l1key=id]').value(),
         filter: {type: 'info'},
         error: function (error) {
-            jeedomUtils.showAlert({
-                message: error.message,
-                level: 'danger'
-            })
+            if (jeeFrontEnd.jeedomVersion >= '4.4.0'){
+                jeedomUtils.showAlert({
+                    message: data.result,
+                    level: 'danger'
+                })
+            } else {
+                $.fn.showAlert({
+                    message: data.result,
+                    level: 'danger'
+                })
+            }
         },
         success: function (result) {
             tr.find('.cmdAttr[data-l1key=value]').append(result)

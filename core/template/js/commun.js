@@ -72,45 +72,57 @@ if (document.getElementById("icon_aux").getAttribute("data-statut") === 'on' && 
     document.getElementById("iconeautre").style.color = "yellow"
 }
 
+function popUpPool(){
+    const iconpool = document.getElementById("icon_pool");
+    const divfitration = document.getElementById("modefiltration");
+    const select = document.createElement("select");
+    const option = document.createElement("option");
+    const option1 = document.createElement("option");
+    const option2 = document.createElement("option");
+    const label = document.createElement("label");
 
-document.querySelector('#icon_pool').addEventListener('click', function () {
-    jeeDialog.dialog({
-        id: 'filtration',
-        title: 'Filtration',
-        fullScreen: false,
-        width: 250,
-        height: 200,
-        contentUrl: 'index.php?v=d&plugin=oklyn&modal=filtration',
-        buttons: {
-            confirm: {
-                label: 'Valider',
-                className: 'success',
-                callback: {
-                    click: function(event) {
-                        const selectpool =  document.getElementById('selectpool')
-                        const popuppool = document.querySelector('#popuppool')
-                        if (selectpool.value === 'auto'){
-                            jeedom.cmd.execute({id:popuppool.dataset.cmd_auto_id})
-                        }
-                        if (selectpool.value === 'on'){
-                            jeedom.cmd.execute({id:popuppool.dataset.cmd_on_id})
-                        }
-                        if (selectpool.value === 'off'){
-                            jeedom.cmd.execute({id:popuppool.dataset.cmd_off_id})
-                        }
-                        document.getElementById('filtration')._jeeDialog.destroy()
-                    }
-                }
-            },
-            cancel: {
-                label: 'Annuler',
-                className: 'warning',
-                callback: {
-                    click: function(event) {
-                        document.getElementById('filtration')._jeeDialog.destroy()
-                    }
-                }
-            }
+    iconpool.parentNode.removeChild(iconpool);
+
+    option.id = "poolauto";
+    option.value = "auto";
+    option.text = "Auto";
+
+    option1.id = "poolon";
+    option1.value = "on";
+    option1.text = "On";
+
+    option2.id = "pooloff";
+    option2.value = "off";
+    option2.text = "Off";
+
+    select.id = "selectpool";
+    select.add(option);
+    select.add(option1);
+    select.add(option2);
+
+    label.innerHTML = "Filtration";
+
+    document.getElementById("popuppool").appendChild(label).appendChild(select);
+
+    if (document.getElementById("popuppool").getAttribute("data-pompe") === "auto"){
+        document.getElementById("poolauto").selected = "true";
+    } else if(document.getElementById("popuppool").getAttribute("data-pompe") === "on"){
+        document.getElementById("poolon").selected = "true";
+        divfitration.style.display = "none";
+    } else if(document.getElementById("popuppool").getAttribute("data-pompe") === "off"){
+        document.getElementById("pooloff").selected = "true";
+        divfitration.style.display = "none";
+    }
+
+    document.getElementById('selectpool').addEventListener('change', function() {
+        if (this.value === 'auto'){
+            jeedom.cmd.execute({id:document.querySelector('#popuppool').dataset.cmd_auto_id});
         }
-    })
-});
+        if (this.value === 'on'){
+            jeedom.cmd.execute({id:document.querySelector('#popuppool').dataset.cmd_on_id});
+        }
+        if (this.value === 'off'){
+            jeedom.cmd.execute({id:document.querySelector('#popuppool').dataset.cmd_off_id});
+        }
+    });
+}
