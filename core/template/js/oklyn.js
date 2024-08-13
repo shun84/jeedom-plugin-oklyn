@@ -43,9 +43,9 @@ if (parseFloat(document.getElementById("domsalt").innerHTML) >= 4.00 && parseFlo
 
 document.querySelector('#icon_aux_second').addEventListener('click', function () {
     if (document.getElementById("icon_aux_second").getAttribute("data-statutsecond") === 'off'){
-        jeedom.cmd.execute({id: $(this).data('cmd_on_id')})
+        jeedom.cmd.execute({id: document.getElementById("icon_aux_second").dataset.cmd_on_id})
     } else {
-        jeedom.cmd.execute({id: $(this).data('cmd_off_id')})
+        jeedom.cmd.execute({id: document.getElementById("icon_aux_second").dataset.cmd_off_id})
     }
 });
 

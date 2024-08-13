@@ -11,102 +11,54 @@ document.getElementById('bt_validChangeDate').addEventListener('click', function
 displayOklyn(object_id, '', '')
 
 function displayOklyn(object_id, _dateStart, _dateEnd) {
-    if (jeeFrontEnd.jeedomVersion >= '4.4.0'){
-        domUtils.ajax({
-            type: 'POST',
-            url: 'plugins/oklyn/core/ajax/oklyn.ajax.php',
-            data: {
-                action: 'getOklyn',
-                object_id: object_id,
-                version: 'dashboard',
-                dateStart : _dateStart,
-                dateEnd : _dateEnd
-            },
-            dataType: 'json',
-            global: false,
-            error: function (request, status, error) {
-                handleAjaxError(request, status, error)
-            },
-            success: function (data) {
-                if (data.state !== 'ok') {
-                    jeedomUtils.showAlert({
-                        message: data.result,
-                        level: 'danger'
-                    })
-                }
-                let icon = '';
-                if (isset(data.result.object.display) && isset(data.result.object.display.icon)) {
-                    icon = data.result.object.display.icon
-                }
-                document.getElementById('oklynname').innerHTML = icon + ' ' + data.result.object.name
-
-                for (let i in data.result.eqLogics) {
-                    graphesOklyn(
-                        data.result.eqLogics[i].eqLogic.id,
-                        data.result.eqLogics[i].eqLogic.configuration.packoklyn,
-                        data.result.date.start,
-                        data.result.date.end
-                    );
-                }
+    domUtils.ajax({
+        type: 'POST',
+        url: 'plugins/oklyn/core/ajax/oklyn.ajax.php',
+        data: {
+            action: 'getOklyn',
+            object_id: object_id,
+            version: 'dashboard',
+            dateStart : _dateStart,
+            dateEnd : _dateEnd
+        },
+        dataType: 'json',
+        global: false,
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error)
+        },
+        success: function (data) {
+            if (data.state !== 'ok') {
+                jeedomUtils.showAlert({
+                    message: data.result,
+                    level: 'danger'
+                })
             }
-        })
-    } else {
-        $.ajax({
-            type: 'POST',
-            url: 'plugins/oklyn/core/ajax/oklyn.ajax.php',
-            data: {
-                action: 'getOklyn',
-                object_id: object_id,
-                version: 'dashboard',
-                dateStart : _dateStart,
-                dateEnd : _dateEnd
-            },
-            dataType: 'json',
-            error: function (request, status, error) {
-                handleAjaxError(request, status, error);
-            },
-            success: function (data) {
-                if (data.state !== 'ok') {
-                    $.fn.showAlert({
-                        message: data.result,
-                        level: 'danger'
-                    })
-                }
-                let icon = '';
-                if (isset(data.result.object.display) && isset(data.result.object.display.icon)) {
-                    icon = data.result.object.display.icon
-                }
-                document.getElementById('oklynname').innerHTML = icon + ' ' + data.result.object.name
-
-                for (let i in data.result.eqLogics) {
-                    graphesOklyn(
-                        data.result.eqLogics[i].eqLogic.id,
-                        data.result.eqLogics[i].eqLogic.configuration.packoklyn,
-                        data.result.date.start,
-                        data.result.date.end
-                    );
-                }
+            let icon = '';
+            if (isset(data.result.object.display) && isset(data.result.object.display.icon)) {
+                icon = data.result.object.display.icon
             }
-        });
-    }
+            document.getElementById('oklynname').innerHTML = icon + ' ' + data.result.object.name
 
+            for (let i in data.result.eqLogics) {
+                graphesOklyn(
+                    data.result.eqLogics[i].eqLogic.id,
+                    data.result.eqLogics[i].eqLogic.configuration.packoklyn,
+                    data.result.date.start,
+                    data.result.date.end
+                );
+            }
+        }
+    })
 }
 
 function graphesOklyn(_eqLogic_id, _param_pack, _dateStart, _dateEnd) {
     jeedom.eqLogic.getCmd({
         id: _eqLogic_id,
         error: function (error) {
-            if (jeeFrontEnd.jeedomVersion >= '4.4.0'){
-                jeedomUtils.showAlert({
-                    message: data.result,
-                    level: 'danger'
-                })
-            } else {
-                $.fn.showAlert({
-                    message: data.result,
-                    level: 'danger'
-                })
-            }
+            jeedomUtils.showAlert({
+                message: error.message,
+                level: 'danger'
+            })
         },
         success: function (cmds) {
             const histoairwater = document.getElementById('oklyn_air_water')

@@ -19,14 +19,14 @@
 /*
 * Permet la réorganisation des commandes dans l'équipement
 */
-$("#table_cmd").sortable({
-    axis: "y",
-    cursor: "move",
-    items: ".cmd",
-    placeholder: "ui-state-highlight",
-    tolerance: "intersect",
-    forcePlaceholderSize: true
-});
+// $("#table_cmd").sortable({
+//     axis: "y",
+//     cursor: "move",
+//     items: ".cmd",
+//     placeholder: "ui-state-highlight",
+//     tolerance: "intersect",
+//     forcePlaceholderSize: true
+// });
 
 /*
 * Fonction permettant l'affichage des commandes dans l'équipement
@@ -75,27 +75,20 @@ function addCmdToTable(_cmd) {
         tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> Tester</a>'
     }
     tr += '</tr>'
-    $('#table_cmd tbody').append(tr)
-    tr = $('#table_cmd tbody tr').last()
+    document.querySelector('#table_cmd tbody').insertAdjacentHTML('beforeend', tr)
+    tr = document.querySelectorAll('#table_cmd tbody tr').last()
     jeedom.eqLogic.buildSelectCmd({
-        id:  $('.eqLogicAttr[data-l1key=id]').value(),
+        id:  document.querySelector('.eqLogicAttr[data-l1key=id]').jeeValue(),
         filter: {type: 'info'},
         error: function (error) {
-            if (jeeFrontEnd.jeedomVersion >= '4.4.0'){
-                jeedomUtils.showAlert({
-                    message: data.result,
-                    level: 'danger'
-                })
-            } else {
-                $.fn.showAlert({
-                    message: data.result,
-                    level: 'danger'
-                })
-            }
+            jeedomUtils.showAlert({
+                message: error.message,
+                level: 'danger'
+            })
         },
         success: function (result) {
-            tr.find('.cmdAttr[data-l1key=value]').append(result)
-            tr.setValues(_cmd, '.cmdAttr')
+            tr.querySelector('.cmdAttr[data-l1key=value]').insertAdjacentHTML('beforeend', result)
+            tr.setJeeValues(_cmd, '.cmdAttr')
             jeedom.cmd.changeType(tr, init(_cmd.subType))
         }
     });

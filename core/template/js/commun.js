@@ -41,9 +41,9 @@ if (document.getElementById("popuppool").getAttribute("data-pompe") === "auto"){
 
 document.querySelector('#icon_aux').addEventListener('click', function () {
     if (document.getElementById("icon_aux").getAttribute("data-statut") === 'off'){
-        jeedom.cmd.execute({id: $(this).data('cmd_on_id')})
+        jeedom.cmd.execute({id:document.getElementById('icon_aux').dataset.cmd_on_id})
     } else {
-        jeedom.cmd.execute({id: $(this).data('cmd_off_id')})
+        jeedom.cmd.execute({id:document.getElementById('icon_aux').dataset.cmd_off_id})
     }
 });
 
@@ -116,13 +116,13 @@ function popUpPool(){
 
     document.getElementById('selectpool').addEventListener('change', function() {
         if (this.value === 'auto'){
-            jeedom.cmd.execute({id:document.querySelector('#popuppool').dataset.cmd_auto_id});
+            jeedom.cmd.execute({id:document.getElementById('popuppool').dataset.cmd_auto_id});
         }
         if (this.value === 'on'){
-            jeedom.cmd.execute({id:document.querySelector('#popuppool').dataset.cmd_on_id});
+            jeedom.cmd.execute({id:document.getElementById('popuppool').dataset.cmd_on_id});
         }
         if (this.value === 'off'){
-            jeedom.cmd.execute({id:document.querySelector('#popuppool').dataset.cmd_off_id});
+            jeedom.cmd.execute({id:document.getElementById('popuppool').dataset.cmd_off_id});
         }
     });
 }

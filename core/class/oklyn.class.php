@@ -18,7 +18,7 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
-require_once __DIR__ . '/../../core/api/oklynApi.php';
+require_once __DIR__ . '/../../core/php/oklynApi.php';
 
 class oklyn extends eqLogic {
     /* *************************Attributs****************************** */
@@ -32,7 +32,11 @@ class oklyn extends eqLogic {
     ];
 
     /* ***********************Methode static*************************** */
-    public static function cron() {
+    /**
+     * @throws Exception
+     */
+    public static function cron(): void
+    {
         foreach (oklyn::byType('oklyn') as $eqLogic) {
             if ($eqLogic->getIsEnable() == 1) {
                 $api = new oklynApi(config::byKey('apicle','oklyn'));
@@ -47,7 +51,8 @@ class oklyn extends eqLogic {
         }
     }
 
-    public static function cron30() {
+    public static function cron30(): void
+    {
         foreach (oklyn::byType('oklyn') as $eqLogic) {
             if ($eqLogic->getIsEnable() == 1) {
                 $eqLogic->updateOklyn();
@@ -60,7 +65,8 @@ class oklyn extends eqLogic {
     /**
      * @throws Exception
      */
-    public function updateOklyn(){
+    public function updateOklyn(): void
+    {
         $api = new oklynApi(config::byKey('apicle','oklyn'));
         $airdate = new DateTime($api->getSonde('air','recorded'));
 
@@ -81,7 +87,8 @@ class oklyn extends eqLogic {
     /**
      * @throws Exception
      */
-    public function preInsert(){
+    public function preInsert(): void
+    {
         $apikey = config::byKey('apicle','oklyn');
         if ($apikey == '') {
             throw new Exception(__('Veulliez renseigner la clef d\'api dans Configuration', __FILE__));
@@ -91,7 +98,8 @@ class oklyn extends eqLogic {
     /**
      * @throws Exception
      */
-    public function preUpdate() {
+    public function preUpdate(): void
+    {
         if ($this->getConfiguration('packoklyn') == '') {
             throw new Exception(__('Veuillez sélectionner le pack acheter chez Oklyn', __FILE__));
         }
@@ -108,7 +116,8 @@ class oklyn extends eqLogic {
     /**
      * @throws Exception
      */
-    public function postSave() {
+    public function postSave(): void
+    {
         $air = $this->getCmd(null, 'air');
         if (!is_object($air)) {
             $air = new oklynCmd();
@@ -432,38 +441,24 @@ class oklynCmd extends cmd {
     /**
      * @throws Exception
      */
-    public function execute($_options = []) {
+    public function execute($_options = []): void
+    {
         $api = new oklynApi(config::byKey('apicle','oklyn'));
 
         if ($this->getLogicalId() == 'pompeoff') {
             $putpompeoff = $api->putPompe('off');
-            $errorapi = json_decode($putpompeoff);
-            if ($errorapi->{'error'}){
-                throw new Exception(__('L\'arret de la pompe n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
-            }else{
-                log::add('oklyn','debug','Lancement de l\'action pompe Off');
-                $this->getEqLogic()->checkAndUpdateCmd('pompeoff', $putpompeoff);
-            }
+            log::add('oklyn','debug','Lancement de l\'action pompe Off');
+            $this->getEqLogic()->checkAndUpdateCmd('pompeoff', $putpompeoff);
         }
         if ($this->getLogicalId() == 'pompeon') {
             $putpompeon = $api->putPompe('on');
-            $errorapi = json_decode($putpompeon);
-            if ($errorapi->{'error'}){
-                throw new Exception(__('Le lancement de la pompe n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
-            }else{
-                log::add('oklyn','debug','Lancement de l\'action pompe On');
-                $this->getEqLogic()->checkAndUpdateCmd('pompeon', $putpompeon);
-            }
+            log::add('oklyn','debug','Lancement de l\'action pompe On');
+            $this->getEqLogic()->checkAndUpdateCmd('pompeon', $putpompeon);
         }
         if ($this->getLogicalId() == 'pompeauto') {
             $putpompeauto = $api->putPompe('auto');
-            $errorapi = json_decode($putpompeauto);
-            if ($errorapi->{'error'}){
-                throw new Exception(__('L\'automatisation de la pompe n\'a pas pu se faire : '.$errorapi->{'formatted_error'}, __FILE__));
-            }else{
-                log::add('oklyn','debug','Lancement de l\'action pompe Auto');
-                $this->getEqLogic()->checkAndUpdateCmd('pompeauto', $putpompeauto);
-            }
+            log::add('oklyn','debug','Lancement de l\'action pompe Auto');
+            $this->getEqLogic()->checkAndUpdateCmd('pompeauto', $putpompeauto);
         }
         if ($this->getLogicalId() == 'auxoff') {
             $putauxoff = $api->putAux('aux','off');
